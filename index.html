@@ -202,10 +202,19 @@ function generateAdvisory(data){
     return `<div class='advisory'><h3>${title}</h3><ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
 }
 
-// Voice input
+// Voice input for mobile & desktop
 function startVoice(){
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if(!SpeechRecognition){ alert("Voice input not supported in this browser!"); return; }
+    if(!SpeechRecognition){
+        alert("Voice input not supported in this browser!");
+        return;
+    }
+
+    const activeInput = document.activeElement;
+    if(!activeInput || activeInput.tagName !== "INPUT"){
+        alert("Please tap on a field to enter text via voice.");
+        return;
+    }
 
     let recognition = new SpeechRecognition();
     recognition.lang = currentLang === "hi" ? "hi-IN" : "en-US";
@@ -215,9 +224,16 @@ function startVoice(){
 
     recognition.onresult = function(event){
         const transcript = event.results[0][0].transcript;
-        document.getElementById("cropInput").value = transcript;
+        activeInput.value = transcript;
     };
-    recognition.onerror = function(event){ alert("Voice recognition error: " + event.error); };
+
+    recognition.onerror = function(event){
+        if(event.error === "no-speech"){
+            alert("No speech detected! Please speak clearly and try again.");
+        } else {
+            alert("Voice recognition error: " + event.error);
+        }
+    };
 }
 </script>
 
