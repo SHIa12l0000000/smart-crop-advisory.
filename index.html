@@ -25,8 +25,8 @@ header .nav-actions { display:flex; gap:12px; align-items:center; }
 main { padding:24px; max-width:1200px; margin:auto; }
 
 /* CARD GRID */
-.card-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:20px; margin-top:24px; }
-.card-grid button { background: linear-gradient(135deg,#22c55e,#16a34a,#3b82f6,#0ea5e9); background-size: 400% 400%; animation: gradientBG 10s ease infinite; color:#fff; border:none; border-radius:20px; min-height:160px; font-size:1.35rem; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow: 0 6px 14px rgba(0,0,0,0.2); cursor:pointer; transition: transform 0.35s, box-shadow 0.35s; text-align:center; padding:10px; }
+.card-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:20px; margin-top:24px; }
+.card-grid button { background: linear-gradient(135deg,#22c55e,#16a34a,#3b82f6,#0ea5e9); background-size: 400% 400%; animation: gradientBG 10s ease infinite; color:#fff; border:none; border-radius:20px; min-height:140px; font-size:1.25rem; display:flex; flex-direction:column; justify-content:center; align-items:center; box-shadow: 0 6px 14px rgba(0,0,0,0.2); cursor:pointer; transition: transform 0.35s, box-shadow 0.35s; }
 .card-grid button:hover{ transform: translateY(-5px) scale(1.05); box-shadow:0 12px 24px rgba(0,0,0,0.3); }
 @keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
@@ -37,26 +37,26 @@ section.active { display:block; }
 
 /* TABS */
 .tab-container { display:flex; gap:12px; overflow-x:auto; margin-top:16px; }
-.tab-btn { flex:0 0 auto; min-width:150px; padding:12px 20px; border-radius:16px; background:#d1fae5; color:#166534; font-weight:700; cursor:pointer; white-space:nowrap; text-align:center; transition:0.3s; font-size:0.95rem; }
+.tab-btn { flex:0 0 auto; min-width:150px; padding:12px 20px; border-radius:16px; background:#d1fae5; color:#166534; font-weight:700; cursor:pointer; white-space:nowrap; text-align:center; transition:0.3s; }
 .tab-btn.active { background: linear-gradient(135deg,#16a34a,#22c55e); color:#fff; box-shadow:0 6px 14px rgba(0,0,0,.25);}
-.tab-content { display:none; margin-top:12px; padding:16px; border-radius:16px; background:#f9fafb; box-shadow:0 2px 6px rgba(0,0,0,0.1); font-size:0.95rem; }
+.tab-content { display:none; margin-top:12px; padding:16px; border-radius:16px; background:#f9fafb; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
 .tab-content.active { display:block; }
 body.dark .tab-content { background:#1e293b; color:#e2e8f0; }
 
 /* FORM */
 form { max-width:600px; margin:auto; display:flex; flex-direction:column; gap:12px; }
-form input, form select { padding:12px; border-radius:8px; border:1px solid #ccc; width:100%; font-size:1rem; }
+form input, form select { padding:10px; border-radius:8px; border:1px solid #ccc; width:100%; }
 body.dark form input, body.dark form select { background:#1e293b; border:1px solid #555; color:#e2e8f0; }
-form button { padding:12px 18px; border:none; border-radius:10px; cursor:pointer; font-weight:600; font-size:1rem; }
+form button { padding:10px 16px; border:none; border-radius:10px; cursor:pointer; font-weight:600; }
 .btn-primary { background:#22c55e; color:#fff; }
 .btn-secondary { background:#e5e7eb; color:#111; }
 body.dark .btn-secondary { background:#334155; color:#a5f3fc; }
 
 /* CARDS / TABLES */
-.card { background:#fff; padding:16px; border-radius:12px; margin:12px 0; box-shadow:0 2px 6px rgba(0,0,0,0.1); font-size:0.95rem; }
+.card { background:#fff; padding:16px; border-radius:12px; margin:12px 0; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
 body.dark .card { background:#334155; color:#e2e8f0; }
 table { width:100%; border-collapse:collapse; margin-top:12px; }
-th,td { padding:8px; border:1px solid #ccc; border-radius:6px; text-align:center; font-size:0.9rem; }
+th,td { padding:8px; border:1px solid #ccc; border-radius:6px; text-align:center; }
 body.dark th, body.dark td { border-color:#555; }
 
 /* FIXED BUTTONS */
@@ -67,15 +67,9 @@ body.dark th, body.dark td { border-color:#555; }
 @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
 
 /* RESPONSIVE */
-@media (max-width:800px){
-  .card-grid { grid-template-columns: 1fr 1fr; gap:12px; }
-  header h1{ font-size:1.4rem; }
-  .tab-btn{ font-size:0.9rem; padding:10px 16px; min-width:120px; }
-}
-@media (max-width:500px){
+@media (max-width:600px){
   .card-grid { grid-template-columns: 1fr; gap:12px; }
-  header h1{ font-size:1.2rem; }
-  .tab-btn{ font-size:0.85rem; padding:8px 12px; min-width:100px; }
+  header h1{ font-size:1.3rem; }
 }
 </style>
 </head>
@@ -156,7 +150,7 @@ body.dark th, body.dark td { border-color:#555; }
   <button class="tab-btn" onclick="openTab('irrigation')">💧 Irrigation</button>
   <button class="tab-btn" onclick="openTab('storage')">🏠 Storage Tips</button>
   <button class="tab-btn" onclick="openTab('organic')">🌱 Organic Tips</button>
-  <button class="tab-btn" onclick="openTab('chemical')">⚗️ Chemical Tips</button>
+  <button class="tab-btn" onclick="openTab('chemical')">⚗ Chemical Tips</button>
   <button class="tab-btn" onclick="openTab('eco')">🌍 Eco Friendly</button>
   <button class="tab-btn" onclick="openTab('harvest')">🌾 Harvest Tips</button>
 </div>
@@ -179,6 +173,51 @@ body.dark th, body.dark td { border-color:#555; }
 <button class="btn-secondary" id="btnBackSolution" onclick="showPage('home')">⬅ Back</button>
 </section>
 
+<!-- ADVISORIES -->
+<section id="advisories">
+<h2 id="advisoriesTitle">📋 Advisories</h2>
+<div id="advisoryContent" class="card">
+  Stay updated with latest farming advisories.
+</div>
+<button class="btn-secondary" onclick="showPage('home')" id="btnBackAdvisory">⬅ Back</button>
+</section>
+
+<!-- MARKET -->
+<section id="market">
+<h2 id="marketTitle">💹 Market Prices</h2>
+<div id="marketContent" class="card">
+  Real-time crop market prices and trends.
+</div>
+<button class="btn-secondary" onclick="showPage('home')" id="btnBackMarket">⬅ Back</button>
+</section>
+
+<!-- WEATHER -->
+<section id="weather">
+<h2 id="weatherTitle">☁ Weather</h2>
+<div id="weatherContent" class="card">
+  Current weather updates for your region.
+</div>
+<button class="btn-secondary" onclick="showPage('home')" id="btnBackWeather">⬅ Back</button>
+</section>
+
+<!-- SOIL -->
+<section id="soil">
+<h2 id="soilTitle">🌱 Soil Health</h2>
+<div id="soilContent" class="card">
+  Detailed soil analysis and health recommendations.
+</div>
+<button class="btn-secondary" onclick="showPage('home')" id="btnBackSoil">⬅ Back</button>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+<h2 id="roadmapTitle">🚀 Roadmap</h2>
+<div id="roadmapContent" class="card">
+  Step-by-step roadmap for sustainable farming.
+</div>
+<button class="btn-secondary" onclick="showPage('home')" id="btnBackRoadmap">⬅ Back</button>
+</section>
+
 <!-- FOOTER -->
 <footer style="text-align:center;padding:16px;">
   <span id="footerText">Prototype — Built for Smart India Hackathon.</span>
@@ -196,7 +235,7 @@ en:{
 btnBack:"⬅ Back",
 btnPrev:"⬅ Previous",
 btnNext:"Next ➡",
-solutionTabs:["🌾 Crop Advice","🧪 Fertilizer","🐛 Pest Control","💹 Market Advice","💧 Irrigation","🏠 Storage Tips","🌱 Organic Tips","⚗️ Chemical Tips","🌍 Eco Friendly","🌾 Harvest Tips"],
+solutionTabs:["🌾 Crop Advice","🧪 Fertilizer","🐛 Pest Control","💹 Market Advice","💧 Irrigation","🏠 Storage Tips","🌱 Organic Tips","⚗ Chemical Tips","🌍 Eco Friendly","🌾 Harvest Tips"],
 tabContents:{
 crop:"Choose crop based on soil & weather conditions.",
 fertilizer:"Use recommended organic & chemical fertilizers wisely.",
@@ -221,13 +260,13 @@ btnRoadmap:"🚀 Roadmap",
 inputTitle:"👨‍🌾 Farmer Input",
 farmerForm:{name:"Farmer Name",phone:"Phone 91XXXXXXXXXX",district:"District",area:"Area in acres",crop:"Crop Name",soil:"Select Soil Type"},
 advisoriesTitle:"📋 Advisories",
-advisoryContent:"Get latest farming advice.",
+advisoryContent:"Stay updated with latest farming advisories.",
 marketTitle:"💹 Market Prices",
-marketContent:"Real-time market price & trends for crops.",
+marketContent:"Real-time crop market prices and trends.",
 weatherTitle:"☁ Weather",
-weatherContent:"Current weather update for your area.",
+weatherContent:"Current weather updates for your region.",
 soilTitle:"🌱 Soil Health",
-soilContent:"Detailed soil analysis & health advice.",
+soilContent:"Detailed soil analysis and health recommendations.",
 roadmapTitle:"🚀 Roadmap",
 roadmapContent:"Step-by-step roadmap for sustainable farming.",
 footerText:"Prototype — Built for Smart India Hackathon."
@@ -236,7 +275,7 @@ hi:{
 btnBack:"⬅ वापस",
 btnPrev:"⬅ पिछला",
 btnNext:"अगला ➡",
-solutionTabs:["🌾 फसल सलाह","🧪 उर्वरक","🐛 कीट नियंत्रण","💹 बाजार सलाह","💧 सिंचाई","🏠 भंडारण सुझाव","🌱 जैविक सुझाव","⚗️ रासायनिक सुझाव","🌍 पर्यावरण अनुकूल","🌾 कटाई सुझाव"],
+solutionTabs:["🌾 फसल सलाह","🧪 उर्वरक","🐛 कीट नियंत्रण","💹 बाजार सलाह","💧 सिंचाई","🏠 भंडारण सुझाव","🌱 जैविक सुझाव","⚗ रासायनिक सुझाव","🌍 पर्यावरण अनुकूल","🌾 कटाई सुझाव"],
 tabContents:{
 crop:"मिट्टी और मौसम के अनुसार फसल चुनें।",
 fertilizer:"सिफारिश की गई जैविक और रासायनिक उर्वरक का सही उपयोग करें।",
@@ -333,6 +372,31 @@ document.getElementById("langSelect").addEventListener("change",e=>{
   tabButtons.forEach((b,i)=>b.textContent=data.solutionTabs[i]);
   const tabContents=data.tabContents;
   for(const k in tabContents){document.getElementById("tab-"+k).textContent=tabContents[k];}
+
+  // Advisories
+  document.getElementById("advisoriesTitle").textContent=data.advisoriesTitle;
+  document.getElementById("advisoryContent").textContent=data.advisoryContent;
+  document.getElementById("btnBackAdvisory").textContent=data.btnBack;
+
+  // Market
+  document.getElementById("marketTitle").textContent=data.marketTitle;
+  document.getElementById("marketContent").textContent=data.marketContent;
+  document.getElementById("btnBackMarket").textContent=data.btnBack;
+
+  // Weather
+  document.getElementById("weatherTitle").textContent=data.weatherTitle;
+  document.getElementById("weatherContent").textContent=data.weatherContent;
+  document.getElementById("btnBackWeather").textContent=data.btnBack;
+
+  // Soil
+  document.getElementById("soilTitle").textContent=data.soilTitle;
+  document.getElementById("soilContent").textContent=data.soilContent;
+  document.getElementById("btnBackSoil").textContent=data.btnBack;
+
+  // Roadmap
+  document.getElementById("roadmapTitle").textContent=data.roadmapTitle;
+  document.getElementById("roadmapContent").textContent=data.roadmapContent;
+  document.getElementById("btnBackRoadmap").textContent=data.btnBack;
 
   // Footer
   document.getElementById("footerText").textContent=data.footerText;
