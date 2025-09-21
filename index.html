@@ -9,7 +9,7 @@
 body { font-family:"Segoe UI", Arial, sans-serif; margin:0; background:#f0fdf4; color:#222; transition:0.3s; }
 body.dark { background:#121212; color:#eee; }
 header, footer { display:flex; align-items:center; justify-content:center; padding:1rem; background:#16a34a; color:white; position:relative; border-bottom-left-radius:12px; border-bottom-right-radius:12px; }
-header img { width:40px; margin-right:10px; }
+header img { width:40px; height:40px; margin-right:10px; object-fit:contain; }
 header h1 { margin:0; font-size:1.3rem; }
 #langCorner { position:absolute; left:10px; top:10px; font-size:0.7rem; background:#fff; color:#16a34a; border-radius:8px; padding:3px 6px; cursor:pointer; }
 body.dark #langCorner { background:#333; color:#a5f3fc; }
@@ -18,7 +18,7 @@ body.dark #langCorner { background:#333; color:#a5f3fc; }
 main { max-width:480px; margin:auto; padding:1rem; }
 
 /* Sections */
-section { background:white; border-radius:20px; padding:1.5rem; box-shadow:0 6px 15px rgba(0,0,0,0.08); display:none; animation:fade 0.3s ease-in-out; margin-bottom:1rem; }
+section { background:white; border-radius:20px; padding:1.5rem; box-shadow:0 6px 15px rgba(0,0,0,0.08); display:none; animation:fade 0.3s ease-in-out; margin-bottom:1rem; word-wrap:break-word; overflow-wrap:break-word; }
 body.dark section { background:#1e1e1e; color:#eee; box-shadow:none; }
 h2 { font-size:1.3rem; margin-bottom:1rem; color:#16a34a; text-align:center; }
 body.dark h2 { color:#a5f3fc; }
@@ -36,17 +36,17 @@ body.dark .btn-secondary { background:#333; color:#eee; }
 .btn-line { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; justify-content:space-between; }
 
 /* Advisory */
-.advisory { border-radius:16px; padding:12px; margin-top:12px; background:#f9fafb; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+.advisory { border-radius:16px; padding:12px; margin-top:12px; background:#f9fafb; box-shadow:0 2px 6px rgba(0,0,0,0.1); word-wrap:break-word; overflow-wrap:break-word; }
 body.dark .advisory { background:#2a2a2a; border:1px solid #555; }
 .advisory h3 { margin:0 0 8px 0; color:#16a34a; font-size:1.05rem; }
 body.dark .advisory h3 { color:#a5f3fc; }
-table { width:100%; border-collapse:collapse; margin-top:10px; font-size:0.9rem; }
-th, td { border:1px solid #999; padding:6px; text-align:left; border-radius:6px; }
+table { width:100%; border-collapse:collapse; margin-top:10px; font-size:0.9rem; table-layout:fixed; word-wrap:break-word; }
+th, td { border:1px solid #999; padding:6px; text-align:left; border-radius:6px; word-wrap:break-word; }
 body.dark th, body.dark td { border:1px solid #666; }
 
 /* Splash */
 #splash { position:fixed; top:0; left:0; right:0; bottom:0; background:#16a34a; color:white; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:1.3rem; z-index:9999; animation:fadeIn 1s; }
-#splash img { width:70px; margin-bottom:12px; }
+#splash img { width:70px; height:70px; margin-bottom:12px; object-fit:contain; }
 
 /* Floating buttons */
 #darkToggle, #voiceButtonInline { position:fixed; border-radius:50%; padding:12px; font-size:1.2rem; box-shadow:0 4px 10px rgba(0,0,0,0.25); z-index:999; }
@@ -69,14 +69,14 @@ body.dark th, body.dark td { border:1px solid #666; }
 
 <!-- Splash -->
 <div id="splash">
-<img src="https://via.placeholder.com/70" alt="Logo" />
+<img src="logo.png" alt="Logo" />
 <div>Smart Crop Advisory</div>
 <small>Loading...</small>
 </div>
 
 <!-- Header -->
 <header>
-<img src="https://via.placeholder.com/40" alt="Logo" />
+<img src="logo.png" alt="Logo" />
 <h1>Smart Crop Advisory</h1>
 <div id="langCorner">🌐</div>
 </header>
@@ -138,7 +138,7 @@ body.dark th, body.dark td { border:1px solid #666; }
 <!-- Advisories -->
 <section id="advisories">
 <h2 id="advisoryTitle">📋 Advisories</h2>
-<div id="advisoryList">No advisories yet — fill the form and click "Get Advisory".</div>
+<div id="advisoryList" style="overflow-x:auto;">No advisories yet — fill the form and click "Get Advisory".</div>
 <br />
 <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
 </section>
@@ -158,7 +158,6 @@ body.dark th, body.dark td { border:1px solid #666; }
 <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
 </section>
 
-<!-- Footer -->
 <footer>
 Prototype — Built for Smart India Hackathon idea submission.<br/>
 For production: connect sensors, weather API & backend AI.
@@ -169,11 +168,12 @@ For production: connect sensors, weather API & backend AI.
 <button id="voiceButtonInline">🎤</button>
 
 <script>
-// Language & UI
 let currentLang="en"; 
 let activeInput=null;
 const pages=["home","input","advisories","roadmap","language"];
-const uiTrans={en:{homeTitle:"Welcome 👋",homeText:"Select an option below:",btnInput:"👨‍🌾 Farmer Input",btnAdvisory:"📋 Advisories",btnRoadmap:"🚀 Roadmap",inputTitle:"👨‍🌾 Farmer Input",labelName:"Name",labelPhone:"Phone (SMS/IVR)",labelDistrict:"District",labelArea:"Area (acres)",labelSoil:"Soil Type",labelCrop:"Crop",btnGetAdvisory:"✨ Get Advisory",btnReset:"Reset",thanks:"Thanks for using our website! It will help you a lot.",cropPlaceholder:"Wheat"},hi:{homeTitle:"स्वागत 👋",homeText:"नीचे विकल्प चुनें:",btnInput:"👨‍🌾 किसान इनपुट",btnAdvisory:"📋 सलाह",btnRoadmap:"🚀 रोडमैप",inputTitle:"👨‍🌾 किसान इनपुट",labelName:"नाम",labelPhone:"फोन (SMS/IVR के लिए)",labelDistrict:"जिला",labelArea:"क्षेत्रफल (एकड़)",labelSoil:"मृदा प्रकार",labelCrop:"फसल",btnGetAdvisory:"✨ सलाह प्राप्त करें",btnReset:"रीसेट",thanks:"हमारी वेबसाइट का उपयोग करने के लिए धन्यवाद। यह आपको बहुत मदद करेगा।",cropPlaceholder:"गेहूं"}};
+const uiTrans={
+en:{homeTitle:"Welcome 👋",homeText:"Select an option below:",btnInput:"👨‍🌾 Farmer Input",btnAdvisory:"📋 Advisories",btnRoadmap:"🚀 Roadmap",inputTitle:"👨‍🌾 Farmer Input",labelName:"Name",labelPhone:"Phone (SMS/IVR)",labelDistrict:"District",labelArea:"Area (acres)",labelSoil:"Soil Type",labelCrop:"Crop",btnGetAdvisory:"✨ Get Advisory",btnReset:"Reset",thanks:"Thanks for using our website! It will help you a lot.",cropPlaceholder:"Wheat"},
+hi:{homeTitle:"स्वागत 👋",homeText:"नीचे विकल्प चुनें:",btnInput:"👨‍🌾 किसान इनपुट",btnAdvisory:"📋 सलाह",btnRoadmap:"🚀 रोडमैप",inputTitle:"👨‍🌾 किसान इनपुट",labelName:"नाम",labelPhone:"फोन (SMS/IVR के लिए)",labelDistrict:"जिला",labelArea:"क्षेत्रफल (एकड़)",labelSoil:"मृदा प्रकार",labelCrop:"फसल",btnGetAdvisory:"✨ सलाह प्राप्त करें",btnReset:"रीसेट",thanks:"हमारी वेबसाइट का उपयोग करने के लिए धन्यवाद। यह आपको बहुत मदद करेगा।",cropPlaceholder:"गेहूं"}};
 const soilTrans={ en:["Loamy","Sandy","Clay","Laterite"], hi:["दोमट","रेतीली","मिट्टी","लैटराइट"] };
 const advTrans={en:{wheat1:"Apply nitrogen fertilizer", wheat2:"Monitor irrigation regularly", rice1:"Keep fields flooded", rice2:"Check for pests", general:"Follow standard crop practices", soilSandy:"Add compost to sandy soil", largeArea:"Consider hiring extra labor", market:"Check local market prices before selling", generalTitle:"Crop Advisory", wheatTitle:"Wheat Advisory", riceTitle:"Rice Advisory"},hi:{wheat1:"नाइट्रोजन उर्वरक लगाएं", wheat2:"सिंचाई नियमित रूप से मॉनिटर करें", rice1:"खेतों में पानी बनाए रखें", rice2:"कीटों की जाँच करें", general:"मानक फसल प्रथाओं का पालन करें", soilSandy:"रेतीली मिट्टी में कंपोस्ट डालें", largeArea:"अतिरिक्त श्रमिक रखने पर विचार करें", market:"बेचने से पहले स्थानीय बाजार की कीमतें देखें", generalTitle:"फसल सलाह", wheatTitle:"गेहूं सलाह", riceTitle:"चावल सलाह"}};
 
@@ -253,5 +253,6 @@ document.getElementById("darkToggle").addEventListener("click",()=>document.body
 document.getElementById("langCorner").addEventListener("click",()=>showPage("language"));
 
 </script>
+
 </body>
 </html>
