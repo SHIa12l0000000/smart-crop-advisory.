@@ -1,188 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌱 Smart Crop Advisory</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f9f4;
-      color: #333;
-    }
-    header {
-      background: #2e7d32;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-    nav button {
-      padding: 0.5rem 1rem;
-      border: none;
-      background: #4caf50;
-      color: white;
-      cursor: pointer;
-      border-radius: 6px;
-    }
-    nav button:hover {
-      background: #388e3c;
-    }
-    section {
-      display: none;
-      padding: 1rem;
-    }
-    section.active {
-      display: block;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      max-width: 400px;
-      margin: auto;
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    input, select {
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .btn-line {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-    }
-    .btn-primary {
-      background: #2e7d32;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .btn-primary:hover {
-      background: #1b5e20;
-    }
-    .btn-secondary {
-      background: #ccc;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .card {
-      background: white;
-      padding: 1rem;
-      margin: 1rem auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      max-width: 400px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🌱 Smart Crop Advisory</title>
+<style>
+/* General Reset */
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Segoe UI",Arial,sans-serif;}
+body{background:#f0fdf4;color:#222;transition:0.3s;}
+body.dark{background:#0f172a;color:#eee;}
+
+/* Header */
+header{display:flex;align-items:center;justify-content:center;gap:10px;padding:1rem;background:linear-gradient(90deg,#16a34a,#22c55e);color:white;border-bottom-left-radius:20px;border-bottom-right-radius:20px;}
+header img{width:40px;height:40px;object-fit:contain;}
+header h1{font-size:1.3rem;}
+
+/* Navigation Tabs */
+nav{display:flex;justify-content:space-around;flex-wrap:wrap;background:#fff;padding:0.5rem;border-radius:16px;margin:1rem auto;max-width:600px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+body.dark nav{background:#1e293b;}
+nav button{flex:1;min-width:100px;margin:4px;padding:10px;border:none;border-radius:12px;background:#e2fbe8;color:#166534;font-weight:600;cursor:pointer;transition:0.3s;}
+nav button:hover{background:#bbf7d0;}
+body.dark nav button{background:#334155;color:#a5f3fc;}
+body.dark nav button:hover{background:#475569;}
+
+/* Sections */
+section{display:none;padding:1.2rem;max-width:700px;margin:auto;}
+section.active{display:block;animation:fadeIn 0.4s;}
+h2{text-align:center;margin-bottom:1rem;color:#16a34a;}
+body.dark h2{color:#a5f3fc;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+/* Cards */
+.card{background:rgba(255,255,255,0.8);backdrop-filter:blur(10px);border-radius:16px;padding:1rem;margin:0.8rem 0;box-shadow:0 6px 15px rgba(0,0,0,0.1);}
+body.dark .card{background:rgba(30,41,59,0.9);color:#fff;}
+
+/* Form */
+form{display:flex;flex-direction:column;gap:0.8rem;}
+form input,form select{padding:12px;border:1px solid #ccc;border-radius:12px;font-size:1rem;}
+body.dark form input,body.dark form select{background:#1e293b;color:#fff;border:1px solid #555;}
+.btn-line{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+button{cursor:pointer;}
+.btn-primary{flex:1;background:linear-gradient(135deg,#16a34a,#22c55e);color:white;padding:12px;border:none;border-radius:12px;font-size:1rem;transition:0.3s;}
+.btn-primary:hover{background:linear-gradient(135deg,#15803d,#16a34a);}
+.btn-secondary{flex:1;background:#e5e7eb;padding:12px;border:none;border-radius:12px;font-size:1rem;}
+body.dark .btn-secondary{background:#334155;color:#eee;}
+
+/* Advisory Cards */
+.advisory h3{margin-bottom:8px;font-size:1.1rem;color:#166534;}
+body.dark .advisory h3{color:#a5f3fc;}
+.advisory ul{padding-left:20px;}
+
+/* Solution Concept Tabs */
+.tab-container{display:flex;gap:10px;justify-content:center;margin-bottom:1rem;flex-wrap:wrap;}
+.tab-btn{flex:1;min-width:120px;padding:10px;background:#d1fae5;border:none;border-radius:12px;font-weight:600;cursor:pointer;transition:0.3s;}
+.tab-btn.active{background:#16a34a;color:#fff;}
+body.dark .tab-btn{background:#334155;color:#a5f3fc;}
+body.dark .tab-btn.active{background:#22c55e;color:#fff;}
+
+/* Floating Buttons */
+#darkToggle{position:fixed;bottom:20px;right:20px;background:#16a34a;color:white;border:none;border-radius:50%;padding:14px;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);}
+</style>
 </head>
 <body>
-  <header>
-    <h1>🌱 Smart Crop Advisory Prototype</h1>
-  </header>
 
-  <nav>
-    <button onclick="showPage('home')">🏠 Home</button>
-    <button onclick="showPage('farmers')">👩‍🌾 Farmers</button>
-    <button onclick="showPage('input')">➕ Add Input</button>
-  </nav>
+<header>
+  <img src="logo.png" alt="Logo">
+  <h1>🌱 Smart Crop Advisory</h1>
+</header>
 
+<nav>
+  <button onclick="showPage('home')">🏠 Home</button>
+  <button onclick="showPage('input')">👨‍🌾 Farmer Input</button>
+  <button onclick="showPage('advisories')">📋 Advisories</button>
+  <button onclick="showPage('solution')">💡 Solution Concept</button>
+  <button onclick="showPage('roadmap')">🚀 Roadmap</button>
+</nav>
+
+<main>
   <!-- Home -->
   <section id="home" class="active">
-    <h2>Welcome</h2>
-    <p>This is a lightweight prototype for crop advisory. Farmers can enter details and get recommendations.</p>
-  </section>
-
-  <!-- Farmers List -->
-  <section id="farmers">
-    <h2>👩‍🌾 Farmers List</h2>
-    <div id="farmerList" class="card">No farmers found (backend empty)</div>
+    <h2>Welcome 👋</h2>
+    <div class="card">This prototype helps farmers get crop selection advice, fertilizer recommendations, pest control tips and market price updates.</div>
   </section>
 
   <!-- Farmer Input -->
   <section id="input">
-    <h2 id="inputTitle">👨‍🌾 Farmer Input</h2>
+    <h2>👨‍🌾 Farmer Input</h2>
     <form id="farmerForm">
-      <label id="labelName">Name</label>
-      <input type="text" name="name" placeholder="Farmer name" required />
-
-      <label id="labelPhone">Phone (SMS/IVR)</label>
-      <input type="tel" name="phone" placeholder="91XXXXXXXXXX" required />
-
-      <label id="labelDistrict">District</label>
-      <input type="text" name="district" placeholder="District" required />
-
-      <label id="labelArea">Area (acres)</label>
-      <input type="number" name="area" step="0.1" value="1" required />
-
-      <label id="labelSoil">Soil Type</label>
-      <select name="soil" id="soilSelect" required>
-        <option value="">-- Select Soil --</option>
-        <option value="alluvial">Alluvial</option>
-        <option value="black">Black</option>
-        <option value="red">Red</option>
-        <option value="laterite">Laterite</option>
+      <input type="text" name="name" placeholder="Farmer Name" required>
+      <input type="tel" name="phone" placeholder="91XXXXXXXXXX" required>
+      <input type="text" name="district" placeholder="District" required>
+      <input type="number" name="area" placeholder="Area (acres)" step="0.1" required>
+      <select name="soil" required>
+        <option value="">-- Select Soil Type --</option>
+        <option>Loamy</option><option>Sandy</option><option>Clay</option><option>Laterite</option>
       </select>
-
-      <label id="labelCrop">Crop</label>
-      <input type="text" name="crop" id="cropInput" value="Wheat" required />
-
+      <input type="text" name="crop" placeholder="Crop (e.g., Wheat)" required>
       <div class="btn-line">
-        <button type="submit" class="btn-primary" id="btnGetAdvisory">✨ Get Advisory</button>
-        <button type="reset" class="btn-secondary" id="btnReset">Reset</button>
-        <button type="button" class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
+        <button type="submit" class="btn-primary">✨ Get Advisory</button>
+        <button type="reset" class="btn-secondary">Reset</button>
       </div>
     </form>
   </section>
 
-  <script>
-    function showPage(id) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
+  <!-- Advisories -->
+  <section id="advisories">
+    <h2>📋 Advisory Results</h2>
+    <div id="advisoryList" class="card">No advisories yet.</div>
+  </section>
 
-    document.getElementById("farmerForm").addEventListener("submit", function(event) {
-      event.preventDefault();
+  <!-- Solution Concept -->
+  <section id="solution">
+    <h2>💡 Solution Concept</h2>
+    <div class="tab-container">
+      <button class="tab-btn active" onclick="openTab('crop')">🌾 Crop Advice</button>
+      <button class="tab-btn" onclick="openTab('fertilizer')">🧪 Fertilizer</button>
+      <button class="tab-btn" onclick="openTab('pest')">🐛 Pest Control</button>
+      <button class="tab-btn" onclick="openTab('market')">💹 Market Prices</button>
+    </div>
+    <div id="tab-crop" class="card tab-content">✔ Helps farmers choose the right crop based on soil & weather.</div>
+    <div id="tab-fertilizer" class="card tab-content" style="display:none;">✔ Recommends chemical vs organic fertilizers with proper quantity.</div>
+    <div id="tab-pest" class="card tab-content" style="display:none;">✔ Provides pest control tips and eco-friendly solutions.</div>
+    <div id="tab-market" class="card tab-content" style="display:none;">✔ Updates market prices and connects with buyers.</div>
+  </section>
 
-      const formData = new FormData(this);
-      const farmer = {
-        name: formData.get("name"),
-        phone: formData.get("phone"),
-        district: formData.get("district"),
-        area: formData.get("area"),
-        soil: formData.get("soil"),
-        crop: formData.get("crop"),
-      };
+  <!-- Roadmap -->
+  <section id="roadmap">
+    <h2>🚀 Roadmap</h2>
+    <div class="card">
+      <ul>
+        <li>App + SMS + IVR support</li>
+        <li>IoT sensors for soil & weather</li>
+        <li>AI-based advisory engine</li>
+        <li>Offline support for low connectivity</li>
+      </ul>
+    </div>
+  </section>
+</main>
 
-      const farmerCard = `
-        <div class="card">
-          <h3>${farmer.name}</h3>
-          <p>📞 ${farmer.phone}</p>
-          <p>📍 ${farmer.district}</p>
-          <p>🌾 ${farmer.crop} (${farmer.area} acres, ${farmer.soil} soil)</p>
-        </div>
-      `;
+<!-- Dark Mode -->
+<button id="darkToggle">🌓</button>
 
-      document.getElementById("farmerList").innerHTML = farmerCard;
-      alert("✅ Advisory generated for " + farmer.crop + "!");
-      showPage('farmers');
-      this.reset();
-    });
-  </script>
+<script>
+function showPage(id){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+function openTab(tab){
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".tab-content").forEach(c=>c.style.display="none");
+  document.querySelector(`[onclick="openTab('${tab}')"]`).classList.add("active");
+  document.getElementById("tab-"+tab).style.display="block";
+}
+document.getElementById("darkToggle").addEventListener("click",()=>document.body.classList.toggle("dark"));
+
+/* Advisory Demo */
+document.getElementById("farmerForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const data=Object.fromEntries(new FormData(e.target));
+  document.getElementById("advisoryList").innerHTML=
+    `<div class="advisory">
+       <h3>Advisory for ${data.crop}</h3>
+       <ul>
+         <li>Use best practices for ${data.crop}</li>
+         <li>Soil: ${data.soil}</li>
+         <li>Check market before selling</li>
+       </ul>
+     </div>`;
+  showPage("advisories");
+});
+</script>
+
 </body>
 </html>
