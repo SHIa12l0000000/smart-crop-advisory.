@@ -82,11 +82,11 @@ footer { font-size: 0.8rem; }
 <input type="number" name="area" step="0.1" value="1" />
 
 <label id="labelSoil">Soil Type</label>
-<select name="soil">
-<option>Loamy</option>
-<option>Sandy</option>
-<option>Clay</option>
-<option>Laterite</option>
+<select name="soil" id="soilSelect">
+<option value="Loamy">Loamy</option>
+<option value="Sandy">Sandy</option>
+<option value="Clay">Clay</option>
+<option value="Laterite">Laterite</option>
 </select>
 
 <label id="labelCrop">Crop</label>
@@ -141,11 +141,19 @@ window.addEventListener("load", () => {
 const pages = ["home","input","advisories","roadmap","language"];
 let currentLang = "en";
 
+// Translations
 const uiTrans = {
-  en: { homeTitle:"Welcome 👋", homeText:"Select an option below:", btnInput:"👨‍🌾 Farmer Input", btnAdvisory:"📋 Advisories", btnRoadmap:"🚀 Roadmap", inputTitle:"👨‍🌾 Farmer Input", labelName:"Name", labelPhone:"Phone (for SMS/IVR)", labelDistrict:"District", labelArea:"Area (acres)", labelSoil:"Soil Type", labelCrop:"Crop", btnGetAdvisory:"✨ Get Advisory", btnReset:"Reset", thanks:"Thanks for using our website! It will help you a lot." },
-  hi: { homeTitle:"स्वागत है 👋", homeText:"नीचे विकल्प चुनें:", btnInput:"👨‍🌾 किसान इनपुट", btnAdvisory:"📋 सलाह", btnRoadmap:"🚀 रोडमैप", inputTitle:"👨‍🌾 किसान इनपुट", labelName:"नाम", labelPhone:"फोन (SMS/IVR के लिए)", labelDistrict:"जिला", labelArea:"क्षेत्र (एकड़)", labelSoil:"मिट्टी का प्रकार", labelCrop:"फसल", btnGetAdvisory:"✨ सलाह प्राप्त करें", btnReset:"रीसेट करें", thanks:"हमारी वेबसाइट का उपयोग करने के लिए धन्यवाद! यह आपकी बहुत मदद करेगा।" }
+  en: { homeTitle:"Welcome 👋", homeText:"Select an option below:", btnInput:"👨‍🌾 Farmer Input", btnAdvisory:"📋 Advisories", btnRoadmap:"🚀 Roadmap", inputTitle:"👨‍🌾 Farmer Input", labelName:"Name", labelPhone:"Phone (for SMS/IVR)", labelDistrict:"District", labelArea:"Area (acres)", labelSoil:"Soil Type", labelCrop:"Crop", btnGetAdvisory:"✨ Get Advisory", btnReset:"Reset", cropPlaceholder:"Wheat", thanks:"Thanks for using our website! It will help you a lot." },
+  hi: { homeTitle:"स्वागत है 👋", homeText:"नीचे विकल्प चुनें:", btnInput:"👨‍🌾 किसान इनपुट", btnAdvisory:"📋 सलाह", btnRoadmap:"🚀 रोडमैप", inputTitle:"👨‍🌾 किसान इनपुट", labelName:"नाम", labelPhone:"फोन (SMS/IVR के लिए)", labelDistrict:"जिला", labelArea:"क्षेत्र (एकड़)", labelSoil:"मिट्टी का प्रकार", labelCrop:"फसल", btnGetAdvisory:"✨ सलाह प्राप्त करें", btnReset:"रीसेट करें", cropPlaceholder:"गेहूं", thanks:"हमारी वेबसाइट का उपयोग करने के लिए धन्यवाद! यह आपकी बहुत मदद करेगा।" }
 };
 
+// Soil type translations
+const soilTrans = {
+  en: ["Loamy","Sandy","Clay","Laterite"],
+  hi: ["लॉमी","रेतीली","मिट्टी","लेटराइट"]
+};
+
+// Advisory translations
 const advTrans = {
   en: { wheat1:"Apply nitrogen fertilizer", wheat2:"Monitor irrigation regularly", rice1:"Keep fields flooded", rice2:"Check for pests", general:"Follow standard crop practices", soilSandy:"Add compost to sandy soil", largeArea:"Consider hiring extra labor", market:"Check local market prices before selling", wheatTitle:"Wheat Advisory", riceTitle:"Rice Advisory", generalTitle:"Crop Advisory" },
   hi: { wheat1:"नाइट्रोजन उर्वरक डालें", wheat2:"सिंचाई नियमित रूप से करें", rice1:"खेतों को पानी से भरें", rice2:"कीटों की जाँच करें", general:"मानक फसल प्रथाओं का पालन करें", soilSandy:"रेतीली मिट्टी में कंपोस्ट डालें", largeArea:"अतिरिक्त श्रम लेने पर विचार करें", market:"बेचने से पहले स्थानीय बाजार के दाम देखें", wheatTitle:"गेहूं सलाह", riceTitle:"चावल सलाह", generalTitle:"फसल सलाह" }
@@ -160,9 +168,25 @@ function showPage(id){
 // Set language
 function setLanguage(){
     currentLang = document.getElementById("langSelect").value;
+    // Update UI text
     for(const key in uiTrans[currentLang]){
         let el = document.getElementById(key);
         if(el) el.innerText = uiTrans[currentLang][key];
+    }
+    // Update soil dropdown
+    const soilSelect = document.getElementById("soilSelect");
+    soilSelect.innerHTML = "";
+    soilTrans[currentLang].forEach(soil => {
+        const opt = document.createElement("option");
+        opt.value = soil;
+        opt.text = soil;
+        soilSelect.appendChild(opt);
+    });
+    // Update crop placeholder and value if it's previous default
+    const cropInput = document.getElementById("cropInput");
+    cropInput.placeholder = uiTrans[currentLang].cropPlaceholder;
+    if(cropInput.value === uiTrans[currentLang==='en'?'hi':'en'].cropPlaceholder){
+        cropInput.value = uiTrans[currentLang].cropPlaceholder;
     }
     showPage("home");
 }
@@ -181,53 +205,52 @@ function generateAdvisory(data){
     let tips=[];
     const crop = data.crop.toLowerCase();
     let title = advTrans[currentLang].generalTitle;
-    if(crop.includes("wheat")){
+    if(crop.includes("wheat") || crop.includes("गेहूं")){
         tips.push(advTrans[currentLang].wheat1, advTrans[currentLang].wheat2);
         title = advTrans[currentLang].wheatTitle;
-    } else if(crop.includes("rice")){
+    } else if(crop.includes("rice") || crop.includes("चावल")){
         tips.push(advTrans[currentLang].rice1, advTrans[currentLang].rice2);
         title = advTrans[currentLang].riceTitle;
     } else {
         tips.push(advTrans[currentLang].general, advTrans[currentLang].general);
     }
-    if(data.soil.toLowerCase().includes("sandy")) tips.push(advTrans[currentLang].soilSandy);
+    if(data.soil.toLowerCase().includes("sandy") || data.soil.includes("रेतीली")) tips.push(advTrans[currentLang].soilSandy);
     if(parseFloat(data.area) > 5) tips.push(advTrans[currentLang].largeArea);
     tips.push(advTrans[currentLang].market);
     return `<div class='advisory'><h3>${title}</h3><ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
 }
 
-// Auto-retry voice input
+// Voice input fills Crop field
 function startVoice(){
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if(!SpeechRecognition){ alert("Voice input not supported!"); return; }
 
-    const activeInput = document.activeElement;
-    if(!activeInput || activeInput.tagName !== "INPUT"){ alert("Please tap on a field to use voice input."); return; }
-
-    activeInput.blur();
+    const cropInput = document.getElementById("cropInput");
 
     let recognition = new SpeechRecognition();
     recognition.lang = currentLang === "hi" ? "hi-IN" : "en-US";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
+    recognition.onstart = function(){ console.log("Listening... Speak now."); };
+    
     recognition.onresult = function(event){
-        activeInput.value = event.results[0][0].transcript;
-        activeInput.focus();
+        const transcript = event.results[0][0].transcript;
+        cropInput.value = transcript;
+        cropInput.focus();
     };
 
     recognition.onerror = function(event){
         if(event.error === "no-speech"){
             recognition.stop();
-            setTimeout(()=>{ startVoice(); }, 500); // auto-retry
+            setTimeout(()=>{ startVoice(); }, 500);
         } else {
             alert("Voice recognition error: " + event.error);
         }
     };
 
     recognition.onend = function(){
-        // If input still empty, retry automatically
-        if(activeInput.value.trim() === "") setTimeout(()=>{ startVoice(); }, 300);
+        if(cropInput.value.trim() === "") setTimeout(()=>{ startVoice(); }, 300);
     };
 
     recognition.start();
