@@ -1,256 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Crop Advisory App</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      margin: 0;
-      background: #f0fdf4;
-      color: #222;
-    }
-    header, footer {
-      text-align: center;
-      padding: 1rem;
-      background: #16a34a;
-      color: white;
-    }
-    header img {
-      width: 40px;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-    header h1 { margin: 0; font-size: 1.5rem; display: inline-block; vertical-align: middle; }
-    main {
-      max-width: 700px;
-      margin: auto;
-      padding: 1rem;
-    }
-    section {
-      background: white;
-      border-radius: 16px;
-      padding: 1rem 1.2rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      display: none;
-      animation: fade 0.3s ease-in-out;
-    }
-    h2 {
-      font-size: 1.2rem;
-      margin-bottom: .5rem;
-      color: #166534;
-    }
-    form input, form select {
-      width: 100%;
-      padding: 10px;
-      margin: 6px 0;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: .95rem;
-    }
-    button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: .95rem;
-      transition: 0.2s;
-    }
-    .btn-primary { background: #16a34a; color: white; }
-    .btn-primary:hover { background: #15803d; }
-    .btn-secondary { background: #f3f4f6; color: #111; margin-left: 6px; }
-    .advisory {
-      border: 1px solid #e5e7eb;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 10px;
-      background: #f9fafb;
-    }
-    .advisory h3 { margin: 0; font-size: 1rem; color: #166534; }
-    ul { margin: 0.5rem 0 0; padding-left: 20px; }
-    footer { font-size: 0.8rem; }
-
-    /* Home Screen */
-    #home { display: block; text-align: center; }
-    .menu-btn {
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      padding: 14px;
-      font-size: 1rem;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      background: #16a34a;
-      color: white;
-      transition: 0.2s;
-    }
-    .menu-btn:hover { background: #15803d; }
-
-    /* Splash Screen */
-    #splash {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #16a34a;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      z-index: 9999;
-      animation: fadeIn 1s;
-    }
-    #splash img {
-      width: 70px;
-      margin-bottom: 10px;
-    }
-    @keyframes fade { from {opacity: 0;} to {opacity: 1;} }
-    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Smart Crop Advisory App</title>
+<style>
+body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; background: #f0fdf4; color: #222; }
+header, footer { text-align: center; padding: 1rem; background: #16a34a; color: white; }
+header img { width: 40px; vertical-align: middle; margin-right: 8px; }
+header h1 { margin: 0; font-size: 1.5rem; display: inline-block; vertical-align: middle; }
+main { max-width: 700px; margin: auto; padding: 1rem; }
+section { background: white; border-radius: 16px; padding: 1rem 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; animation: fade 0.3s ease-in-out; }
+h2 { font-size: 1.2rem; margin-bottom: .5rem; color: #166534; }
+form input, form select { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 10px; font-size: .95rem; }
+button { padding: 10px 16px; border: none; border-radius: 10px; cursor: pointer; font-size: .95rem; transition: 0.2s; }
+.btn-primary { background: #16a34a; color: white; }
+.btn-primary:hover { background: #15803d; }
+.btn-secondary { background: #f3f4f6; color: #111; margin-left: 6px; }
+.advisory { border: 1px solid #e5e7eb; padding: 10px; margin-top: 10px; border-radius: 10px; background: #f9fafb; }
+.advisory h3 { margin: 0; font-size: 1rem; color: #166534; }
+ul { margin: 0.5rem 0 0; padding-left: 20px; }
+footer { font-size: 0.8rem; }
+#home { display: block; text-align: center; }
+.menu-btn { display: block; width: 100%; margin: 10px 0; padding: 14px; font-size: 1rem; border-radius: 12px; border: none; cursor: pointer; background: #16a34a; color: white; transition: 0.2s; }
+.menu-btn:hover { background: #15803d; }
+#splash { position: fixed; top:0; left:0; right:0; bottom:0; background: #16a34a; color: white; display:flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.3rem; z-index: 9999; animation: fadeIn 1s; }
+#splash img { width: 70px; margin-bottom: 10px; }
+@keyframes fade { from {opacity:0;} to {opacity:1;} }
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+</style>
 </head>
 <body>
-  <!-- Splash Screen -->
-  <div id="splash">
-    <img src="logo.png" alt="Logo" />
-    <div>Smart Crop Advisory</div>
-    <small>Loading...</small>
-  </div>
 
-  <header>
-    <img src="logo.png" alt="Logo" />
-    <h1>Smart Crop Advisory</h1>
-  </header>
+<!-- Splash Screen -->
+<div id="splash">
+<img src="logo.png" alt="Logo" />
+<div>Smart Crop Advisory</div>
+<small>Loading...</small>
+</div>
 
-  <main>
-    <!-- Home Screen -->
-    <section id="home">
-      <h2>Welcome 👋</h2>
-      <p>Select an option below:</p>
-      <button class="menu-btn" onclick="showPage('input')">👨‍🌾 Farmer Input</button>
-      <button class="menu-btn" onclick="showPage('advisories')">📋 Advisories</button>
-      <button class="menu-btn" onclick="showPage('roadmap')">🚀 Roadmap</button>
-    </section>
+<header>
+<img src="logo.png" alt="Logo" />
+<h1>Smart Crop Advisory</h1>
+</header>
 
-    <!-- Farmer Input Section -->
-    <section id="input">
-      <h2>👨‍🌾 Farmer Input</h2>
-      <form id="farmerForm">
-        <label>Name</label>
-        <input type="text" name="name" required placeholder="Farmer name" />
+<main>
+<!-- Language Selection -->
+<section id="language">
+<h2>Select Language 🌐</h2>
+<select id="langSelect">
+<option value="en">English</option>
+<option value="hi">Hindi</option>
+<option value="es">Spanish</option>
+<option value="fr">French</option>
+<option value="de">German</option>
+<option value="it">Italian</option>
+<option value="pt">Portuguese</option>
+<option value="nl">Dutch</option>
+<option value="ru">Russian</option>
+<option value="ja">Japanese</option>
+<option value="zh">Chinese</option>
+<option value="ar">Arabic</option>
+<option value="bn">Bengali</option>
+<option value="ur">Urdu</option>
+<option value="pa">Punjabi</option>
+<option value="gu">Gujarati</option>
+<option value="ta">Tamil</option>
+<option value="te">Telugu</option>
+<option value="kn">Kannada</option>
+<option value="ml">Malayalam</option>
+</select>
+<br><br>
+<button class="btn-primary" onclick="setLanguage()">✅ Confirm Language</button>
+</section>
 
-        <label>Phone (for SMS/IVR)</label>
-        <input type="text" name="phone" required placeholder="91XXXXXXXXXX" />
+<!-- Home Screen -->
+<section id="home">
+<h2 id="homeTitle">Welcome 👋</h2>
+<p id="homeText">Select an option below:</p>
+<button class="menu-btn" onclick="showPage('input')" id="btnInput">👨‍🌾 Farmer Input</button>
+<button class="menu-btn" onclick="showPage('advisories')" id="btnAdvisory">📋 Advisories</button>
+<button class="menu-btn" onclick="showPage('roadmap')" id="btnRoadmap">🚀 Roadmap</button>
+</section>
 
-        <label>District</label>
-        <input type="text" name="district" placeholder="District" />
+<!-- Farmer Input Section -->
+<section id="input">
+<h2 id="inputTitle">👨‍🌾 Farmer Input</h2>
+<form id="farmerForm">
+<label id="labelName">Name</label>
+<input type="text" name="name" required placeholder="Farmer name" />
 
-        <label>Area (acres)</label>
-        <input type="number" name="area" step="0.1" value="1" />
+<label id="labelPhone">Phone (for SMS/IVR)</label>
+<input type="text" name="phone" required placeholder="91XXXXXXXXXX" />
 
-        <label>Soil Type</label>
-        <select name="soil">
-          <option>Loamy</option>
-          <option>Sandy</option>
-          <option>Clay</option>
-          <option>Laterite</option>
-        </select>
+<label id="labelDistrict">District</label>
+<input type="text" name="district" placeholder="District" />
 
-        <label>Crop</label>
-        <input type="text" name="crop" value="Wheat" />
+<label id="labelArea">Area (acres)</label>
+<input type="number" name="area" step="0.1" value="1" />
 
-        <br /><br />
-        <button type="submit" class="btn-primary">✨ Get Advisory</button>
-        <button type="reset" class="btn-secondary">Reset</button>
-        <button type="button" class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-      </form>
-    </section>
+<label id="labelSoil">Soil Type</label>
+<select name="soil">
+<option>Loamy</option>
+<option>Sandy</option>
+<option>Clay</option>
+<option>Laterite</option>
+</select>
 
-    <!-- Advisory Section -->
-    <section id="advisories">
-      <h2>📋 Advisories</h2>
-      <div id="advisoryList">No advisories yet — fill the form and click "Get Advisory".</div>
-      <br />
-      <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-    </section>
+<label id="labelCrop">Crop</label>
+<input type="text" name="crop" id="cropInput" value="Wheat" />
 
-    <!-- Roadmap Section -->
-    <section id="roadmap">
-      <h2>🚀 Feature Roadmap</h2>
-      <ul>
-        <li>App + SMS + IVR + Local language voice messages</li>
-        <li>IoT sensors for soil moisture / pH</li>
-        <li>Weather + Soil + Satellite data → AI model</li>
-        <li>Market prices, buyer connect, storage tips</li>
-        <li>Offline SMS digests for low connectivity</li>
-        <li>Training & onboarding for farmers</li>
-      </ul>
-      <br />
-      <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-    </section>
-  </main>
+<br><br>
+<button type="submit" class="btn-primary" id="btnGetAdvisory">✨ Get Advisory</button>
+<button type="reset" class="btn-secondary" id="btnReset">Reset</button>
+<button type="button" class="btn-secondary" id="btnBack" onclick="showPage('home')">⬅ Back</button>
+<button type="button" class="btn-secondary" onclick="startVoice()">🎤 Voice Input</button>
+</form>
+</section>
 
-  <footer>
-    Prototype — Built for Smart India Hackathon idea submission.<br/>
-    For production: connect sensors, weather API & backend AI.
-  </footer>
+<!-- Advisory Section -->
+<section id="advisories">
+<h2 id="advisoryTitle">📋 Advisories</h2>
+<div id="advisoryList">No advisories yet — fill the form and click "Get Advisory".</div>
+<br />
+<button class="btn-secondary" onclick="showPage('home')" id="btnBackAdvisory">⬅ Back</button>
+</section>
 
-  <script>
-    // Splash screen auto-hide
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("splash").style.display = "none";
-        showPage("home");
-      }, 2000);
-    });
+<!-- Roadmap Section -->
+<section id="roadmap">
+<h2 id="roadmapTitle">🚀 Feature Roadmap</h2>
+<ul>
+<li>App + SMS + IVR + Local language voice messages</li>
+<li>IoT sensors for soil moisture / pH</li>
+<li>Weather + Soil + Satellite data → AI model</li>
+<li>Market prices, buyer connect, storage tips</li>
+<li>Offline SMS digests for low connectivity</li>
+<li>Training & onboarding for farmers</li>
+</ul>
+<br />
+<button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
+</section>
+</main>
 
-    const pages = ["home", "input", "advisories", "roadmap"];
-    function showPage(id) {
-      pages.forEach(p => document.getElementById(p).style.display = "none");
-      document.getElementById(id).style.display = "block";
-    }
+<footer>
+Prototype — Built for Smart India Hackathon idea submission.<br/>
+For production: connect sensors, weather API & backend AI.
+</footer>
 
-    const form = document.getElementById("farmerForm");
-    const list = document.getElementById("advisoryList");
+<script>
+// Splash screen auto-hide
+window.addEventListener("load", () => {
+setTimeout(() => {
+document.getElementById("splash").style.display = "none";
+showPage("language");
+}, 1500);
+});
 
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(form));
-      const adv = generateAdvisory(data);
-      list.innerHTML = adv;
-      showPage("advisories");
-    });
+const pages = ["home","input","advisories","roadmap","language"];
+let currentLang = "en";
 
-    function generateAdvisory(data) {
-      let tips = [];
-      const crop = data.crop.toLowerCase();
+// UI translations
+const uiTrans = {
+en:{homeTitle:"Welcome 👋",homeText:"Select an option below:",btnInput:"👨‍🌾 Farmer Input",btnAdvisory:"📋 Advisories",btnRoadmap:"🚀 Roadmap",inputTitle:"👨‍🌾 Farmer Input",labelName:"Name",labelPhone:"Phone (for SMS/IVR)",labelDistrict:"District",labelArea:"Area (acres)",labelSoil:"Soil Type",labelCrop:"Crop",btnGetAdvisory:"✨ Get Advisory",btnReset:"Reset",btnBack:"⬅ Back",advisoryTitle:"📋 Advisories",roadmapTitle:"🚀 Feature Roadmap"},
+hi:{homeTitle:"स्वागत 👋",homeText:"नीचे विकल्प चुनें:",btnInput:"👨‍🌾 किसान इनपुट",btnAdvisory:"📋 सलाह",btnRoadmap:"🚀 रोडमैप",inputTitle:"👨‍🌾 किसान इनपुट",labelName:"नाम",labelPhone:"फोन (SMS/IVR के लिए)",labelDistrict:"ज़िला",labelArea:"क्षेत्र (एकड़ में)",labelSoil:"मृदा प्रकार",labelCrop:"फसल",btnGetAdvisory:"✨ सलाह लें",btnReset:"रीसेट",btnBack:"⬅ वापस",advisoryTitle:"📋 सलाह",roadmapTitle:"🚀 फीचर रोडमैप"},
+es:{homeTitle:"Bienvenido 👋",homeText:"Seleccione una opción a continuación:",btnInput:"👨‍🌾 Entrada del agricultor",btnAdvisory:"📋 Consejos",btnRoadmap:"🚀 Hoja de ruta",inputTitle:"👨‍🌾 Entrada del agricultor",labelName:"Nombre",labelPhone:"Teléfono (para SMS/IVR)",labelDistrict:"Distrito",labelArea:"Área (acres)",labelSoil:"Tipo de suelo",labelCrop:"Cultivo",btnGetAdvisory:"✨ Obtener consejo",btnReset:"Restablecer",btnBack:"⬅ Atrás",advisoryTitle:"📋 Consejos",roadmapTitle:"🚀 Hoja de ruta"},
+fr:{homeTitle:"Bienvenue 👋",homeText:"Sélectionnez une option ci-dessous:",btnInput:"👨‍🌾 Entrée agriculteur",btnAdvisory:"📋 Conseils",btnRoadmap:"🚀 Feuille de route",inputTitle:"👨‍🌾 Entrée agriculteur",labelName:"Nom",labelPhone:"Téléphone (SMS/IVR)",labelDistrict:"District",labelArea:"Zone (acres)",labelSoil:"Type de sol",labelCrop:"Culture",btnGetAdvisory:"✨ Obtenir conseil",btnReset:"Réinitialiser",btnBack:"⬅ Retour",advisoryTitle:"📋 Conseils",roadmapTitle:"🚀 Feuille de route"},
+de:{homeTitle:"Willkommen 👋",homeText:"Wählen Sie unten eine Option:",btnInput:"👨‍🌾 Bauern-Eingabe",btnAdvisory:"📋 Ratschläge",btnRoadmap:"🚀 Fahrplan",inputTitle:"👨‍🌾 Bauern-Eingabe",labelName:"Name",labelPhone:"Telefon (für SMS/IVR)",labelDistrict:"Bezirk",labelArea:"Fläche (acres)",labelSoil:"Bodentyp",labelCrop:"Ernte",btnGetAdvisory:"✨ Ratschlag erhalten",btnReset:"Zurücksetzen",btnBack:"⬅ Zurück",advisoryTitle:"📋 Ratschläge",roadmapTitle:"🚀 Fahrplan"},
+it:{homeTitle:"Benvenuto 👋",homeText:"Seleziona un'opzione qui sotto:",btnInput:"👨‍🌾 Input agricoltore",btnAdvisory:"📋 Consigli",btnRoadmap:"🚀 Roadmap",inputTitle:"👨‍🌾 Input agricoltore",labelName:"Nome",labelPhone:"Telefono (per SMS/IVR)",labelDistrict:"Distretto",labelArea:"Area (acri)",labelSoil:"Tipo di suolo",labelCrop:"Coltura",btnGetAdvisory:"✨ Ottieni consiglio",btnReset:"Reset",btnBack:"⬅ Indietro",advisoryTitle:"📋 Consigli",roadmapTitle:"🚀 Roadmap"},
+pt:{homeTitle:"Bem-vindo 👋",homeText:"Selecione uma opção abaixo:",btnInput:"👨‍🌾 Entrada do agricultor",btnAdvisory:"📋 Conselhos",btnRoadmap:"🚀 Roteiro",inputTitle:"👨‍🌾 Entrada do agricultor",labelName:"Nome",labelPhone:"Telefone (para SMS/IVR)",labelDistrict:"Distrito",labelArea:"Área (acres)",labelSoil:"Tipo de solo",labelCrop:"Cultivo",btnGetAdvisory:"✨ Obter conselho",btnReset:"Redefinir",btnBack:"⬅ Voltar",advisoryTitle:"📋 Conselhos",roadmapTitle:"🚀 Roteiro"},
+nl:{homeTitle:"Welkom 👋",homeText:"Selecteer een optie hieronder:",btnInput:"👨‍🌾 Boer Invoer",btnAdvisory:"📋 Adviezen",btnRoadmap:"🚀 Routekaart",inputTitle:"👨‍🌾 Boer Invoer",labelName:"Naam",labelPhone:"Telefoon (voor SMS/IVR)",labelDistrict:"District",labelArea:"Oppervlakte (acres)",labelSoil:"Soort bodem",labelCrop:"Gewas",btnGetAdvisory:"✨ Advies krijgen",btnReset:"Resetten",btnBack:"⬅ Terug",advisoryTitle:"📋 Adviezen",roadmapTitle:"🚀 Routekaart"},
+ru:{homeTitle:"Добро пожаловать 👋",homeText:"Выберите вариант ниже:",btnInput:"👨‍🌾 Ввод фермера",btnAdvisory:"📋 Консультации",btnRoadmap:"🚀 Дорожная карта",inputTitle:"👨‍🌾 Ввод фермера",labelName:"Имя",labelPhone:"Телефон (для SMS/IVR)",labelDistrict:"Район",labelArea:"Площадь (акры)",labelSoil:"Тип почвы",labelCrop:"Культура",btnGetAdvisory:"✨ Получить консультацию",btnReset:"Сброс",btnBack:"⬅ Назад",advisoryTitle:"📋 Консультации",roadmapTitle:"🚀 Дорожная карта"},
+ja:{homeTitle:"ようこそ 👋",homeText:"以下から選択してください:",btnInput:"👨‍🌾 農家入力",btnAdvisory:"📋 アドバイス",btnRoadmap:"🚀 ロードマップ",inputTitle:"👨‍🌾 農家入力",labelName:"名前",labelPhone:"電話 (SMS/IVR用)",labelDistrict:"地区",labelArea:"面積 (エーカー)",labelSoil:"土壌タイプ",labelCrop:"作物",btnGetAdvisory:"✨ アドバイス取得",btnReset:"リセット",btnBack:"⬅ 戻る",advisoryTitle:"📋 アドバイス",roadmapTitle:"🚀 ロードマップ"},
+zh:{homeTitle:"欢迎 👋",homeText:"请选择以下选项:",btnInput:"👨‍🌾 农民输入",btnAdvisory:"📋 建议",btnRoadmap:"🚀 路线图",inputTitle:"👨‍🌾 农民输入",labelName:"姓名",labelPhone:"电话 (短信/IVR)",labelDistrict:"地区",labelArea:"面积 (英亩)",labelSoil:"土壤类型",labelCrop:"作物",btnGetAdvisory:"✨ 获取建议",btnReset:"重置",btnBack:"⬅ 返回",advisoryTitle:"📋 建议",roadmapTitle:"🚀 路线图"},
+ar:{homeTitle:"أهلاً 👋",homeText:"اختر خياراً أدناه:",btnInput:"👨‍🌾 إدخال المزارع",btnAdvisory:"📋 نصائح",btnRoadmap:"🚀 خارطة الطريق",inputTitle:"👨‍🌾 إدخال المزارع",labelName:"الاسم",labelPhone:"الهاتف (لـ SMS/IVR)",labelDistrict:"المنطقة",labelArea:"المساحة (فدان)",labelSoil:"نوع التربة",labelCrop:"المحصول",btnGetAdvisory:"✨ احصل على النصيحة",btnReset:"إعادة ضبط",btnBack:"⬅ رجوع",advisoryTitle:"📋 نصائح",roadmapTitle:"🚀 خارطة الطريق"},
+bn:{homeTitle:"স্বাগত 👋",homeText:"নিচের অপশন নির্বাচন করুন:",btnInput:"👨‍🌾 কৃষক ইনপুট",btnAdvisory:"📋 পরামর্শ",btnRoadmap:"🚀 রোডম্যাপ",inputTitle:"👨‍🌾 কৃষক ইনপুট",labelName:"নাম",labelPhone:"ফোন (SMS/IVR)",labelDistrict:"জেলা",labelArea:"এলাকা (একর)",labelSoil:"মাটি ধরন",labelCrop:"ফসল",btnGetAdvisory:"✨ পরামর্শ নিন",btnReset:"রিসেট",btnBack:"⬅ পিছনে",advisoryTitle:"📋 পরামর্শ",roadmapTitle:"🚀 রোডম্যাপ"},
+ur:{homeTitle:"خوش آمدید 👋",homeText:"نیچے ایک آپشن منتخب کریں:",btnInput:"👨‍🌾 کسان ان پٹ",btnAdvisory:"📋 مشورے",btnRoadmap:"🚀 روڈ میپ",inputTitle:"👨‍🌾 کسان ان پٹ",labelName:"نام",labelPhone:"فون (SMS/IVR کے لیے)",labelDistrict:"ضلع",labelArea:"رقبہ (ایکڑ میں)",labelSoil:"مٹی کی قسم",labelCrop:"فصل",btnGetAdvisory:"✨ مشورہ حاصل کریں",btnReset:"ری سیٹ",btnBack:"⬅ پیچھے",advisoryTitle:"📋 مشورے",roadmapTitle:"🚀 روڈ میپ"},
+pa:{homeTitle:"ਸੁਆਗਤ ਹੈ 👋",homeText:"ਹੇਠਾਂ ਇੱਕ ਵਿਕਲਪ ਚੁਣੋ:",btnInput:"👨‍🌾 ਕਿਸਾਨ ਇਨਪੁੱਟ",btnAdvisory:"📋 ਸਲਾਹਾਂ",btnRoadmap:"🚀 ਰੋਡਮੈਪ",inputTitle:"👨‍🌾 ਕਿਸਾਨ ਇਨਪੁੱਟ",labelName:"ਨਾਮ",labelPhone:"ਫ਼ੋਨ (SMS/IVR ਲਈ)",labelDistrict:"ਜ਼ਿਲਾ",labelArea:"ਖੇਤਰ (ਏਕੜ)",labelSoil:"ਮਿੱਟੀ ਦਾ ਪ੍ਰਕਾਰ",labelCrop:"ਫਸਲ",btnGetAdvisory:"✨ ਸਲਾਹ ਲਵੋ",btnReset:"ਰੀਸੈੱਟ",btnBack:"⬅ ਵਾਪਸ",advisoryTitle:"📋 ਸਲਾਹਾਂ",roadmapTitle:"🚀 ਰੋਡਮੈਪ"},
+gu:{homeTitle:"સ્વાગત 👋",homeText:"નીચે વિકલ્પ પસંદ કરો:",btnInput:"👨‍🌾 ખેડૂત ઇનપુટ",btnAdvisory:"📋 સલાહો",btnRoadmap:"🚀 રોડમૅપ",inputTitle:"👨‍🌾 ખેડૂત ઇનપુટ",labelName:"નામ",labelPhone:"ફોન (SMS/IVR માટે)",labelDistrict:"જિલ્લો",labelArea:"એરિયા (એકર)",labelSoil:"માટી પ્રકાર",labelCrop:"પસંદ",btnGetAdvisory:"✨ સલાહ મેળવો",btnReset:"રીસેટ",btnBack:"⬅ પાછા",advisoryTitle:"📋 સલાહો",roadmapTitle:"🚀 રોડમૅપ"},
+ta:{homeTitle:"வரவேற்பு 👋",homeText:"கீழே விருப்பத்தை தேர்ந்தெடுக்கவும்:",btnInput:"👨‍🌾 விவசாயி உள்ளீடு",btnAdvisory:"📋 ஆலோசனைகள்",btnRoadmap:"🚀 ரோட்மாப்",inputTitle:"👨‍🌾 விவசாயி உள்ளீடு",labelName:"பெயர்",labelPhone:"தொலைபேசி (SMS/IVR)",labelDistrict:"மாவட்டம்",labelArea:"பரப்பு (ஏக்கர்)",labelSoil:"மண் வகை",labelCrop:"பயிர்",btnGetAdvisory:"✨ ஆலோசனை பெறுக",btnReset:"மீட்டமை",btnBack:"⬅ திரும்ப",advisoryTitle:"📋 ஆலோசனைகள்",roadmapTitle:"🚀 ரோட்மாப்"},
+te:{homeTitle:"స్వాగతం 👋",homeText:"కింద ఒక ఎంపికను ఎంచుకోండి:",btnInput:"👨‍🌾 రైతు ఇన్పుట్",btnAdvisory:"📋 సలహాలు",btnRoadmap:"🚀 రోడ్‌మ్యాప్",inputTitle:"👨‍🌾 రైతు ఇన్పుట్",labelName:"పేరు",labelPhone:"ఫోన్ (SMS/IVR కోసం)",labelDistrict:"జిల్లా",labelArea:"వేదిక (ఎకరాలు)",labelSoil:"మట్టి రకం",labelCrop:"పంట",btnGetAdvisory:"✨ సలహా పొందండి",btnReset:"రిసెట్",btnBack:"⬅ వెనుకు",advisoryTitle:"📋 సలహాలు",roadmapTitle:"🚀 రోడ్‌మ్యాప్"},
+kn:{homeTitle:"ಸ್ವಾಗತ 👋",homeText:"ಕೆಳಗಿನ ಆಯ್ಕೆ ಆಯ್ಕೆಮಾಡಿ:",btnInput:"👨‍🌾 ರೈತ ಇನ್ಪುಟ್",btnAdvisory:"📋 ಸಲಹೆಗಳು",btnRoadmap:"🚀 ರಸ್ತೆಪಟ್ಟಿ",inputTitle:"👨‍🌾 ರೈತ ಇನ್ಪುಟ್",labelName:"ಹೆಸರು",labelPhone:"ಫೋನ್ (SMS/IVR)",labelDistrict:"ಜಿಲ್ಲೆ",labelArea:"ಪ್ರದೇಶ (ಎಕರೆ)",labelSoil:"ಮಣ್ಣು ಪ್ರಕಾರ",labelCrop:"ಫಸುಲು",btnGetAdvisory:"✨ ಸಲಹೆ ಪಡೆಯಿರಿ",btnReset:"ಮರುಹೊಂದಿಸಿ",btnBack:"⬅ ಹಿಂಬಾಲಿಸಿ",advisoryTitle:"📋 ಸಲಹೆಗಳು",roadmapTitle:"🚀 ರಸ್ತೆಪಟ್ಟಿ"},
+ml:{homeTitle:"സ്വാഗതം 👋",homeText:"താഴെ ഒരു ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക:",btnInput:"👨‍🌾 കർഷക ഇൻപുട്ട്",btnAdvisory:"📋 ഉപദേശങ്ങൾ",btnRoadmap:"🚀 റോഡ്‌മാപ്",inputTitle:"👨‍🌾 കർഷക ഇൻപുട്ട്",labelName:"പേര്",labelPhone:"ഫോൺ (SMS/IVR)",labelDistrict:"ജില്ല",labelArea:"പ്രദേശം (എക്കർ)",labelSoil:"മണ്ണ് തരം",labelCrop:"പണി",btnGetAdvisory:"✨ ഉപദേശം നേടുക",btnReset:"റീസെറ്റ്",btnBack:"⬅ പിൻവാങ്ങുക",advisoryTitle:"📋 ഉപദേശങ്ങൾ",roadmapTitle:"🚀 റോഡ്‌മാപ്"}
+};
 
-      if (crop.includes("wheat")) {
-        tips.push("Apply Nitrogen-rich fertilizer at tillering stage (20-25 kg/acre)");
-        tips.push("Irrigate: Maintain soil moisture during heading stage; avoid waterlogging.");
-      } else if (crop.includes("rice")) {
-        tips.push("Ensure puddled fields for transplantation; use 4-5 g seed/plot.");
-        tips.push("Fertilizer: Balanced NPK; split nitrogen application.");
-      } else {
-        tips.push(`General tip for ${data.crop}: Monitor for pests weekly.`);
-        tips.push("Use soil test based fertilizer recommendation.");
-      }
+// Advisory translations (English + Hindi as example, can expand)
+const advTrans = {
+en:{wheat1:"Apply Nitrogen-rich fertilizer at tillering stage (20-25 kg/acre)",wheat2:"Irrigate: Maintain soil moisture during heading stage; avoid waterlogging.",rice1:"Ensure puddled fields for transplantation; use 4-5 g seed/plot.",rice2:"Fertilizer: Balanced NPK; split nitrogen application.",general:"General tip: Monitor for pests weekly.",soilSandy:"Sandy soil — increase irrigation frequency; add organic matter.",largeArea:"Large area detected — consider zonal soil sampling.",market:"Market tip: Check nearest mandi prices; store if prices are low today."},
+hi:{wheat1:"टिलरिंग चरण में नाइट्रोजन युक्त उर्वरक डालें (20-25 किलो/एकड़)",wheat2:"सिंचाई: हेडिंग चरण में मिट्टी की नमी बनाए रखें; जलजमाव से बचें।",rice1:"रोपण के लिए खेतों को भिगोएँ; 4-5 ग्राम बीज/प्लॉट का उपयोग करें।",rice2:"उर्वरक: संतुलित NPK; नाइट्रोजन को विभाजित करें।",general:"सामान्य सुझाव: कीटों की साप्ताहिक निगरानी करें।",soilSandy:"रेतीली मिट्टी — सिंचाई की आवृत्ति बढ़ाएँ; जैविक पदार्थ डालें।",largeArea:"बड़ा क्षेत्र पाया गया — ज़ोनल मिट्टी परीक्षण पर विचार करें।",market:"बाजार सुझाव: निकटतम मंडी की कीमतें देखें; यदि आज कीमतें कम हैं तो संग्रह करें।"}
+};
 
-      if (data.soil.toLowerCase().includes("sandy")) {
-        tips.push("Soil is sandy — increase irrigation frequency; add organic matter.");
-      }
-      if (parseFloat(data.area) > 5) {
-        tips.push("Large area detected — consider zonal sampling for soil testing.");
-      }
+// Show/hide pages
+function showPage(id){pages.forEach(p=>document.getElementById(p).style.display="none");document.getElementById(id).style.display="block";}
 
-      tips.push("Market tip: Check nearest mandi prices and consider storage if prices are low today.");
+// Set language
+function setLanguage(){
+currentLang=document.getElementById("langSelect").value;
+for(const key in uiTrans[currentLang]){
+let el=document.getElementById(key);
+if(el) el.innerText=uiTrans[currentLang][key];
+}
+showPage("home");
+}
 
-      return `<div class='advisory'>
-        <h3>Advisory for ${data.crop}</h3>
-        <ul>${tips.map(t => `<li>${t}</li>`).join("")}</ul>
-      </div>`;
-    }
-  </script>
+// Advisory generation
+const form=document.getElementById("farmerForm");
+const list=document.getElementById("advisoryList");
+form.addEventListener("submit",e=>{e.preventDefault();const data=Object.fromEntries(new FormData(form));const adv=generateAdvisory(data);list.innerHTML=adv;showPage("advisories");});
+function generateAdvisory(data){
+let tips=[];const crop=data.crop.toLowerCase();
+if(crop.includes("wheat")){tips.push(advTrans[currentLang]?.wheat1||advTrans.en.wheat1);tips.push(advTrans[currentLang]?.wheat2||advTrans.en.wheat2);}
+else if(crop.includes("rice")){tips.push(advTrans[currentLang]?.rice1||advTrans.en.rice1);tips.push(advTrans[currentLang]?.rice2||advTrans.en.rice2);}
+else{tips.push(advTrans[currentLang]?.general||advTrans.en.general);tips.push(advTrans[currentLang]?.general||advTrans.en.general);}
+if(data.soil.toLowerCase().includes("sandy")) tips.push(advTrans[currentLang]?.soilSandy||advTrans.en.soilSandy);
+if(parseFloat(data.area)>5) tips.push(advTrans[currentLang]?.largeArea||advTrans.en.largeArea);
+tips.push(advTrans[currentLang]?.market||advTrans.en.market);
+return `<div class='advisory'><h3>Advisory for ${data.crop}</h3><ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
+}
+
+// Voice input
+function startVoice(){
+if(!('webkitSpeechRecognition' in window)){alert("Voice input not supported!");return;}
+let recognition=new webkitSpeechRecognition();
+recognition.lang=currentLang==="hi"?"hi-IN":currentLang==="es"?"es-ES":"en-US";
+recognition.start();
+recognition.onresult=function(event){document.getElementById("cropInput").value=event.results[0][0].transcript;};
+recognition.onerror=function(){alert("Voice recognition error.");};
+}
+</script>
+
 </body>
 </html>
