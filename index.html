@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Crop Advisory — Prototype</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f9fafb; }
+    header, footer { text-align: center; padding: 1rem; background: #fff; border-bottom: 1px solid #ddd; }
+    h1 { font-size: 1.5rem; margin: 0; }
+    main { max-width: 1000px; margin: auto; padding: 1rem; display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
+    section { background: #fff; border-radius: 10px; padding: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    form input, form select { width: 100%; padding: 8px; margin: 4px 0; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; }
+    .btn-primary { background: #16a34a; color: white; }
+    .btn-secondary { background: #eee; }
+    .advisory { border: 1px solid #ddd; padding: 10px; margin-top: 10px; border-radius: 5px; }
+    ul { margin: 0; padding-left: 20px; }
+    .full { grid-column: span 2; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Smart Crop Advisory — Prototype</h1>
+    <p style="font-size: 0.9rem; color: gray;">Farmer-friendly • Multi-channel: App / SMS / IVR</p>
+  </header>
+
+  <main>
+    <!-- Farmer Input Section -->
+    <section>
+      <h2>Farmer Input</h2>
+      <form id="farmerForm">
+        <label>Name</label>
+        <input type="text" name="name" required placeholder="Farmer name" />
+
+        <label>Phone (for SMS/IVR)</label>
+        <input type="text" name="phone" required placeholder="91XXXXXXXXXX" />
+
+        <label>District</label>
+        <input type="text" name="district" placeholder="District" />
+
+        <label>Area (acres)</label>
+        <input type="number" name="area" step="0.1" value="1" />
+
+        <label>Soil Type</label>
+        <select name="soil">
+          <option>Loamy</option>
+          <option>Sandy</option>
+          <option>Clay</option>
+          <option>Laterite</option>
+        </select>
+
+        <label>Crop</label>
+        <input type="text" name="crop" value="Wheat" />
+
+        <br /><br />
+        <button type="submit" class="btn-primary">Get Advisory</button>
+        <button type="reset" class="btn-secondary">Reset</button>
+      </form>
+
+      <p style="font-size: 0.8rem; color: gray;">Note: This is a static prototype. For production, integrate sensors, weather API, and backend AI model.</p>
+    </section>
+
+    <!-- Advisory Section -->
+    <section>
+      <h2>Advisories</h2>
+      <div id="advisoryList">No advisories yet — fill the form and click "Get Advisory".</div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="full">
+      <h2>Feature Roadmap (Prototype → Production)</h2>
+      <ul>
+        <li>App + SMS + IVR + Local language voice messages</li>
+        <li>IoT sensors for soil moisture / pH</li>
+        <li>Weather + Soil + Satellite data → AI model</li>
+        <li>Market prices, buyer connect, storage tips</li>
+        <li>Offline SMS digests for low connectivity</li>
+        <li>Training & onboarding for farmers</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p style="font-size: 0.8rem; color: gray;">Prototype — Built for Smart India Hackathon idea submission. Replace mock logic with backend AI and integrations for production.</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("farmerForm");
+    const list = document.getElementById("advisoryList");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      const adv = generateAdvisory(data);
+      list.innerHTML = adv;
+    });
+
+    function generateAdvisory(data) {
+      let tips = [];
+      const crop = data.crop.toLowerCase();
+
+      if (crop.includes("wheat")) {
+        tips.push("Apply Nitrogen-rich fertilizer at tillering stage (20-25 kg/acre)");
+        tips.push("Irrigate: Maintain soil moisture during heading stage; avoid waterlogging.");
+      } else if (crop.includes("rice")) {
+        tips.push("Ensure puddled fields for transplantation; use 4-5 g seed/plot.");
+        tips.push("Fertilizer: Balanced NPK; split nitrogen application.");
+      } else {
+        tips.push(`General tip for ${data.crop}: Monitor for pests weekly.`);
+        tips.push("Use soil test based fertilizer recommendation.");
+      }
+
+      if (data.soil.toLowerCase().includes("sandy")) {
+        tips.push("Soil is sandy — increase irrigation frequency; add organic matter.");
+      }
+      if (parseFloat(data.area) > 5) {
+        tips.push("Large area detected — consider zonal sampling for soil testing.");
+      }
+
+      tips.push("Market tip: Check nearest mandi prices and consider storage if prices are low today.");
+
+      return `<div class='advisory'><h3>Advisory for ${data.crop}</h3><ul>${tips.map(t => `<li>${t}</li>`).join("")}</ul></div>`;
+    }
+  </script>
+</body>
+</html>
