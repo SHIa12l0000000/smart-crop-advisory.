@@ -15,10 +15,10 @@ body {
 }
 body.dark { background: #0f172a; color: #e2e8f0; }
 
-/* ================== HEADER / NAV ================== */
+/* ================== HEADER ================== */
 header {
   position: sticky;
-  top: 0;
+  top:0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,24 +29,22 @@ header {
   z-index: 1000;
   color: #fff;
 }
-header img { height: 50px; }
-header h1 { margin: 0 12px; font-size: 1.6rem; }
-header .nav-actions { display: flex; gap: 12px; align-items: center; }
-@keyframes gradientAnim {
-  0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}
-}
+header img { height:50px; }
+header h1 { margin:0 12px; font-size:1.6rem; }
+header .nav-actions { display:flex; gap:12px; align-items:center; }
+@keyframes gradientAnim{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
 /* ================== SPLASH ================== */
 #splash {
   position: fixed; top:0; left:0; right:0; bottom:0;
   background:#16a34a; color:#fff;
   display:flex; flex-direction:column; justify-content:center; align-items:center;
-  font-size:1.4rem; z-index: 9999;
+  font-size:1.4rem; z-index:9999;
 }
 #splash img { height:100px; margin-bottom:16px; }
 
-/* ================== MAIN CONTAINER ================== */
-main { padding: 24px; max-width: 1200px; margin: auto; }
+/* ================== MAIN ================== */
+main { padding:24px; max-width:1200px; margin:auto; }
 
 /* ================== CARD GRID ================== */
 .card-grid {
@@ -99,14 +97,7 @@ section.active { display:block; }
   transition:0.3s;
 }
 .tab-btn.active { background: linear-gradient(135deg,#16a34a,#22c55e); color:#fff; box-shadow:0 6px 14px rgba(0,0,0,.25);}
-.tab-content {
-  display:none;
-  margin-top:12px;
-  padding:16px;
-  border-radius:16px;
-  background:#f9fafb;
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
-}
+.tab-content { display:none; margin-top:12px; padding:16px; border-radius:16px; background:#f9fafb; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
 .tab-content.active { display:block; }
 body.dark .tab-content { background:#1e293b; color:#e2e8f0; }
 
@@ -127,10 +118,7 @@ th,td { padding:8px; border:1px solid #ccc; border-radius:6px; text-align:center
 body.dark th, body.dark td { border-color:#555; }
 
 /* ================== FIXED BUTTONS ================== */
-#darkToggle, #voiceButtonInline {
-  position:fixed; bottom:20px; width:50px; height:50px; border-radius:50%; font-size:24px;
-  display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,.3); cursor:pointer; z-index:999;
-}
+#darkToggle, #voiceButtonInline { position:fixed; bottom:20px; width:50px; height:50px; border-radius:50%; font-size:24px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,.3); cursor:pointer; z-index:999;}
 #darkToggle { right:20px; background:#16a34a; color:#fff; }
 #voiceButtonInline { right:80px; background:#3b82f6; color:#fff; }
 #voiceButtonInline.listening { animation:pulse 1s infinite; }
@@ -155,7 +143,7 @@ body.dark th, body.dark td { border-color:#555; }
 <!-- HEADER -->
 <header>
   <img src="logo.png" alt="Logo">
-  <h1>Smart Crop Advisory</h1>
+  <h1 id="appTitle">Smart Crop Advisory</h1>
   <div class="nav-actions">
     <select id="langSelect">
       <option value="en">English</option>
@@ -165,109 +153,119 @@ body.dark th, body.dark td { border-color:#555; }
 </header>
 
 <main>
-  <!-- HOME / CARDS -->
-  <section id="home" class="active">
-    <h2 style="text-align:center;">Welcome 👋</h2>
-    <p style="text-align:center;">Select an option to get started:</p>
-    <div class="card-grid">
-      <button onclick="showPage('input')">👨‍🌾 Farmer Input</button>
-      <button onclick="showPage('advisories')">📋 Advisories</button>
-      <button onclick="showPage('solution')">💡 Solution Concept</button>
-      <button onclick="showPage('market')">💹 Market Prices</button>
-      <button onclick="showPage('weather')">☁ Weather</button>
-      <button onclick="showPage('soil')">🌱 Soil Health</button>
-      <button onclick="showPage('roadmap')">🚀 Roadmap</button>
-    </div>
-  </section>
+<!-- HOME -->
+<section id="home" class="active">
+  <h2 style="text-align:center;" id="homeTitle">Welcome 👋</h2>
+  <p style="text-align:center;" id="homeText">Select an option to get started:</p>
+  <div class="card-grid">
+    <button onclick="showPage('input')" id="btnInput">👨‍🌾 Farmer Input</button>
+    <button onclick="showPage('advisories')" id="btnAdvisory">📋 Advisories</button>
+    <button onclick="showPage('solution')" id="btnSolution">💡 Solution Concept</button>
+    <button onclick="showPage('market')" id="btnMarket">💹 Market Prices</button>
+    <button onclick="showPage('weather')" id="btnWeather">☁ Weather</button>
+    <button onclick="showPage('soil')" id="btnSoil">🌱 Soil Health</button>
+    <button onclick="showPage('roadmap')" id="btnRoadmap">🚀 Roadmap</button>
+  </div>
+</section>
 
-  <!-- FARMER INPUT -->
-  <section id="input">
-    <h2>👨‍🌾 Farmer Input</h2>
-    <form id="farmerForm">
-      <input type="text" name="name" placeholder="Farmer Name" required>
-      <input type="tel" name="phone" placeholder="Phone 91XXXXXXXXXX" required>
-      <input type="text" name="district" placeholder="District" required>
-      <input type="number" name="area" placeholder="Area in acres" step="0.1" required>
-      <select name="soil" required>
-        <option value="">Select Soil Type</option>
-        <option value="Loamy">Loamy</option>
-        <option value="Sandy">Sandy</option>
-        <option value="Clay">Clay</option>
-        <option value="Silty">Silty</option>
-      </select>
-      <input type="text" name="crop" placeholder="Crop Name" required>
-      <div style="display:flex;gap:10px; flex-wrap:wrap; margin-top:10px;">
-        <button type="submit" class="btn-primary">✨ Get Advisory</button>
-        <button type="reset" class="btn-secondary">Reset</button>
-        <button type="button" class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-      </div>
-    </form>
-  </section>
+<!-- FARMER INPUT -->
+<section id="input">
+<h2 id="inputTitle">👨‍🌾 Farmer Input</h2>
+<form id="farmerForm">
+  <input type="text" name="name" placeholder="Farmer Name" required>
+  <input type="tel" name="phone" placeholder="Phone 91XXXXXXXXXX" required>
+  <input type="text" name="district" placeholder="District" required>
+  <input type="number" name="area" placeholder="Area in acres" step="0.1" required>
+  <select name="soil" required>
+    <option value="">Select Soil Type</option>
+    <option value="Loamy">Loamy</option>
+    <option value="Sandy">Sandy</option>
+    <option value="Clay">Clay</option>
+    <option value="Silty">Silty</option>
+    <option value="Red">Red</option>
+    <option value="Black">Black</option>
+    <option value="Alluvial">Alluvial</option>
+    <option value="Laterite">Laterite</option>
+    <option value="Peaty">Peaty</option>
+  </select>
+  <input type="text" name="crop" placeholder="Crop Name" required>
+  <div style="display:flex;gap:10px; flex-wrap:wrap; margin-top:10px;">
+    <button type="submit" class="btn-primary">✨ Get Advisory</button>
+    <button type="reset" class="btn-secondary">Reset</button>
+    <button type="button" class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
+  </div>
+</form>
+</section>
 
-  <!-- ADVISORIES -->
-  <section id="advisories">
-    <h2>📋 Advisories</h2>
-    <div id="advisoryList"><p id="noAdvisory">No advisories yet. Fill the form above.</p></div>
-    <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-  </section>
+<!-- ADVISORIES -->
+<section id="advisories">
+<h2 id="advisoryTitle">📋 Advisories</h2>
+<div id="advisoryList"><p id="noAdvisory">No advisories yet. Fill the form above.</p></div>
+<button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
+</section>
 
-  <!-- SOLUTION CONCEPT -->
-  <section id="solution">
-    <h2>💡 Solution Concept</h2>
-    <div class="tab-container">
-      <button class="tab-btn" onclick="openTab('crop')">🌾 Crop Advice</button>
-      <button class="tab-btn" onclick="openTab('fertilizer')">🧪 Fertilizer</button>
-      <button class="tab-btn" onclick="openTab('pest')">🐛 Pest Control</button>
-      <button class="tab-btn" onclick="openTab('marketAdvice')">💹 Market Advice</button>
-    </div>
-    <div id="tab-crop" class="tab-content">✔ Helps farmers choose the right crop based on soil & weather.</div>
-    <div id="tab-fertilizer" class="tab-content">
-      <h3>Organic Fertilizers</h3>
-      <ul><li>Improves soil health</li><li>Environmentally friendly</li><li>Slow nutrient release</li></ul>
-      <h3>Chemical Fertilizers</h3>
-      <ul><li>Quick nutrient release</li><li>Precise nutrient control</li><li>Overuse can degrade soil</li></ul>
-    </div>
-    <div id="tab-pest" class="tab-content">✔ Provides pest control tips and eco-friendly solutions.</div>
-    <div id="tab-marketAdvice" class="tab-content">✔ Updates market prices and connects with buyers.</div>
-    <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-  </section>
+<!-- SOLUTION CONCEPT -->
+<section id="solution">
+<h2 id="solutionTitle">💡 Solution Concept</h2>
+<div class="tab-container" id="solutionTabs">
+  <button class="tab-btn" onclick="openTab('crop')">🌾 Crop Advice</button>
+  <button class="tab-btn" onclick="openTab('fertilizer')">🧪 Fertilizer</button>
+  <button class="tab-btn" onclick="openTab('pest')">🐛 Pest Control</button>
+  <button class="tab-btn" onclick="openTab('marketAdvice')">💹 Market Advice</button>
+  <button class="tab-btn" onclick="openTab('irrigation')">💧 Irrigation</button>
+  <button class="tab-btn" onclick="openTab('organic')">🌱 Organic Methods</button>
+  <button class="tab-btn" onclick="openTab('disease')">🦠 Disease Control</button>
+  <button class="tab-btn" onclick="openTab('storage')">🏠 Storage Tips</button>
+  <button class="tab-btn" onclick="openTab('machinery')">🚜 Machinery Advice</button>
+  <button class="tab-btn" onclick="openTab('financial')">💰 Financial Planning</button>
+</div>
+<div id="tab-crop" class="tab-content">✔ Select crops suitable for soil & weather.</div>
+<div id="tab-fertilizer" class="tab-content">✔ Fertilizer recommendations for crop & soil health.</div>
+<div id="tab-pest" class="tab-content">✔ Eco-friendly pest control measures.</div>
+<div id="tab-marketAdvice" class="tab-content">✔ Check market prices & buyer connections.</div>
+<div id="tab-irrigation" class="tab-content">✔ Optimal irrigation schedules.</div>
+<div id="tab-organic" class="tab-content">✔ Use compost & organic farming techniques.</div>
+<div id="tab-disease" class="tab-content">✔ Monitor & prevent crop diseases.</div>
+<div id="tab-storage" class="tab-content">✔ Post-harvest storage & preservation tips.</div>
+<div id="tab-machinery" class="tab-content">✔ Recommend suitable farm machinery.</div>
+<div id="tab-financial" class="tab-content">✔ Financial planning & subsidy guidance.</div>
+<button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
+</section>
 
-  <!-- MARKET -->
-  <section id="market">
-    <h2>💹 Market Prices</h2>
-    <div class="card">
-      <table id="marketTable">
-        <tr><th>Crop</th><th>Price/kg (₹)</th></tr>
-      </table>
-    </div>
-    <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-  </section>
+<!-- MARKET -->
+<section id="market">
+<h2 id="marketTitle">💹 Market Prices</h2>
+<div class="card">
+  <table id="marketTable"><tr><th>Crop</th><th>Price/kg (₹)</th></tr></table>
+</div>
+<button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
+</section>
 
-  <!-- WEATHER -->
-  <section id="weather">
-    <h2>☁ Weather Forecast</h2>
-    <div id="weatherCards"></div>
-    <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-  </section>
+<!-- WEATHER -->
+<section id="weather">
+<h2 id="weatherTitle">☁ Weather Forecast</h2>
+<div id="weatherCards"></div>
+<button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
+</section>
 
-  <!-- SOIL -->
-  <section id="soil">
-    <h2>🌱 Soil Health Tips</h2>
-    <div id="soilCards"></div>
-    <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-  </section>
+<!-- SOIL -->
+<section id="soil">
+<h2 id="soilTitle">🌱 Soil Health Tips</h2>
+<div id="soilCards"></div>
+<button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
+</section>
 
-  <!-- ROADMAP -->
-  <section id="roadmap">
-    <h2>🚀 Feature Roadmap</h2>
-    <ul id="roadmapList"></ul>
-    <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
-  </section>
+<!-- ROADMAP -->
+<section id="roadmap">
+<h2 id="roadmapTitle">🚀 Feature Roadmap</h2>
+<ul id="roadmapList"></ul>
+<button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
+</section>
 
 </main>
 
 <footer style="text-align:center;padding:12px;background:#16a34a;color:#fff;">
-  Prototype — Built for Smart India Hackathon. Connect sensors & APIs for production.
+Prototype — Built for Smart India Hackathon.
 </footer>
 
 <button id="darkToggle">🌓</button>
@@ -276,58 +274,172 @@ body.dark th, body.dark td { border-color:#555; }
 <script>
 // ================== CORE ==================
 const pages=["home","input","advisories","solution","market","weather","soil","roadmap"];
+const langData = {
+  en: {
+    homeTitle: "Welcome 👋",
+    homeText: "Select an option to get started:",
+    inputTitle: "👨‍🌾 Farmer Input",
+    advisoryTitle: "📋 Advisories",
+    solutionTitle: "💡 Solution Concept",
+    marketTitle: "💹 Market Prices",
+    weatherTitle: "☁ Weather Forecast",
+    soilTitle: "🌱 Soil Health Tips",
+    roadmapTitle: "🚀 Feature Roadmap",
+    advisoryMsg: "Follow soil & crop recommendations for optimal yield.",
+    market: [
+      {crop:"Wheat",price:21},{crop:"Rice",price:28},{crop:"Cotton",price:65},{crop:"Tomato",price:18},{crop:"Onion",price:12}
+    ],
+    weatherData:[
+      {day:"Mon",temp:30,desc:"Sunny"},{day:"Tue",temp:28,desc:"Rainy"},{day:"Wed",temp:29,desc:"Cloudy"}
+    ],
+    soilTips:[
+      {type:"Loamy",tip:"Ideal for most crops; retains moisture & nutrients"},
+      {type:"Sandy",tip:"Drains quickly; may need organic matter"},
+      {type:"Clay",tip:"Holds nutrients but drains poorly"},
+      {type:"Silty",tip:"Fertile but can compact easily"},
+      {type:"Red",tip:"Rich in iron; suitable for legumes"},
+      {type:"Black",tip:"Rich in calcium; ideal for cotton"},
+      {type:"Alluvial",tip:"Very fertile; good for rice & wheat"},
+      {type:"Laterite",tip:"Good drainage; needs organic matter"},
+      {type:"Peaty",tip:"High organic matter; acidic soil"}
+    ],
+    roadmap:[
+      "App + SMS + IVR + Local language voice messages",
+      "IoT sensors for soil moisture / pH",
+      "AI-based advisory using weather & soil data",
+      "Market prices & buyer connect",
+      "Offline SMS digest for low connectivity",
+      "Farmer training & onboarding"
+    ]
+  },
+  hi: {
+    homeTitle: "स्वागत है 👋",
+    homeText: "शुरू करने के लिए विकल्प चुनें:",
+    inputTitle: "👨‍🌾 किसान इनपुट",
+    advisoryTitle: "📋 सलाह",
+    solutionTitle: "💡 समाधान अवधारणा",
+    marketTitle: "💹 बाजार मूल्य",
+    weatherTitle: "☁ मौसम पूर्वानुमान",
+    soilTitle: "🌱 मिट्टी स्वास्थ्य टिप्स",
+    roadmapTitle: "🚀 फीचर रोडमैप",
+    advisoryMsg: "अधिकतम पैदावार के लिए मिट्टी और फसल की सिफारिशों का पालन करें।",
+    market:[
+      {crop:"गेहूँ",price:21},{crop:"चावल",price:28},{crop:"कपास",price:65},{crop:"टमाटर",price:18},{crop:"प्याज",price:12}
+    ],
+    weatherData:[
+      {day:"सोम",temp:30,desc:"धूप"},{day:"मंगल",temp:28,desc:"बारिश"},{day:"बुध",temp:29,desc:"बादल"}
+    ],
+    soilTips:[
+      {type:"दोमट",tip:"अधिकतर फसलों के लिए आदर्श; नमी और पोषक तत्व बनाए रखता है"},
+      {type:"रेतीली",tip:"जल जल्दी निकलता है; कार्बनिक पदार्थ की आवश्यकता"},
+      {type:"मिट्टी",tip:"पोषक तत्व रखता है लेकिन जल निकासी खराब"},
+      {type:"सिली",tip:"उर्वरक लेकिन आसानी से सघन हो सकती है"},
+      {type:"लाल",tip:"लोहा समृद्ध; फलियों के लिए उपयुक्त"},
+      {type:"काली",tip:"कैल्शियम समृद्ध; कपास के लिए आदर्श"},
+      {type:"बादामी",tip:"बहुत उपजाऊ; चावल और गेहूँ के लिए अच्छा"},
+      {type:"लेटेराइट",tip:"अच्छा जल निकास; कार्बनिक पदार्थ की आवश्यकता"},
+      {type:"पीटी",tip:"उच्च कार्बनिक पदार्थ; अम्लीय मिट्टी"}
+    ],
+    roadmap:[
+      "ऐप + SMS + IVR + स्थानीय भाषा वॉइस संदेश",
+      "मृदा नमी / pH के लिए IoT सेंसर",
+      "मौसम और मिट्टी डेटा पर आधारित AI सलाह",
+      "बाजार मूल्य और खरीदार कनेक्ट",
+      "कम कनेक्टिविटी के लिए ऑफलाइन SMS सार",
+      "किसानों के लिए प्रशिक्षण और ऑनबोर्डिंग"
+    ]
+  }
+};
+
+let currentLang="en";
+
+// ================== FUNCTIONS ==================
+function updateLang(){
+  const data=langData[currentLang];
+  document.getElementById('homeTitle').textContent=data.homeTitle;
+  document.getElementById('homeText').textContent=data.homeText;
+  document.getElementById('inputTitle').textContent=data.inputTitle;
+  document.getElementById('advisoryTitle').textContent=data.advisoryTitle;
+  document.getElementById('solutionTitle').textContent=data.solutionTitle;
+  document.getElementById('marketTitle').textContent=data.marketTitle;
+  document.getElementById('weatherTitle').textContent=data.weatherTitle;
+  document.getElementById('soilTitle').textContent=data.soilTitle;
+  document.getElementById('roadmapTitle').textContent=data.roadmapTitle;
+
+  // Market table
+  const table=document.getElementById('marketTable');
+  table.innerHTML='<tr><th>'+(currentLang==='hi'?'फसल':'Crop')+'</th><th>'+(currentLang==='hi'?'कीमत (₹/किग्रा)':'Price/kg (₹)')+'</th></tr>';
+  data.market.forEach(m=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${m.crop}</td><td>${m.price}</td>`;table.appendChild(tr);});
+
+  // Weather cards
+  const weatherDiv=document.getElementById('weatherCards');
+  weatherDiv.innerHTML='';
+  data.weatherData.forEach(w=>{const d=document.createElement('div');d.className='card';d.textContent=`${w.day}: ${w.temp}°C, ${w.desc}`;weatherDiv.appendChild(d);});
+
+  // Soil cards
+  const soilDiv=document.getElementById('soilCards');
+  soilDiv.innerHTML='';
+  data.soilTips.forEach(s=>{const d=document.createElement('div');d.className='card';d.textContent=`🌱 ${s.type} - ${s.tip}`;soilDiv.appendChild(d);});
+
+  // Roadmap
+  const roadmap=document.getElementById('roadmapList');
+  roadmap.innerHTML='';
+  data.roadmap.forEach(r=>{const li=document.createElement('li');li.textContent=r;roadmap.appendChild(li);});
+}
+
 function showPage(id){pages.forEach(p=>document.getElementById(p).classList.remove('active'));document.getElementById(id).classList.add('active');}
 
 // Tabs
 function openTab(tab){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b=>{if(b.textContent.toLowerCase().includes(tab))b.classList.add('active');});
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
+  document.getElementById("tab-"+tab).classList.add("active");
+  document.querySelector(`.tab-btn[onclick="openTab('${tab}')"]`).classList.add("active");
 }
+
+// Language select
+document.getElementById('langSelect').addEventListener('change',(e)=>{
+  currentLang=e.target.value;
+  updateLang();
+});
 
 // Dark mode
 document.getElementById('darkToggle').addEventListener('click',()=>document.body.classList.toggle('dark'));
 
-// Splash hide
-setTimeout(()=>document.getElementById('splash').style.display='none',1500);
+// Voice input
+let activeInput=null;
+document.querySelectorAll('input,select').forEach(inp=>{inp.addEventListener('focus',()=>activeInput=inp)});
+const voiceBtn=document.getElementById("voiceButtonInline");
+voiceBtn.addEventListener("click",()=>{
+  if(!activeInput){alert(currentLang==='hi'?'कृपया पहले फ़ील्ड पर टैप करें।':'Please tap on a field'); return;}
+  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SpeechRecognition){alert("Voice input not supported"); return;}
+  let recognition=new SpeechRecognition();
+  recognition.lang=currentLang==='hi'?'hi-IN':'en-US';
+  recognition.interimResults=false; recognition.maxAlternatives=1;
+  voiceBtn.classList.add("listening"); recognition.start();
+  recognition.onresult=function(e){activeInput.value=e.results[0][0].transcript; voiceBtn.classList.remove("listening");}
+  recognition.onerror=function(){voiceBtn.classList.remove("listening"); alert("Voice recognition error");}
+});
 
-// Farmer Advisory Submit
-document.getElementById('farmerForm').addEventListener('submit', e=>{
+// Farmer form submit
+document.getElementById('farmerForm').addEventListener('submit',e=>{
   e.preventDefault();
-  const f=e.target,name=f.name.value,crop=f.crop.value,soil=f.soil.value,area=f.area.value;
+  const f=e.target; const name=f.name.value; const crop=f.crop.value; const soil=f.soil.value; const area=f.area.value;
+  const data=langData[currentLang];
   const advisory=document.createElement('div'); advisory.className='card';
-  advisory.innerHTML=`👨‍🌾 ${name} | 🌾 ${crop}, 🌱 ${soil}, 🏞 ${area} acres<br>
-  🧪 Fertilizer: Organic recommended; Chemical as needed<br>💧 Irrigation: Water as needed<br>🐛 Pest: Monitor & control<br>💡 Advisory: Follow soil & crop recommendations.`;
-  const list=document.getElementById('advisoryList'); document.getElementById('noAdvisory')?.remove(); list.prepend(advisory);
+  advisory.innerHTML=`👨‍🌾 ${name} | 🌾 ${crop}, 🌱 ${soil}, 🏞 ${area} acres<br>💡 Advisory: ${data.advisoryMsg}`;
+  const list=document.getElementById('advisoryList');
+  document.getElementById('noAdvisory')?.remove();
+  list.prepend(advisory);
   showPage('advisories'); f.reset();
 });
 
-// Voice Input
-let activeInput=null;
-document.querySelectorAll("input[type=text], input[type=tel]").forEach(inp=>inp.addEventListener("focus",()=>activeInput=inp));
-document.getElementById('voiceButtonInline').addEventListener('click', function(){
-  if(!activeInput){alert('Tap on a field'); return;}
-  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SpeechRecognition){alert("Voice input not supported"); return;}
-  let recognition=new SpeechRecognition(); recognition.lang='en-US';
-  recognition.interimResults=false; recognition.maxAlternatives=1;
-  this.classList.add('listening'); recognition.start();
-  recognition.onresult=e=>{activeInput.value=e.results[0][0].transcript; this.classList.remove('listening');};
-  recognition.onerror=e=>this.classList.remove('listening');
-});
+// Splash hide
+setTimeout(()=>document.getElementById('splash').style.display='none',1500);
 
-// Populate Market, Weather, Soil, Roadmap
-const marketData=[{crop:"Wheat",price:21},{crop:"Rice",price:28},{crop:"Cotton",price:65},{crop:"Tomato",price:18},{crop:"Onion",price:12}];
-const weatherData=[{day:"Mon",temp:30,desc:"Sunny"},{day:"Tue",temp:28,desc:"Rainy"},{day:"Wed",temp:29,desc:"Cloudy"}];
-const soilTips=[{type:"Loamy",tip:"Retains moisture & nutrients"},{type:"Sandy",tip:"Drains quickly, add organic matter"},{type:"Clay",tip:"Holds nutrients but drains poorly"},{type:"Silty",tip:"Fertile but can compact"}];
-const roadmap=["App+SMS+IVR+Local language voice","IoT sensors for soil","AI-based advisory","Market prices & buyer connect","Offline SMS digest","Farmer training"];
-
-const table=document.getElementById('marketTable');
-marketData.forEach(m=>{const tr=document.createElement('tr'); tr.innerHTML=`<td>${m.crop}</td><td>${m.price}</td>`; table.appendChild(tr);});
-const weatherContainer=document.getElementById('weatherCards'); weatherData.forEach(w=>{const div=document.createElement('div'); div.className='card'; div.textContent=`${w.day}: ${w.temp}°C, ${w.desc}`; weatherContainer.appendChild(div);});
-const soilContainer=document.getElementById('soilCards'); soilTips.forEach(s=>{const div=document.createElement('div'); div.className='card'; div.textContent=`🌱 ${s.type} - ${s.tip}`; soilContainer.appendChild(div);});
-const roadmapList=document.getElementById('roadmapList'); roadmap.forEach(r=>{const li=document.createElement('li'); li.textContent=r; roadmapList.appendChild(li);});
+// Initialize
+updateLang();
 </script>
 
 </body>
