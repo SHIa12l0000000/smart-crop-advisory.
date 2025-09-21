@@ -44,13 +44,13 @@ body.dark th, body.dark td { border:1px solid #666; }
 <body>
 
 <div id="splash">
-<img src="logo.png" alt="Logo" />
+<img src="https://via.placeholder.com/70" alt="Logo" />
 <div>Smart Crop Advisory</div>
 <small>Loading...</small>
 </div>
 
 <header>
-<img src="logo.png" alt="Logo" />
+<img src="https://via.placeholder.com/40" alt="Logo" />
 <h1>Smart Crop Advisory</h1>
 <div id="langCorner">🌐</div>
 </header>
@@ -109,7 +109,7 @@ body.dark th, body.dark td { border:1px solid #666; }
 <h2 id="advisoryTitle">📋 Advisories</h2>
 <div id="advisoryList">No advisories yet — fill the form and click "Get Advisory".</div>
 <br />
-<button class="btn-secondary" onclick="showPage('home')" id="btnBackAdvisory">⬅ Back</button>
+<button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
 </section>
 
 <section id="roadmap">
@@ -145,22 +145,15 @@ hi:{homeTitle:"स्वागत 👋",homeText:"नीचे विकल्�
 const soilTrans={ en:["Loamy","Sandy","Clay","Laterite"], hi:["दोमट","रेतीली","मिट्टी","लैटराइट"] };
 
 const advTrans={
-en:{
-wheat1:"Apply nitrogen fertilizer", wheat2:"Monitor irrigation regularly",
-rice1:"Keep fields flooded", rice2:"Check for pests",
-general:"Follow standard crop practices", soilSandy:"Add compost to sandy soil", largeArea:"Consider hiring extra labor",
-market:"Check local market prices before selling", generalTitle:"Crop Advisory", wheatTitle:"Wheat Advisory", riceTitle:"Rice Advisory"
-},
-hi:{
-wheat1:"नाइट्रोजन उर्वरक लगाएं", wheat2:"सिंचाई नियमित रूप से मॉनिटर करें",
-rice1:"खेतों में पानी बनाए रखें", rice2:"कीटों की जाँच करें",
-general:"मानक फसल प्रथाओं का पालन करें", soilSandy:"रेतीली मिट्टी में कंपोस्ट डालें", largeArea:"अतिरिक्त श्रमिक रखने पर विचार करें",
-market:"बेचने से पहले स्थानीय बाजार की कीमतें देखें", generalTitle:"फसल सलाह", wheatTitle:"गेहूं सलाह", riceTitle:"चावल सलाह"
-};
+en:{wheat1:"Apply nitrogen fertilizer", wheat2:"Monitor irrigation regularly",rice1:"Keep fields flooded", rice2:"Check for pests",general:"Follow standard crop practices",soilSandy:"Add compost to sandy soil",largeArea:"Consider hiring extra labor",market:"Check local market prices before selling",generalTitle:"Crop Advisory",wheatTitle:"Wheat Advisory",riceTitle:"Rice Advisory"},
+hi:{wheat1:"नाइट्रोजन उर्वरक लगाएं", wheat2:"सिंचाई नियमित रूप से मॉनिटर करें",rice1:"खेतों में पानी बनाए रखें", rice2:"कीटों की जाँच करें",general:"मानक फसल प्रथाओं का पालन करें",soilSandy:"रेतीली मिट्टी में कंपोस्ट डालें",largeArea:"अतिरिक्त श्रमिक रखने पर विचार करें",market:"बेचने से पहले स्थानीय बाजार की कीमतें देखें",generalTitle:"फसल सलाह",wheatTitle:"गेहूं सलाह",riceTitle:"चावल सलाह"}};
 
 // Splash hide
 window.addEventListener("load",()=>{
-setTimeout(()=>{document.getElementById("splash").style.display="none"; showPage("language");},1500);
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+showPage("language");
+},1500);
 });
 
 // Show page
@@ -190,7 +183,7 @@ list.innerHTML=adv+`<p style="margin-top:10px;font-style:italic;">${uiTrans[curr
 showPage("advisories");
 });
 
-// Generate advisory with fertilizer table and quantity
+// Generate advisory
 function generateAdvisory(data){
 let tips=[], cropLower=data.crop.toLowerCase();
 if(cropLower.includes(currentLang==='hi'?'गेहूं':'wheat')) tips.push(advTrans[currentLang].wheat1,advTrans[currentLang].wheat2);
@@ -205,29 +198,11 @@ const fertilizerTable = `
 <h4>${currentLang==='hi'?'खाद तुलना':'Fertilizer Comparison'}</h4>
 <table>
 <thead>
-<tr>
-<th>${currentLang==='hi'?'प्रकार':'Type'}</th>
-<th>${currentLang==='hi'?'लाभ':'Benefits'}</th>
-<th>${currentLang==='hi'?'हानि':'Drawbacks'}</th>
-<th>${currentLang==='hi'?'प्रभाव अवधि':'Effect Duration'}</th>
-<th>${currentLang==='hi'?'सिफारिश की मात्रा':'Recommended Quantity'}</th>
-</tr>
+<tr><th>${currentLang==='hi'?'प्रकार':'Type'}</th><th>${currentLang==='hi'?'लाभ':'Benefits'}</th><th>${currentLang==='hi'?'हानि':'Drawbacks'}</th><th>${currentLang==='hi'?'प्रभाव अवधि':'Effect Duration'}</th><th>${currentLang==='hi'?'सिफारिश की मात्रा':'Recommended Quantity'}</th></tr>
 </thead>
 <tbody>
-<tr>
-<td>${currentLang==='hi'?'रासायनिक खाद':'Chemical Fertilizer'}</td>
-<td>${currentLang==='hi'?'त्वरित पोषक आपूर्ति, उच्च उपज':'Quick nutrient supply, high yield'}</td>
-<td>${currentLang==='hi'?'मृदा गिरावट, जल प्रदूषण':'Soil degradation, water pollution'}</td>
-<td>${currentLang==='hi'?'अल्पकालिक (2-4 सप्ताह)':'Short-term (2-4 weeks)'}</td>
-<td>${currentLang==='hi'?'50 किग्रा प्रति एकड़':'50 kg per acre'}</td>
-</tr>
-<tr>
-<td>${currentLang==='hi'?'जैविक खाद':'Organic Fertilizer'}</td>
-<td>${currentLang==='hi'?'मृदा स्वास्थ्य में सुधार, टिकाऊ':'Improves soil health, sustainable'}</td>
-<td>${currentLang==='hi'?'धीमा पोषक रिलीज, तुरंत कम उपज':'Slower nutrient release, lower immediate yield'}</td>
-<td>${currentLang==='hi'?'दीर्घकालिक (2-3 महीने)':'Long-term (2-3 months)'}</td>
-<td>${currentLang==='hi'?'2 टन प्रति एकड़':'2 tons per acre'}</td>
-</tr>
+<tr><td>${currentLang==='hi'?'रासायनिक खाद':'Chemical Fertilizer'}</td><td>${currentLang==='hi'?'त्वरित पोषक आपूर्ति, उच्च उपज':'Quick nutrient supply, high yield'}</td><td>${currentLang==='hi'?'मृदा गिरावट, जल प्रदूषण':'Soil degradation, water pollution'}</td><td>${currentLang==='hi'?'अल्पकालिक (2-4 सप्ताह)':'Short-term (2-4 weeks)'}</td><td>${currentLang==='hi'?'50 किग्रा प्रति एकड़':'50 kg per acre'}</td></tr>
+<tr><td>${currentLang==='hi'?'जैविक खाद':'Organic Fertilizer'}</td><td>${currentLang==='hi'?'मृदा स्वास्थ्य में सुधार, टिकाऊ':'Improves soil health, sustainable'}</td><td>${currentLang==='hi'?'धीमा पोषक रिलीज, तुरंत कम उपज':'Slower nutrient release, lower immediate yield'}</td><td>${currentLang==='hi'?'दीर्घकालिक (2-3 महीने)':'Long-term (2-3 months)'}</td><td>${currentLang==='hi'?'2 टन प्रति एकड़':'2 tons per acre'}</td></tr>
 </tbody>
 </table>
 `;
@@ -241,7 +216,6 @@ return `<div class='advisory'><h3>${title}</h3><ul>${tips.map(t=>`<li>${t}</li>`
 
 // Voice input
 document.querySelectorAll("input[type=text], input[type=tel]").forEach(inp=>{ inp.addEventListener("focus",()=>activeInput=inp); });
-
 const voiceBtn=document.getElementById("voiceButtonInline");
 voiceBtn.addEventListener("click",startVoice);
 function startVoice(){
