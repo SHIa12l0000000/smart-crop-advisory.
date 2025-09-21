@@ -14,11 +14,38 @@ main{padding:16px}section{display:none;animation:fadeIn .4s}section.active{displ
 button{border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:600;transition:.3s}
 button:hover{opacity:.85}.btn-primary{background:#22c55e;color:#fff}.btn-secondary{background:#e5e7eb;color:#111}
 body.dark .btn-secondary{background:#334155;color:#a5f3fc}.btn-line{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.tab-container{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:1rem}
-.tab-btn{flex:1;min-width:120px;padding:10px;border-radius:12px;background:#d1fae5;color:#166534;font-weight:600;cursor:pointer;transition:.3s}
-.tab-btn.active{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.2)}
-body.dark .tab-btn{background:#334155;color:#a5f3fc}
-body.dark .tab-btn.active{background:#22c55e;color:#fff}
+
+/* ======================== SCROLLABLE LARGE TABS ======================== */
+.tab-container {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.tab-btn {
+  flex: 0 0 auto;
+  min-width: 150px;
+  padding: 14px 20px;
+  border-radius: 16px;
+  background: #d1fae5;
+  color: #166534;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: .3s;
+  text-align: center;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  background: linear-gradient(135deg,#16a34a,#22c55e);
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(0,0,0,.25);
+}
+body.dark .tab-btn { background: #334155; color: #a5f3fc; }
+body.dark .tab-btn.active { background: #22c55e; color: #fff; }
+
 .tab-content{display:none;border-radius:16px;padding:14px;background:#f9fafb;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-top:10px}
 .tab-content.active{display:block}body.dark .tab-content{background:#2a2a2a;border:1px solid #555}
 form label{display:block;margin-top:10px;font-weight:600}
@@ -34,7 +61,7 @@ table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid
 body.dark th,body.dark td{border-color:#555}
 #splash{position:fixed;top:0;left:0;right:0;bottom:0;background:#16a34a;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;font-size:1.2rem}
 #splash img{height:80px;margin-bottom:12px}
-@media (max-width:600px){body{font-size:14px}.btn-line{flex-direction:column}.card{padding:10px}.tab-btn{font-size:0.85rem;padding:8px}}
+@media (max-width:600px){body{font-size:14px}.btn-line{flex-direction:column}.card{padding:10px}.tab-btn{font-size:1rem;padding:12px 16px}}
 </style>
 </head>
 <body>
@@ -174,167 +201,93 @@ body.dark th,body.dark td{border-color:#555}
 <button id="voiceButtonInline">🎤</button>
 
 <script>
-// ========================== DATA ==========================
 let currentLang="en";
 let activeInput=null;
 const pages=["home","input","advisories","roadmap","language","solution","market","weather","soil"];
 
 const langData={
-  en:{
-    advisoryMsg:"Follow soil & crop recommendations for optimal yield.",
-    market:[{crop:"Wheat",price:21},{crop:"Rice",price:28},{crop:"Cotton",price:65},{crop:"Tomato",price:18},{crop:"Onion",price:12}],
-    weatherData:[],
-    soilTips:[
-      {type:"Loamy",tip:"Ideal for most crops; retains moisture & nutrients"},
-      {type:"Sandy",tip:"Drains quickly; may need organic matter"},
-      {type:"Clay",tip:"Holds nutrients but drains poorly"},
-      {type:"Silty",tip:"Fertile but can compact easily"}
-    ],
-    roadmap:[
-      "App + SMS + IVR + Local language voice messages",
-      "IoT sensors for soil moisture / pH",
-      "Weather + Soil + Satellite data → AI model",
-      "Market prices, buyer connect, storage tips",
-      "Offline SMS digests for low connectivity",
-      "Training & onboarding for farmers"
-    ]
-  },
-  hi:{
-    advisoryMsg:"अधिकतम पैदावार के लिए मिट्टी और फसल की सिफारिशों का पालन करें।",
-    market:[{crop:"गेहूँ",price:21},{crop:"चावल",price:28},{crop:"कपास",price:65},{crop:"टमाटर",price:18},{crop:"प्याज",price:12}],
-    weatherData:[],
-    soilTips:[
-      {type:"दोमट",tip:"अधिकतर फसलों के लिए आदर्श; नमी और पोषक तत्व बनाए रखता है"},
-      {type:"रेतीली",tip:"जल जल्दी निकलता है; कार्बनिक पदार्थ की आवश्यकता"},
-      {type:"मिट्टी",tip:"पोषक तत्व रखता है लेकिन जल निकासी खराब"},
-      {type:"सिली",tip:"उर्वरक लेकिन आसानी से सघन हो सकती है"}
-    ],
-    roadmap:[
-      "ऐप + SMS + IVR + स्थानीय भाषा वॉइस संदेश",
-      "मृदा नमी / pH के लिए IoT सेंसर",
-      "मौसम + मिट्टी + सैटेलाइट डेटा → AI मॉडल",
-      "बाजार की कीमतें, खरीदार कनेक्ट, भंडारण सुझाव",
-      "कम कनेक्टिविटी के लिए ऑफलाइन SMS सार",
-      "किसानों के लिए प्रशिक्षण और ऑनबोर्डिंग"
-    ]
-  }
+  en:{advisoryMsg:"Follow soil & crop recommendations for optimal yield.",market:[{crop:"Wheat",price:21},{crop:"Rice",price:28},{crop:"Cotton",price:65},{crop:"Tomato",price:18},{crop:"Onion",price:12}],weatherData:[{day:"Mon",temp:30,desc:"Sunny"},{day:"Tue",temp:28,desc:"Rainy"},{day:"Wed",temp:29,desc:"Cloudy"}],soilTips:[{type:"Loamy",tip:"Ideal for most crops; retains moisture & nutrients"},{type:"Sandy",tip:"Drains quickly; may need organic matter"},{type:"Clay",tip:"Holds nutrients but drains poorly"},{type:"Silty",tip:"Fertile but can compact easily"}],roadmap:["App + SMS + IVR + Local language voice messages","IoT sensors for soil moisture / pH","Weather + Soil + Satellite data → AI model","Market prices, buyer connect, storage tips","Offline SMS digests for low connectivity","Training & onboarding for farmers"]},
+  hi:{advisoryMsg:"अधिकतम पैदावार के लिए मिट्टी और फसल की सिफारिशों का पालन करें।",market:[{crop:"गेहूँ",price:21},{crop:"चावल",price:28},{crop:"कपास",price:65},{crop:"टमाटर",price:18},{crop:"प्याज",price:12}],weatherData:[{day:"सोम",temp:30,desc:"धूप"},{day:"मंगल",temp:28,desc:"बारिश"},{day:"बुध",temp:29,desc:"बादल"}],soilTips:[{type:"दोमट",tip:"अधिकतर फसलों के लिए आदर्श; नमी और पोषक तत्व बनाए रखता है"},{type:"रेतीली",tip:"जल जल्दी निकलता है; कार्बनिक पदार्थ की आवश्यकता"},{type:"मिट्टी",tip:"पोषक तत्व रखता है लेकिन जल निकासी खराब"},{type:"सिली",tip:"उर्वरक लेकिन आसानी से सघन हो सकती है"}],roadmap:["ऐप + SMS + IVR + स्थानीय भाषा वॉइस संदेश","मृदा नमी / pH के लिए IoT सेंसर","मौसम + मिट्टी + सैटेलाइट डेटा → AI मॉडल","बाजार की कीमतें, खरीदार कनेक्ट, भंडारण सुझाव","कम कनेक्टिविटी के लिए ऑफलाइन SMS सार","किसानों के लिए प्रशिक्षण और ऑनबोर्डिंग"]}
 };
 
-// ========================== LANGUAGE & UI ==========================
-function setLanguage(){
-  currentLang=document.getElementById('langSelect').value;
-  updateLang();
-  showPage('home');
-}
+function setLanguage(){currentLang=document.getElementById('langSelect').value;updateLang();fetchMarketData();fetchWeatherData();showPage('home');}
 
 function updateLang(){
   const data=langData[currentLang];
-  // Market table
   const table=document.getElementById('marketTable');
   table.innerHTML='<tr><th>'+ (currentLang==='hi'?'फसल':'Crop') +'</th><th>'+ (currentLang==='hi'?'कीमत (₹/किग्रा)':'Price/kg (₹)') +'</th></tr>';
-  data.market.forEach(m=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${m.crop}</td><td>${m.price}</td>`;
-    table.appendChild(tr);
-  });
-  // Weather cards
-  const weatherContainer=document.getElementById('weatherCards');
-  weatherContainer.innerHTML='';
-  data.weatherData.forEach(w=>{
-    const div=document.createElement('div');div.className='card';
-    div.textContent=`${w.day}: ${w.temp}°C, ${w.desc}`;weatherContainer.appendChild(div);
-  });
-  // Soil
-  const soilContainer=document.getElementById('soilCards');
-  soilContainer.innerHTML='';
-  data.soilTips.forEach(s=>{
-    const div=document.createElement('div');div.className='card';
-    div.textContent=`🌱 ${s.type} - ${s.tip}`;soilContainer.appendChild(div);
-  });
-  // Roadmap
-  const roadmapList=document.getElementById('roadmapList');
-  roadmapList.innerHTML='';
-  data.roadmap.forEach(r=>{const li=document.createElement('li');li.textContent=r;roadmapList.appendChild(li)});
+  data.market.forEach(m=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${m.crop}</td><td>${m.price}</td>`;table.appendChild(tr);});
+  
+  const weatherContainer=document.getElementById('weatherCards');weatherContainer.innerHTML='';
+  data.weatherData.forEach(w=>{const div=document.createElement('div');div.className='card';div.textContent=`${w.day}: ${w.temp}°C, ${w.desc}`;weatherContainer.appendChild(div);});
+  
+  const soilContainer=document.getElementById('soilCards');soilContainer.innerHTML='';
+  data.soilTips.forEach(s=>{const div=document.createElement('div');div.className='card';div.textContent=`🌱 ${s.type} - ${s.tip}`;soilContainer.appendChild(div);});
+  
+  const roadmapList=document.getElementById('roadmapList');roadmapList.innerHTML='';
+  data.roadmap.forEach(r=>{const li=document.createElement('li');li.textContent=r;roadmapList.appendChild(li);});
 }
 
-// ========================== PAGE NAVIGATION ==========================
-function showPage(id){
-  pages.forEach(p=>document.getElementById(p).classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+function showPage(id){pages.forEach(p=>document.getElementById(p).classList.remove('active'));document.getElementById(id).classList.add('active');}
+function openTab(tab){document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));document.querySelector(`[onclick="openTab('${tab}')"]`).classList.add("active");document.getElementById("tab-"+tab).classList.add("active");}
 
-// ========================== TABS ==========================
-function openTab(tab){
-  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-  document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
-  document.querySelector(`[onclick="openTab('${tab}')"]`).classList.add("active");
-  document.getElementById("tab-"+tab).classList.add("active");
-}
-
-// ========================== DARK MODE ==========================
 document.getElementById('darkToggle').addEventListener("click",()=>document.body.classList.toggle("dark"));
 
-// ========================== VOICE INPUT ==========================
 document.querySelectorAll("input[type=text], input[type=tel]").forEach(inp=>{inp.addEventListener("focus",()=>activeInput=inp)});
 const voiceBtn=document.getElementById("voiceButtonInline");
 voiceBtn.addEventListener("click",()=>{
   if(!activeInput){alert(currentLang==='hi'?'कृपया पहले फ़ील्ड पर टैप करें।':'Please tap on a field');return;}
   const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SpeechRecognition){alert("Voice input not supported");return;}
-  let recognition=new SpeechRecognition();
-  recognition.lang=currentLang==='hi'?'hi-IN':'en-US';
+  let recognition=new SpeechRecognition();recognition.lang=currentLang==='hi'?'hi-IN':'en-US';
   recognition.interimResults=false;recognition.maxAlternatives=1;
   voiceBtn.classList.add("listening");recognition.start();
   recognition.onresult=function(e){activeInput.value=e.results[0][0].transcript;voiceBtn.classList.remove("listening")};
   recognition.onerror=function(){voiceBtn.classList.remove("listening");alert("Voice recognition error")};
 });
 
-// ========================== ADVISORY FORM ==========================
 document.getElementById('farmerForm').addEventListener('submit',e=>{
   e.preventDefault();
-  const name=e.target.name.value;
-  const crop=e.target.crop.value;
-  const soil=e.target.soil.value;
-  const area=e.target.area.value;
-  const data=langData[currentLang];
+  const name=e.target.name.value;const crop=e.target.crop.value;const soil=e.target.soil.value;const area=e.target.area.value;const data=langData[currentLang];
   const advisory=document.createElement('div');advisory.className='card';
   advisory.innerHTML=`👨‍🌾 ${name} | 🌾 ${crop}, 🌱 ${soil}, 🏞️ ${area} acres<br>
   🧪 Fertilizer: Organic recommended for soil health; Chemical only as needed<br>
   💧 Irrigation: Water as needed<br>
   🐛 Pest: Monitor and control<br>
   💡 Advisory: ${data.advisoryMsg}`;
-  const list=document.getElementById('advisoryList');
-  document.getElementById('noAdvisory')?.remove();
-  list.prepend(advisory);
-  showPage('advisories');e.target.reset();
+  const list=document.getElementById('advisoryList');document.getElementById('noAdvisory')?.remove();list.prepend(advisory);showPage('advisories');e.target.reset();
 });
 
-// ========================== REAL-TIME WEATHER ==========================
-async function fetchWeather(){
-  const API_KEY="YOUR_OPENWEATHERMAP_KEY"; // Replace with your key
-  const CITY="Delhi,IN";
-  try{
-    const res=await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${CITY}&units=metric&cnt=3&appid=${API_KEY}`);
-    const data=await res.json();
-    const weatherArray=data.list.map((w,i)=>({day:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(w.dt_txt).getDay()],temp:w.main.temp,desc:w.weather[0].main}));
-    langData[currentLang].weatherData=weatherArray;
-    updateLang();
-  }catch(err){console.error("Weather fetch error",err);}
-}
-
-// ========================== REAL-TIME MARKET (MOCK) ==========================
-async function fetchMarket(){
-  // Replace this with real API if available
-  const marketData=[{crop:"Wheat",price:22},{crop:"Rice",price:29},{crop:"Cotton",price:64},{crop:"Tomato",price:19},{crop:"Onion",price:13}];
-  langData[currentLang].market=marketData;
-  updateLang();
-}
-
-// ========================== INIT ==========================
+// Splash screen hide
 setTimeout(()=>document.getElementById('splash').style.display='none',1500);
+
+// ======= LIVE API FETCH FUNCTIONS =======
+async function fetchMarketData(){
+  try{
+    const res=await fetch('https://api.example.com/market'); // Replace with real API
+    const data=await res.json();
+    const table=document.getElementById('marketTable');
+    table.innerHTML='<tr><th>'+ (currentLang==='hi'?'फसल':'Crop') +'</th><th>'+ (currentLang==='hi'?'कीमत (₹/किग्रा)':'Price/kg (₹)') +'</th></tr>';
+    data.forEach(m=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${m.crop}</td><td>${m.price}</td>`;table.appendChild(tr);});
+  }catch(err){console.error('Market API error',err);}
+}
+
+async function fetchWeatherData(){
+  try{
+    const res=await fetch('https://api.example.com/weather'); // Replace with real API
+    const data=await res.json();
+    const container=document.getElementById('weatherCards');container.innerHTML='';
+    data.forEach(w=>{const div=document.createElement('div');div.className='card';div.textContent=`${w.day}: ${w.temp}°C, ${w.desc}`;container.appendChild(div);});
+  }catch(err){console.error('Weather API error',err);}
+}
+
+// Auto-refresh every 15 mins
+setInterval(()=>{fetchMarketData();fetchWeatherData();},900000);
+
+// Initialize
 updateLang();
-fetchWeather();
-fetchMarket();
+fetchMarketData();
+fetchWeatherData();
 </script>
 
 </body>
