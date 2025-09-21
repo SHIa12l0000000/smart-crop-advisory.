@@ -11,57 +11,77 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
 header img{height:40px}header h1{font-size:1.4rem;margin:0 10px}
 main{padding:16px}section{display:none;animation:fadeIn .4s}section.active{display:block}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-button{border:none;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:600;transition:.3s}
-button:hover{opacity:.85}.btn-primary{background:#22c55e;color:#fff}.btn-secondary{background:#e5e7eb;color:#111}
-body.dark .btn-secondary{background:#334155;color:#a5f3fc}.btn-line{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+button{border:none;cursor:pointer;font-weight:600;transition:.3s}
+button:hover{opacity:.85}
+.btn-primary{background:#22c55e;color:#fff}
+.btn-secondary{background:#e5e7eb;color:#111}
+body.dark .btn-secondary{background:#334155;color:#a5f3fc}
 
-/* ======================== SCROLLABLE LARGE TABS ======================== */
-.tab-container {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
+/* ======================== HOME PAGE CARD TILES ======================== */
+.btn-line{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:16px;
+  margin-top:16px;
 }
-.tab-btn {
-  flex: 0 0 auto;
-  min-width: 150px;
-  padding: 14px 20px;
-  border-radius: 16px;
-  background: #d1fae5;
-  color: #166534;
-  font-weight: 700;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: .3s;
-  text-align: center;
-  white-space: nowrap;
+.btn-line button {
+  min-height:140px;
+  padding:20px 16px;
+  border-radius:20px;
+  font-size:1.2rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  box-shadow:0 6px 14px rgba(0,0,0,0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-.tab-btn.active {
-  background: linear-gradient(135deg,#16a34a,#22c55e);
-  color: #fff;
-  box-shadow: 0 6px 14px rgba(0,0,0,.25);
+.btn-line button:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.25);
 }
-body.dark .tab-btn { background: #334155; color: #a5f3fc; }
-body.dark .tab-btn.active { background: #22c55e; color: #fff; }
 
+/* ======================== TABS ======================== */
+.tab-container {display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scroll-behavior:smooth;}
+.tab-btn {flex:0 0 auto;min-width:150px;padding:14px 20px;border-radius:16px;background:#d1fae5;color:#166534;font-weight:700;font-size:1.1rem;cursor:pointer;text-align:center;white-space:nowrap;transition:.3s;}
+.tab-btn.active {background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 6px 14px rgba(0,0,0,.25);}
+body.dark .tab-btn{background:#334155;color:#a5f3fc;}
+body.dark .tab-btn.active{background:#22c55e;color:#fff;}
 .tab-content{display:none;border-radius:16px;padding:14px;background:#f9fafb;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-top:10px}
-.tab-content.active{display:block}body.dark .tab-content{background:#2a2a2a;border:1px solid #555}
+.tab-content.active{display:block}
+body.dark .tab-content{background:#2a2a2a;border:1px solid #555}
+
+/* ====== FORMS ====== */
 form label{display:block;margin-top:10px;font-weight:600}
 form input,form select{width:100%;padding:8px;margin-top:4px;border-radius:8px;border:1px solid #ccc}
 body.dark form input,body.dark form select{background:#1e293b;border:1px solid #555;color:#e2e8f0}
+
+/* ====== CARDS ====== */
 .card{background:#fff;padding:12px 16px;border-radius:12px;margin:8px 0;box-shadow:0 2px 6px rgba(0,0,0,.1)}
 body.dark .card{background:#334155;color:#e2e8f0}
+
+/* ====== FIXED BUTTONS ====== */
 #darkToggle,#voiceButtonInline{position:fixed;bottom:20px;width:50px;height:50px;border-radius:50%;font-size:24px;display:flex;align-items:center;justify-content:center;z-index:999;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-#darkToggle{right:20px;background:#16a34a;color:#fff}#voiceButtonInline{right:80px;background:#3b82f6;color:#fff}
+#darkToggle{right:20px;background:#16a34a;color:#fff}
+#voiceButtonInline{right:80px;background:#3b82f6;color:#fff}
 #voiceButtonInline.listening{animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+
 table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid #ccc;padding:8px;text-align:center;border-radius:8px}
 body.dark th,body.dark td{border-color:#555}
+
+/* ====== SPLASH ====== */
 #splash{position:fixed;top:0;left:0;right:0;bottom:0;background:#16a34a;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;font-size:1.2rem}
 #splash img{height:80px;margin-bottom:12px}
-@media (max-width:600px){body{font-size:14px}.btn-line{flex-direction:column}.card{padding:10px}.tab-btn{font-size:1rem;padding:12px 16px}}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width:600px){
+  body{font-size:14px}
+  .btn-line button{min-height:120px;font-size:1rem;padding:16px}
+  .tab-btn{font-size:1rem;padding:12px 16px}
+  .card{padding:10px}
+}
 </style>
 </head>
 <body>
@@ -79,6 +99,7 @@ body.dark th,body.dark td{border-color:#555}
 </header>
 
 <main>
+  <!-- LANGUAGE -->
   <section id="language" class="active">
     <h2 id="langTitle">Select Language 🌐</h2>
     <select id="langSelect">
@@ -86,55 +107,59 @@ body.dark th,body.dark td{border-color:#555}
       <option value="hi">हिन्दी</option>
     </select>
     <br><br>
-    <button class="btn-primary" onclick="setLanguage()"><span id="confirmLangBtn">✅ Confirm Language</span></button>
+    <button class="btn-primary" onclick="setLanguage()">✅ Confirm Language</button>
   </section>
 
+  <!-- HOME -->
   <section id="home">
     <h2 id="homeTitle">Welcome 👋</h2>
     <p id="homeText" style="text-align:center;">Select an option below:</p>
     <div class="btn-line">
-      <button class="btn-primary" onclick="showPage('input')" id="btnInput">👨‍🌾 Farmer Input</button>
-      <button class="btn-primary" onclick="showPage('advisories')" id="btnAdvisory">📋 Advisories</button>
-      <button class="btn-primary" onclick="showPage('solution')" id="btnSolution">💡 Solution Concept</button>
-      <button class="btn-primary" onclick="showPage('market')" id="btnMarket">💹 Market Prices</button>
-      <button class="btn-primary" onclick="showPage('weather')" id="btnWeather">☁️ Weather</button>
-      <button class="btn-primary" onclick="showPage('soil')" id="btnSoil">🌱 Soil Health</button>
-      <button class="btn-primary" onclick="showPage('roadmap')" id="btnRoadmap">🚀 Roadmap</button>
+      <button class="btn-primary" onclick="showPage('input')">👨‍🌾 Farmer Input</button>
+      <button class="btn-primary" onclick="showPage('advisories')">📋 Advisories</button>
+      <button class="btn-primary" onclick="showPage('solution')">💡 Solution Concept</button>
+      <button class="btn-primary" onclick="showPage('market')">💹 Market Prices</button>
+      <button class="btn-primary" onclick="showPage('weather')">☁️ Weather</button>
+      <button class="btn-primary" onclick="showPage('soil')">🌱 Soil Health</button>
+      <button class="btn-primary" onclick="showPage('roadmap')">🚀 Roadmap</button>
     </div>
   </section>
 
+  <!-- ====== FARMER INPUT ====== -->
   <section id="input">
     <h2 id="inputTitle">👨‍🌾 Farmer Input</h2>
     <form id="farmerForm">
-      <label id="labelName">Name</label><input type="text" name="name" placeholder="Farmer name" required />
-      <label id="labelPhone">Phone (SMS/IVR)</label><input type="tel" name="phone" placeholder="91XXXXXXXXXX" required />
-      <label id="labelDistrict">District</label><input type="text" name="district" placeholder="District" required />
-      <label id="labelArea">Area (acres)</label><input type="number" name="area" step="0.1" value="1" required />
-      <label id="labelSoil">Soil Type</label>
+      <label>Name</label><input type="text" name="name" placeholder="Farmer name" required />
+      <label>Phone (SMS/IVR)</label><input type="tel" name="phone" placeholder="91XXXXXXXXXX" required />
+      <label>District</label><input type="text" name="district" placeholder="District" required />
+      <label>Area (acres)</label><input type="number" name="area" step="0.1" value="1" required />
+      <label>Soil Type</label>
       <select name="soil" id="soilSelect" required>
         <option value="loamy">Loamy</option>
         <option value="sandy">Sandy</option>
         <option value="clay">Clay</option>
         <option value="silty">Silty</option>
       </select>
-      <label id="labelCrop">Crop</label><input type="text" name="crop" value="Wheat" required />
+      <label>Crop</label><input type="text" name="crop" value="Wheat" required />
       <div class="btn-line">
-        <button type="submit" class="btn-primary" id="btnGetAdvisory">✨ Get Advisory</button>
-        <button type="reset" class="btn-secondary" id="btnReset">Reset</button>
-        <button type="button" class="btn-secondary" onclick="showPage('home')" id="btnBackInput">⬅ Back</button>
+        <button type="submit" class="btn-primary">✨ Get Advisory</button>
+        <button type="reset" class="btn-secondary">Reset</button>
+        <button type="button" class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
       </div>
     </form>
   </section>
 
+  <!-- ====== ADVISORIES ====== -->
   <section id="advisories">
-    <h2 id="advisoryTitle">📋 Advisories</h2>
+    <h2>📋 Advisories</h2>
     <div id="advisoryList"><p id="noAdvisory">No advisories yet — fill the form and click "Get Advisory".</p></div>
     <br/>
-    <button class="btn-secondary" onclick="showPage('home')" id="btnBackAdvisory">⬅ Back</button>
+    <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
   </section>
 
+  <!-- ====== SOLUTION CONCEPT TABS ====== -->
   <section id="solution">
-    <h2 id="solutionTitle">💡 Solution Concept</h2>
+    <h2>💡 Solution Concept</h2>
     <div class="tab-container">
       <button class="tab-btn active" onclick="openTab('crop')">🌾 Crop Advice</button>
       <button class="tab-btn" onclick="openTab('fertilizer')">🧪 Fertilizer</button>
@@ -144,17 +169,9 @@ body.dark th,body.dark td{border-color:#555}
     <div id="tab-crop" class="tab-content active">✔ Helps farmers choose the right crop based on soil & weather.</div>
     <div id="tab-fertilizer" class="tab-content">
       <h3>Organic Fertilizers</h3>
-      <ul>
-        <li>Improves soil health</li>
-        <li>Environmentally friendly</li>
-        <li>Slow nutrient release</li>
-      </ul>
+      <ul><li>Improves soil health</li><li>Environmentally friendly</li><li>Slow nutrient release</li></ul>
       <h3>Chemical Fertilizers</h3>
-      <ul>
-        <li>Quick nutrient release</li>
-        <li>Precise nutrient control</li>
-        <li>Can degrade soil with overuse</li>
-      </ul>
+      <ul><li>Quick nutrient release</li><li>Precise nutrient control</li><li>Can degrade soil with overuse</li></ul>
     </div>
     <div id="tab-pest" class="tab-content">✔ Provides pest control tips and eco-friendly solutions.</div>
     <div id="tab-marketAdvice" class="tab-content">✔ Updates market prices and connects with buyers.</div>
@@ -162,30 +179,32 @@ body.dark th,body.dark td{border-color:#555}
     <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
   </section>
 
+  <!-- ====== MARKET ====== -->
   <section id="market">
-    <h2 id="marketTitle">💹 Market Prices</h2>
+    <h2>💹 Market Prices</h2>
     <div class="card">
-      <table id="marketTable">
-        <tr><th>Crop</th><th>Price/kg (₹)</th></tr>
-      </table>
+      <table id="marketTable"><tr><th>Crop</th><th>Price/kg (₹)</th></tr></table>
     </div>
     <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
   </section>
 
+  <!-- ====== WEATHER ====== -->
   <section id="weather">
-    <h2 id="weatherTitle">☁️ Weather Forecast</h2>
+    <h2>☁️ Weather Forecast</h2>
     <div id="weatherCards"></div>
     <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
   </section>
 
+  <!-- ====== SOIL ====== -->
   <section id="soil">
-    <h2 id="soilTitle">🌱 Soil Health Tips</h2>
+    <h2>🌱 Soil Health Tips</h2>
     <div id="soilCards"></div>
     <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
   </section>
 
+  <!-- ====== ROADMAP ====== -->
   <section id="roadmap">
-    <h2 id="roadmapTitle">🚀 Feature Roadmap</h2>
+    <h2>🚀 Feature Roadmap</h2>
     <ul id="roadmapList"></ul>
     <br/>
     <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
@@ -201,29 +220,24 @@ body.dark th,body.dark td{border-color:#555}
 <button id="voiceButtonInline">🎤</button>
 
 <script>
-let currentLang="en";
-let activeInput=null;
+// ====== CORE ======
+let currentLang="en"; let activeInput=null;
 const pages=["home","input","advisories","roadmap","language","solution","market","weather","soil"];
-
 const langData={
   en:{advisoryMsg:"Follow soil & crop recommendations for optimal yield.",market:[{crop:"Wheat",price:21},{crop:"Rice",price:28},{crop:"Cotton",price:65},{crop:"Tomato",price:18},{crop:"Onion",price:12}],weatherData:[{day:"Mon",temp:30,desc:"Sunny"},{day:"Tue",temp:28,desc:"Rainy"},{day:"Wed",temp:29,desc:"Cloudy"}],soilTips:[{type:"Loamy",tip:"Ideal for most crops; retains moisture & nutrients"},{type:"Sandy",tip:"Drains quickly; may need organic matter"},{type:"Clay",tip:"Holds nutrients but drains poorly"},{type:"Silty",tip:"Fertile but can compact easily"}],roadmap:["App + SMS + IVR + Local language voice messages","IoT sensors for soil moisture / pH","Weather + Soil + Satellite data → AI model","Market prices, buyer connect, storage tips","Offline SMS digests for low connectivity","Training & onboarding for farmers"]},
   hi:{advisoryMsg:"अधिकतम पैदावार के लिए मिट्टी और फसल की सिफारिशों का पालन करें।",market:[{crop:"गेहूँ",price:21},{crop:"चावल",price:28},{crop:"कपास",price:65},{crop:"टमाटर",price:18},{crop:"प्याज",price:12}],weatherData:[{day:"सोम",temp:30,desc:"धूप"},{day:"मंगल",temp:28,desc:"बारिश"},{day:"बुध",temp:29,desc:"बादल"}],soilTips:[{type:"दोमट",tip:"अधिकतर फसलों के लिए आदर्श; नमी और पोषक तत्व बनाए रखता है"},{type:"रेतीली",tip:"जल जल्दी निकलता है; कार्बनिक पदार्थ की आवश्यकता"},{type:"मिट्टी",tip:"पोषक तत्व रखता है लेकिन जल निकासी खराब"},{type:"सिली",tip:"उर्वरक लेकिन आसानी से सघन हो सकती है"}],roadmap:["ऐप + SMS + IVR + स्थानीय भाषा वॉइस संदेश","मृदा नमी / pH के लिए IoT सेंसर","मौसम + मिट्टी + सैटेलाइट डेटा → AI मॉडल","बाजार की कीमतें, खरीदार कनेक्ट, भंडारण सुझाव","कम कनेक्टिविटी के लिए ऑफलाइन SMS सार","किसानों के लिए प्रशिक्षण और ऑनबोर्डिंग"]}
 };
 
-function setLanguage(){currentLang=document.getElementById('langSelect').value;updateLang();fetchMarketData();fetchWeatherData();showPage('home');}
-
+function setLanguage(){currentLang=document.getElementById('langSelect').value;updateLang();showPage('home');}
 function updateLang(){
   const data=langData[currentLang];
   const table=document.getElementById('marketTable');
   table.innerHTML='<tr><th>'+ (currentLang==='hi'?'फसल':'Crop') +'</th><th>'+ (currentLang==='hi'?'कीमत (₹/किग्रा)':'Price/kg (₹)') +'</th></tr>';
   data.market.forEach(m=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${m.crop}</td><td>${m.price}</td>`;table.appendChild(tr);});
-  
   const weatherContainer=document.getElementById('weatherCards');weatherContainer.innerHTML='';
   data.weatherData.forEach(w=>{const div=document.createElement('div');div.className='card';div.textContent=`${w.day}: ${w.temp}°C, ${w.desc}`;weatherContainer.appendChild(div);});
-  
   const soilContainer=document.getElementById('soilCards');soilContainer.innerHTML='';
   data.soilTips.forEach(s=>{const div=document.createElement('div');div.className='card';div.textContent=`🌱 ${s.type} - ${s.tip}`;soilContainer.appendChild(div);});
-  
   const roadmapList=document.getElementById('roadmapList');roadmapList.innerHTML='';
   data.roadmap.forEach(r=>{const li=document.createElement('li');li.textContent=r;roadmapList.appendChild(li);});
 }
@@ -232,7 +246,6 @@ function showPage(id){pages.forEach(p=>document.getElementById(p).classList.remo
 function openTab(tab){document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));document.querySelector(`[onclick="openTab('${tab}')"]`).classList.add("active");document.getElementById("tab-"+tab).classList.add("active");}
 
 document.getElementById('darkToggle').addEventListener("click",()=>document.body.classList.toggle("dark"));
-
 document.querySelectorAll("input[type=text], input[type=tel]").forEach(inp=>{inp.addEventListener("focus",()=>activeInput=inp)});
 const voiceBtn=document.getElementById("voiceButtonInline");
 voiceBtn.addEventListener("click",()=>{
@@ -261,30 +274,11 @@ document.getElementById('farmerForm').addEventListener('submit',e=>{
 // Splash screen hide
 setTimeout(()=>document.getElementById('splash').style.display='none',1500);
 
-// ======= LIVE API FETCH FUNCTIONS =======
-async function fetchMarketData(){
-  try{
-    const res=await fetch('https://api.example.com/market'); // Replace with real API
-    const data=await res.json();
-    const table=document.getElementById('marketTable');
-    table.innerHTML='<tr><th>'+ (currentLang==='hi'?'फसल':'Crop') +'</th><th>'+ (currentLang==='hi'?'कीमत (₹/किग्रा)':'Price/kg (₹)') +'</th></tr>';
-    data.forEach(m=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${m.crop}</td><td>${m.price}</td>`;table.appendChild(tr);});
-  }catch(err){console.error('Market API error',err);}
-}
-
-async function fetchWeatherData(){
-  try{
-    const res=await fetch('https://api.example.com/weather'); // Replace with real API
-    const data=await res.json();
-    const container=document.getElementById('weatherCards');container.innerHTML='';
-    data.forEach(w=>{const div=document.createElement('div');div.className='card';div.textContent=`${w.day}: ${w.temp}°C, ${w.desc}`;container.appendChild(div);});
-  }catch(err){console.error('Weather API error',err);}
-}
-
-// Auto-refresh every 15 mins
+// ======= LIVE API FETCH PLACEHOLDER =======
+async function fetchMarketData(){console.log("Fetch market API here");}
+async function fetchWeatherData(){console.log("Fetch weather API here");}
 setInterval(()=>{fetchMarketData();fetchWeatherData();},900000);
 
-// Initialize
 updateLang();
 fetchMarketData();
 fetchWeatherData();
