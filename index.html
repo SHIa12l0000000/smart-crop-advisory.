@@ -130,7 +130,7 @@ For production: connect sensors, weather API & backend AI.
 </footer>
 
 <script>
-// Splash screen auto-hide
+// Splash screen
 window.addEventListener("load", () => {
     setTimeout(() => {
         document.getElementById("splash").style.display = "none";
@@ -202,7 +202,7 @@ function generateAdvisory(data){
     return `<div class='advisory'><h3>${title}</h3><ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
 }
 
-// Voice input for mobile & desktop
+// Voice input
 function startVoice(){
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if(!SpeechRecognition){
@@ -216,26 +216,30 @@ function startVoice(){
         return;
     }
 
+    // Hide mobile keyboard
+    activeInput.blur();
+
     let recognition = new SpeechRecognition();
     recognition.lang = currentLang === "hi" ? "hi-IN" : "en-US";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
+
     recognition.start();
 
     recognition.onresult = function(event){
         const transcript = event.results[0][0].transcript;
         activeInput.value = transcript;
+        activeInput.focus(); // refocus
     };
 
     recognition.onerror = function(event){
         if(event.error === "no-speech"){
-            alert("No speech detected! Please speak clearly and try again.");
+            alert("No speech detected! Speak immediately after pressing the mic.");
         } else {
             alert("Voice recognition error: " + event.error);
         }
     };
 }
 </script>
-
 </body>
 </html>
