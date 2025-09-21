@@ -28,7 +28,7 @@ body.dark .advisory { border-color:#555; background:#2b2b2b; color:#f0f0f0; }
 .advisory h3 { margin: 0; font-size: 1rem; color: #166534; }
 body.dark .advisory h3 { color:#a0f0a0; }
 ul { margin: 0.5rem 0 0; padding-left: 20px; }
-footer { font-size: 0.8rem; }
+footer { font-size: 0.8rem; text-align:center; }
 #home { display: block; text-align: center; }
 .menu-btn { display: block; width: 100%; margin: 10px 0; padding: 14px; font-size: 1rem; border-radius: 12px; border: none; cursor: pointer; background: #16a34a; color: white; transition: 0.2s; }
 .menu-btn:hover { background: #15803d; }
@@ -36,12 +36,24 @@ footer { font-size: 0.8rem; }
 #splash img { width: 70px; margin-bottom: 10px; }
 @keyframes fade { from {opacity:0;} to {opacity:1;} }
 @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-.voice-btn { margin-top:5px; font-size:0.9rem; padding:6px 12px; border-radius:8px; background:#15803d; color:white; border:none; cursor:pointer; }
-.voice-btn:hover { background:#136f2d; }
-#langCorner { position: fixed; top:10px; right:10px; background:#16a34a; color:white; padding:6px 10px; border-radius:10px; cursor:pointer; z-index:1000; transition:0.3s;}
+
+/* Small corner buttons */
+#langCorner, #darkToggle {
+    position: fixed; top:10px; padding:6px 10px; border-radius:8px; cursor:pointer; font-size:0.85rem; font-weight:bold; z-index:1000; transition:0.3s;
+}
+#langCorner { left:10px; background:#16a34a; color:white;}
 body.dark #langCorner { background:#0f4d29;}
-#darkToggle { position: fixed; top:50px; right:10px; background:#16a34a; color:white; padding:6px 10px; border-radius:10px; cursor:pointer; z-index:1000; transition:0.3s;}
+#darkToggle { right:10px; background:#16a34a; color:white;}
 body.dark #darkToggle { background:#0f4d29;}
+
+/* Floating mic button */
+#voiceButton { position:fixed; bottom:20px; right:20px; font-size:1.2rem; padding:10px 14px; border-radius:50%; background:#16a34a; color:white; border:none; cursor:pointer; z-index:1000; transition:0.2s; box-shadow:0 0 5px #16a34a;}
+#voiceButton.listening { animation: pulse 1s infinite; }
+@keyframes pulse {
+  0% { box-shadow:0 0 5px #16a34a; }
+  50% { box-shadow:0 0 15px #16a34a; }
+  100% { box-shadow:0 0 5px #16a34a; }
+}
 </style>
 </head>
 <body>
@@ -60,7 +72,10 @@ body.dark #darkToggle { background:#0f4d29;}
 
 <!-- Language & Dark Mode Buttons -->
 <div id="langCorner" onclick="showPage('language')">🌐 Language</div>
-<div id="darkToggle" onclick="toggleDark()">🌙 Dark/Light</div>
+<div id="darkToggle" onclick="toggleDark()">🌙 Dark</div>
+
+<!-- Floating mic button -->
+<button id="voiceButton">🎤</button>
 
 <main>
 <!-- Language Selection -->
@@ -89,14 +104,12 @@ body.dark #darkToggle { background:#0f4d29;}
 <form id="farmerForm">
 <label id="labelName">Name</label>
 <input type="text" name="name" required placeholder="Farmer name" />
-<button type="button" class="voice-btn" onclick="startVoice('name')">🎤 Speak Name</button>
 
 <label id="labelPhone">Phone (for SMS/IVR)</label>
 <input type="tel" name="phone" required placeholder="91XXXXXXXXXX" pattern="[0-9]{10}" />
 
 <label id="labelDistrict">District</label>
 <input type="text" name="district" placeholder="District" />
-<button type="button" class="voice-btn" onclick="startVoice('district')">🎤 Speak District</button>
 
 <label id="labelArea">Area (acres)</label>
 <input type="number" name="area" step="0.1" value="1" />
@@ -110,8 +123,7 @@ body.dark #darkToggle { background:#0f4d29;}
 </select>
 
 <label id="labelCrop">Crop</label>
-<input type="text" name="crop" id="cropInput" value="Wheat" />
-<button type="button" class="voice-btn" onclick="startVoice('crop')">🎤 Speak Crop</button>
+<input type="text" name="crop" id="cropInput" value="Wheat" placeholder="Wheat" />
 
 <br><br>
 <button type="submit" class="btn-primary" id="btnGetAdvisory">✨ Get Advisory</button>
@@ -142,7 +154,6 @@ body.dark #darkToggle { background:#0f4d29;}
 <br />
 <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
 </section>
-</main>
 
 <footer>
 Prototype — Built for Smart India Hackathon idea submission.<br/>
@@ -151,29 +162,20 @@ For production: connect sensors, weather API & backend AI.
 
 <script>
 // Splash
-window.addEventListener("load", () => {
-    setTimeout(() => {
-        document.getElementById("splash").style.display = "none";
-        showPage("language");
-    }, 1500);
-});
+window.addEventListener("load", () => { setTimeout(()=>{document.getElementById("splash").style.display="none"; showPage("language");},1500); });
 
 const pages = ["home","input","advisories","roadmap","language"];
 let currentLang = "en";
+let activeInput = null;
 
-// Dark mode toggle
-function toggleDark(){
-    document.body.classList.toggle("dark");
-}
+// Dark mode
+function toggleDark(){ document.body.classList.toggle("dark"); }
 
 // Show page
-function showPage(id){
-    pages.forEach(p => document.getElementById(p).style.display="none");
-    document.getElementById(id).style.display="block";
-}
+function showPage(id){ pages.forEach(p=>document.getElementById(p).style.display="none"); document.getElementById(id).style.display="block"; }
 
-// Translations
-const uiTrans = {
+// Translation
+const uiTrans = { 
   en:{ homeTitle:"Welcome 👋", homeText:"Select an option below:", btnInput:"👨‍🌾 Farmer Input", btnAdvisory:"📋 Advisories", btnRoadmap:"🚀 Roadmap", inputTitle:"👨‍🌾 Farmer Input", labelName:"Name", labelPhone:"Phone (for SMS/IVR)", labelDistrict:"District", labelArea:"Area (acres)", labelSoil:"Soil Type", labelCrop:"Crop", btnGetAdvisory:"✨ Get Advisory", btnReset:"Reset", cropPlaceholder:"Wheat", thanks:"Thanks for using our website! It will help you a lot."},
   hi:{ homeTitle:"स्वागत है 👋", homeText:"नीचे विकल्प चुनें:", btnInput:"👨‍🌾 किसान इनपुट", btnAdvisory:"📋 सलाह", btnRoadmap:"🚀 रोडमैप", inputTitle:"👨‍🌾 किसान इनपुट", labelName:"नाम", labelPhone:"फोन (SMS/IVR के लिए)", labelDistrict:"जिला", labelArea:"क्षेत्र (एकड़)", labelSoil:"मिट्टी का प्रकार", labelCrop:"फसल", btnGetAdvisory:"✨ सलाह प्राप्त करें", btnReset:"रीसेट करें", cropPlaceholder:"गेहूं", thanks:"हमारी वेबसाइट का उपयोग करने के लिए धन्यवाद! यह आपकी बहुत मदद करेगा।"}
 };
@@ -190,19 +192,15 @@ const advTrans = {
 // Set language
 function setLanguage(){
     currentLang = document.getElementById("langSelect").value;
-    for(const key in uiTrans[currentLang]){
-        let el = document.getElementById(key);
-        if(el) el.innerText = uiTrans[currentLang][key];
-    }
-    const soilSelect = document.getElementById("soilSelect");
-    soilSelect.innerHTML="";
-    soilTrans[currentLang].forEach(s => {
-        const opt = document.createElement("option");
-        opt.value=s; opt.text=s; soilSelect.appendChild(opt);
+    document.querySelectorAll("[id]").forEach(el=>{
+        if(uiTrans[currentLang][el.id]) el.innerText = uiTrans[currentLang][el.id];
     });
-    const cropInput = document.getElementById("cropInput");
-    cropInput.placeholder = uiTrans[currentLang].cropPlaceholder;
-    if(cropInput.value === uiTrans[currentLang==='en'?'hi':'en'].cropPlaceholder){ cropInput.value=uiTrans[currentLang].cropPlaceholder; }
+    // Update placeholders
+    document.getElementById("cropInput").placeholder = uiTrans[currentLang].cropPlaceholder;
+    // Update soil options
+    let soilSelect = document.getElementById("soilSelect");
+    soilSelect.innerHTML = "";
+    soilTrans[currentLang].forEach(s=>{ let opt=document.createElement("option"); opt.text=s; soilSelect.add(opt); });
     showPage("home");
 }
 
@@ -213,41 +211,42 @@ form.addEventListener("submit", e=>{
     e.preventDefault();
     const data = Object.fromEntries(new FormData(form));
     const adv = generateAdvisory(data);
-    list.innerHTML = adv + `<p style="margin-top:10px; color:#16a34a;">${uiTrans[currentLang].thanks}</p>`;
+    list.innerHTML = adv + `<p style="margin-top:10px;font-style:italic;">${uiTrans[currentLang].thanks}</p>`;
     showPage("advisories");
 });
 function generateAdvisory(data){
-    let tips=[]; 
-    const crop = data.crop.toLowerCase();
-    let title = advTrans[currentLang].generalTitle;
-    if(crop.includes("wheat") || crop.includes("गेहूं")){ tips.push(advTrans[currentLang].wheat1, advTrans[currentLang].wheat2); title=advTrans[currentLang].wheatTitle; }
-    else if(crop.includes("rice") || crop.includes("चावल")){ tips.push(advTrans[currentLang].rice1, advTrans[currentLang].rice2); title=advTrans[currentLang].riceTitle; }
+    let tips=[];
+    let cropLower = data.crop.toLowerCase();
+    if(cropLower.includes(currentLang==='hi'?'गेहूं':'wheat')) { tips.push(advTrans[currentLang].wheat1, advTrans[currentLang].wheat2); }
+    else if(cropLower.includes(currentLang==='hi'?'चावल':'rice')) { tips.push(advTrans[currentLang].rice1, advTrans[currentLang].rice2); }
     else { tips.push(advTrans[currentLang].general, advTrans[currentLang].general); }
-    if(data.soil.toLowerCase().includes("sandy") || data.soil.includes("रेतीली")) tips.push(advTrans[currentLang].soilSandy);
-    if(parseFloat(data.area) > 5) tips.push(advTrans[currentLang].largeArea);
+    if(data.soil.toLowerCase().includes(currentLang==='hi'?'रेतीली':'sandy')) tips.push(advTrans[currentLang].soilSandy);
+    if(parseFloat(data.area)>5) tips.push(advTrans[currentLang].largeArea);
     tips.push(advTrans[currentLang].market);
+    let title = advTrans[currentLang].generalTitle;
+    if(cropLower.includes(currentLang==='hi'?'गेहूं':'wheat')) title=advTrans[currentLang].wheatTitle;
+    if(cropLower.includes(currentLang==='hi'?'चावल':'rice')) title=advTrans[currentLang].riceTitle;
     return `<div class='advisory'><h3>${title}</h3><ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
 }
 
 // Voice input
-function startVoice(fieldName){
+document.querySelectorAll("input[type=text], input[type=tel]").forEach(inp=>{
+    inp.addEventListener("focus", ()=>{ activeInput = inp; });
+});
+document.getElementById("voiceButton").addEventListener("click", ()=>{
+    if(!activeInput){ alert(currentLang==='hi'?"कृपया पहले किसी फ़ील्ड पर टैप करें।":"Please tap on a field to enter text via voice"); return; }
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if(!SpeechRecognition){ alert("Voice input not supported!"); return; }
-    const inputField = document.querySelector(`[name="${fieldName}"]`);
-    if(!inputField){ alert("Field not found"); return; }
     let recognition = new SpeechRecognition();
-    recognition.lang = currentLang === "hi" ? "hi-IN" : "en-US";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.onresult = function(event){
-        inputField.value = event.results[0][0].transcript; inputField.focus();
-    };
-    recognition.onerror=function(event){
-        if(event.error==="no-speech"){ recognition.stop(); setTimeout(()=>{startVoice(fieldName);},500);}
-        else{ alert("Voice recognition error: "+event.error);}
-    };
+    recognition.lang = currentLang==='hi'?'hi-IN':'en-US';
+    recognition.interimResults=false;
+    recognition.maxAlternatives=1;
     recognition.start();
-}
+    document.getElementById("voiceButton").classList.add("listening");
+    recognition.onresult=function(event){ activeInput.value = event.results[0][0].transcript; };
+    recognition.onerror=function(event){ alert("Voice recognition error: "+event.error); };
+    recognition.onend=function(){ document.getElementById("voiceButton").classList.remove("listening"); };
+});
 </script>
 </body>
 </html>
