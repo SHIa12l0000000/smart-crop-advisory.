@@ -5,77 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Smart Crop Advisory App</title>
 <style>
-/* General Styles */
-body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; background: #f0fdf4; color: #222; transition:0.3s; }
-body.dark { background: #121212; color: #f0f0f0; }
-header, footer { text-align: center; padding: 0.8rem 1rem; background: #16a34a; color: white; transition:0.3s; }
-body.dark header, body.dark footer { background: #0f4d29; color: white; }
-header img { width: 35px; vertical-align: middle; margin-right: 6px; }
-header h1 { margin: 0; font-size: 1.4rem; display: inline-block; vertical-align: middle; }
-main { max-width: 700px; margin: auto; padding: 1rem; }
-section { background: white; border-radius: 16px; padding: 1rem 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; animation: fade 0.3s ease-in-out; transition:0.3s; }
-body.dark section { background: #1e1e1e; color: #f0f0f0; box-shadow:none; }
-h2 { font-size: 1.2rem; margin-bottom: 0.5rem; color: #166534; }
-body.dark h2 { color:#a0f0a0; }
-form input, form select { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 10px; font-size: 0.95rem; background:white; color:black; }
-body.dark form input, body.dark form select { background:#2b2b2b; color:#f0f0f0; border:1px solid #555; }
-button { padding: 10px 16px; border: none; border-radius: 10px; cursor: pointer; font-size: 0.95rem; transition:0.2s; }
-.btn-primary { background: #16a34a; color: white; }
-.btn-primary:hover { background: #15803d; }
-.btn-secondary { background: #f3f4f6; color: #111; }
-body.dark .btn-secondary { background:#2b2b2b; color:#f0f0f0;}
-.advisory { border: 1px solid #e5e7eb; padding: 10px; margin-top: 10px; border-radius: 10px; background: #f9fafb; }
-body.dark .advisory { border-color:#555; background:#2b2b2b; color:#f0f0f0; }
-.advisory h3 { margin: 0; font-size: 1rem; color: #166534; }
-body.dark .advisory h3 { color:#a0f0a0; }
-ul { margin: 0.5rem 0 0; padding-left: 20px; }
-footer { font-size: 0.8rem; text-align:center; }
-#home { display: block; text-align: center; }
-.menu-btn { display: block; width: 100%; margin: 8px 0; padding: 12px; font-size: 1rem; border-radius: 12px; border: none; cursor: pointer; background: #16a34a; color: white; transition: 0.2s; }
-.menu-btn:hover { background: #15803d; }
-#splash { position: fixed; top:0; left:0; right:0; bottom:0; background: #16a34a; color: white; display:flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.3rem; z-index: 9999; animation: fadeIn 1s; }
-#splash img { width: 70px; margin-bottom: 10px; }
+body { font-family:"Segoe UI", Arial, sans-serif; margin:0; background:#f0fdf4; color:#222; transition:0.3s; }
+body.dark { background:#111; color:#eee; }
+header, footer { text-align:center; padding:1rem; background:#16a34a; color:white; position:relative; }
+header img { width:40px; vertical-align:middle; margin-right:8px; }
+header h1 { margin:0; font-size:1.5rem; display:inline-block; vertical-align:middle; }
+#langCorner { position:absolute; left:10px; top:50%; transform:translateY(-50%); font-size:0.8rem; background:#fff; color:#16a34a; border-radius:6px; padding:2px 6px; cursor:pointer; }
+body.dark #langCorner { background:#333; color:#a5f3fc; }
+main { max-width:700px; margin:auto; padding:1rem; }
+section { background:white; border-radius:16px; padding:1rem 1.2rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); display:none; animation:fade 0.3s ease-in-out; margin-bottom:1rem; }
+body.dark section { background:#222; color:#eee; box-shadow:none; }
+h2 { font-size:1.2rem; margin-bottom:.5rem; color:#166534; }
+body.dark h2 { color:#a5f3fc; }
+form input, form select { width:100%; padding:8px; margin:4px 0; border:1px solid #ccc; border-radius:8px; font-size:.95rem; }
+body.dark form input, body.dark form select { background:#333; color:#eee; border:1px solid #555; }
+button { padding:8px 12px; border:none; border-radius:8px; cursor:pointer; font-size:.9rem; transition:0.2s; }
+.btn-primary { background:#16a34a; color:white; }
+.btn-primary:hover { background:#15803d; }
+.btn-secondary { background:#f3f4f6; color:#111; margin-left:4px; }
+body.dark .btn-secondary { background:#444; color:#eee; }
+.advisory { border:1px solid #e5e7eb; padding:10px; margin-top:10px; border-radius:10px; background:#f9fafb; }
+body.dark .advisory { background:#333; border:1px solid #555; }
+.advisory h3 { margin:0; font-size:1rem; color:#166534; }
+body.dark .advisory h3 { color:#a5f3fc; }
+ul { margin:0.5rem 0 0; padding-left:20px; }
+table { width:100%; border-collapse:collapse; margin-top:10px; }
+th, td { border:1px solid #999; padding:6px; text-align:left; }
+body.dark th, body.dark td { border:1px solid #666; }
+#splash { position:fixed; top:0; left:0; right:0; bottom:0; background:#16a34a; color:white; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:1.3rem; z-index:9999; animation:fadeIn 1s; }
+#splash img { width:70px; margin-bottom:10px; }
+.btn-line { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
+#voiceButtonInline { background:#ef4444; color:white; }
+#voiceButtonInline.listening { background:#facc15; color:#111; }
 @keyframes fade { from {opacity:0;} to {opacity:1;} }
 @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-
-/* Small corner buttons */
-#langCorner, #darkToggle{
-    position: fixed; top:12px; width:32px; height:32px; line-height:32px; 
-    border-radius:50%; text-align:center; font-size:16px; font-weight:bold; 
-    cursor:pointer; z-index:1000; transition:0.3s;
-}
-#langCorner { left:12px; background:#16a34a; color:white;}
-body.dark #langCorner { background:#0f4d29;}
-#darkToggle { right:12px; background:#16a34a; color:white;}
-body.dark #darkToggle { background:#0f4d29;}
-
-/* Inline form buttons */
-.form-buttons { display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-start; margin-top:10px; }
-.form-buttons button { flex:1; min-width:60px; font-size:0.85rem; padding:6px 8px; }
-
-/* Mic button listening animation */
-#voiceButtonInline.listening {
-    background:#16a34a;
-    color:white;
-    animation: pulse 1s infinite;
-}
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 rgba(22,163,74,0.7); }
-    50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(22,163,74,0.7); }
-    100% { transform: scale(1); box-shadow: 0 0 0 rgba(22,163,74,0.7); }
-}
-
-/* Responsive */
-@media(max-width:480px){
-    header h1{ font-size:1.2rem; }
-    .menu-btn { font-size:0.95rem; padding:10px; }
-    .form-buttons button { font-size:0.8rem; padding:5px 6px; }
-}
 </style>
 </head>
 <body>
 
-<!-- Splash Screen -->
 <div id="splash">
 <img src="logo.png" alt="Logo" />
 <div>Smart Crop Advisory</div>
@@ -85,14 +52,11 @@ body.dark #darkToggle { background:#0f4d29;}
 <header>
 <img src="logo.png" alt="Logo" />
 <h1>Smart Crop Advisory</h1>
+<div id="langCorner">🌐</div>
 </header>
 
-<!-- Language & Dark Mode Buttons -->
-<div id="langCorner" title="Change Language">🌐</div>
-<div id="darkToggle" title="Toggle Dark Mode">🌙</div>
-
 <main>
-<!-- Language Selection -->
+
 <section id="language">
 <h2>Select Language 🌐</h2>
 <select id="langSelect">
@@ -103,24 +67,22 @@ body.dark #darkToggle { background:#0f4d29;}
 <button class="btn-primary" onclick="setLanguage()">✅ Confirm Language</button>
 </section>
 
-<!-- Home Screen -->
 <section id="home">
 <h2 id="homeTitle">Welcome 👋</h2>
 <p id="homeText">Select an option below:</p>
-<button class="menu-btn" onclick="showPage('input')" id="btnInput">👨‍🌾 Farmer Input</button>
-<button class="menu-btn" onclick="showPage('advisories')" id="btnAdvisory">📋 Advisories</button>
-<button class="menu-btn" onclick="showPage('roadmap')" id="btnRoadmap">🚀 Roadmap</button>
+<button class="btn-primary" onclick="showPage('input')" id="btnInput">👨‍🌾 Farmer Input</button>
+<button class="btn-primary" onclick="showPage('advisories')" id="btnAdvisory">📋 Advisories</button>
+<button class="btn-primary" onclick="showPage('roadmap')" id="btnRoadmap">🚀 Roadmap</button>
 </section>
 
-<!-- Farmer Input Section -->
 <section id="input">
 <h2 id="inputTitle">👨‍🌾 Farmer Input</h2>
 <form id="farmerForm">
 <label id="labelName">Name</label>
-<input type="text" name="name" required placeholder="Farmer name" />
+<input type="text" name="name" placeholder="Farmer name" />
 
-<label id="labelPhone">Phone (for SMS/IVR)</label>
-<input type="tel" name="phone" required placeholder="91XXXXXXXXXX" pattern="[0-9]{10}" />
+<label id="labelPhone">Phone (SMS/IVR)</label>
+<input type="tel" name="phone" placeholder="91XXXXXXXXXX" />
 
 <label id="labelDistrict">District</label>
 <input type="text" name="district" placeholder="District" />
@@ -129,26 +91,20 @@ body.dark #darkToggle { background:#0f4d29;}
 <input type="number" name="area" step="0.1" value="1" />
 
 <label id="labelSoil">Soil Type</label>
-<select name="soil" id="soilSelect">
-<option value="Loamy">Loamy</option>
-<option value="Sandy">Sandy</option>
-<option value="Clay">Clay</option>
-<option value="Laterite">Laterite</option>
-</select>
+<select name="soil" id="soilSelect"></select>
 
 <label id="labelCrop">Crop</label>
-<input type="text" name="crop" id="cropInput" value="Wheat" placeholder="Wheat" />
+<input type="text" name="crop" id="cropInput" value="Wheat" />
 
-<div class="form-buttons">
-  <button type="submit" class="btn-primary" id="btnGetAdvisory">✨ Get Advisory</button>
-  <button type="reset" class="btn-secondary" id="btnReset">Reset</button>
-  <button type="button" class="btn-secondary" id="btnBack" onclick="showPage('home')">⬅ Back</button>
-  <button type="button" class="btn-secondary" id="voiceButtonInline">🎤</button>
+<div class="btn-line">
+<button type="submit" class="btn-primary" id="btnGetAdvisory">✨ Get Advisory</button>
+<button type="button" class="btn-secondary" id="voiceButtonInline">🎤 Voice Input</button>
+<button type="reset" class="btn-secondary" id="btnReset">Reset</button>
+<button type="button" class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
 </div>
 </form>
 </section>
 
-<!-- Advisory Section -->
 <section id="advisories">
 <h2 id="advisoryTitle">📋 Advisories</h2>
 <div id="advisoryList">No advisories yet — fill the form and click "Get Advisory".</div>
@@ -156,7 +112,6 @@ body.dark #darkToggle { background:#0f4d29;}
 <button class="btn-secondary" onclick="showPage('home')" id="btnBackAdvisory">⬅ Back</button>
 </section>
 
-<!-- Roadmap Section -->
 <section id="roadmap">
 <h2 id="roadmapTitle">🚀 Feature Roadmap</h2>
 <ul>
@@ -176,70 +131,138 @@ Prototype — Built for Smart India Hackathon idea submission.<br/>
 For production: connect sensors, weather API & backend AI.
 </footer>
 
+<button id="darkToggle" class="btn-secondary" style="position:fixed; bottom:10px; right:10px;">🌓 Dark Mode</button>
+
 <script>
-// Splash screen auto-hide
-window.addEventListener("load", () => {
-    setTimeout(() => { document.getElementById("splash").style.display = "none"; showPage("language"); }, 1500);
-});
-let pages=["home","input","advisories","roadmap","language"];
-let currentLang="en", activeInput=null;
+let currentLang="en"; 
+let activeInput=null;
+const pages=["home","input","advisories","roadmap","language"];
 
-// Translations
-const uiTrans={en:{ homeTitle:"Welcome 👋", homeText:"Select an option below:", btnInput:"👨‍🌾 Farmer Input", btnAdvisory:"📋 Advisories", btnRoadmap:"🚀 Roadmap", inputTitle:"👨‍🌾 Farmer Input", labelName:"Name", labelPhone:"Phone (SMS/IVR)", labelDistrict:"District", labelArea:"Area (acres)", labelSoil:"Soil Type", labelCrop:"Crop", btnGetAdvisory:"✨ Get Advisory", btnReset:"Reset", thanks:"Thanks for using our website! It will help you a lot.", cropPlaceholder:"Wheat"}, hi:{ homeTitle:"स्वागत 👋", homeText:"नीचे विकल्प चुनें:", btnInput:"👨‍🌾 किसान इनपुट", btnAdvisory:"📋 सलाह", btnRoadmap:"🚀 रोडमैप", inputTitle:"👨‍🌾 किसान इनपुट", labelName:"नाम", labelPhone:"फोन (SMS/IVR के लिए)", labelDistrict:"जिला", labelArea:"क्षेत्रफल (एकड़)", labelSoil:"मृदा प्रकार", labelCrop:"फसल", btnGetAdvisory:"✨ सलाह प्राप्त करें", btnReset:"रीसेट", thanks:"हमारी वेबसाइट का उपयोग करने के लिए धन्यवाद। यह आपको बहुत मदद करेगा।", cropPlaceholder:"गेहूं"}};
+const uiTrans={
+en:{homeTitle:"Welcome 👋",homeText:"Select an option below:",btnInput:"👨‍🌾 Farmer Input",btnAdvisory:"📋 Advisories",btnRoadmap:"🚀 Roadmap",inputTitle:"👨‍🌾 Farmer Input",labelName:"Name",labelPhone:"Phone (SMS/IVR)",labelDistrict:"District",labelArea:"Area (acres)",labelSoil:"Soil Type",labelCrop:"Crop",btnGetAdvisory:"✨ Get Advisory",btnReset:"Reset",thanks:"Thanks for using our website! It will help you a lot.",cropPlaceholder:"Wheat"},
+hi:{homeTitle:"स्वागत 👋",homeText:"नीचे विकल्प चुनें:",btnInput:"👨‍🌾 किसान इनपुट",btnAdvisory:"📋 सलाह",btnRoadmap:"🚀 रोडमैप",inputTitle:"👨‍🌾 किसान इनपुट",labelName:"नाम",labelPhone:"फोन (SMS/IVR के लिए)",labelDistrict:"जिला",labelArea:"क्षेत्रफल (एकड़)",labelSoil:"मृदा प्रकार",labelCrop:"फसल",btnGetAdvisory:"✨ सलाह प्राप्त करें",btnReset:"रीसेट",thanks:"हमारी वेबसाइट का उपयोग करने के लिए धन्यवाद। यह आपको बहुत मदद करेगा।",cropPlaceholder:"गेहूं"}};
+
 const soilTrans={ en:["Loamy","Sandy","Clay","Laterite"], hi:["दोमट","रेतीली","मिट्टी","लैटराइट"] };
-const advTrans={en:{wheat1:"Apply nitrogen fertilizer", wheat2:"Monitor irrigation regularly", rice1:"Keep fields flooded", rice2:"Check for pests", general:"Follow standard crop practices", soilSandy:"Add compost to sandy soil", largeArea:"Consider hiring extra labor", market:"Check local market prices before selling", generalTitle:"Crop Advisory", wheatTitle:"Wheat Advisory", riceTitle:"Rice Advisory"}, hi:{wheat1:"नाइट्रोजन उर्वरक लगाएं", wheat2:"सिंचाई नियमित रूप से मॉनिटर करें", rice1:"खेतों में पानी बनाए रखें", rice2:"कीटों की जाँच करें", general:"मानक फसल प्रथाओं का पालन करें", soilSandy:"रेतीली मिट्टी में कंपोस्ट डालें", largeArea:"अतिरिक्त श्रमिक रखने पर विचार करें", market:"बेचने से पहले स्थानीय बाजार की कीमतें देखें", generalTitle:"फसल सलाह", wheatTitle:"गेहूं सलाह", riceTitle:"चावल सलाह"}};
 
-// Show/hide pages
+const advTrans={
+en:{
+wheat1:"Apply nitrogen fertilizer", wheat2:"Monitor irrigation regularly",
+rice1:"Keep fields flooded", rice2:"Check for pests",
+general:"Follow standard crop practices", soilSandy:"Add compost to sandy soil", largeArea:"Consider hiring extra labor",
+market:"Check local market prices before selling", generalTitle:"Crop Advisory", wheatTitle:"Wheat Advisory", riceTitle:"Rice Advisory"
+},
+hi:{
+wheat1:"नाइट्रोजन उर्वरक लगाएं", wheat2:"सिंचाई नियमित रूप से मॉनिटर करें",
+rice1:"खेतों में पानी बनाए रखें", rice2:"कीटों की जाँच करें",
+general:"मानक फसल प्रथाओं का पालन करें", soilSandy:"रेतीली मिट्टी में कंपोस्ट डालें", largeArea:"अतिरिक्त श्रमिक रखने पर विचार करें",
+market:"बेचने से पहले स्थानीय बाजार की कीमतें देखें", generalTitle:"फसल सलाह", wheatTitle:"गेहूं सलाह", riceTitle:"चावल सलाह"
+};
+
+// Splash hide
+window.addEventListener("load",()=>{
+setTimeout(()=>{document.getElementById("splash").style.display="none"; showPage("language");},1500);
+});
+
+// Show page
 function showPage(id){ pages.forEach(p=>document.getElementById(p).style.display="none"); document.getElementById(id).style.display="block"; }
 
 // Set language
 function setLanguage(){
 currentLang=document.getElementById("langSelect").value;
-for(const key in uiTrans[currentLang]){ let el=document.getElementById(key); if(el) el.innerText=uiTrans[currentLang][key]; }
+for(const key in uiTrans[currentLang]){
+let el=document.getElementById(key);
+if(el) el.innerText=uiTrans[currentLang][key];
+}
 document.getElementById("cropInput").placeholder=uiTrans[currentLang].cropPlaceholder;
 let soilSelect=document.getElementById("soilSelect"); soilSelect.innerHTML="";
 soilTrans[currentLang].forEach(s=>{ let opt=document.createElement("option"); opt.text=s; soilSelect.add(opt); });
 showPage("home");
 }
 
-// Advisory
-const form=document.getElementById("farmerForm"); const list=document.getElementById("advisoryList");
-form.addEventListener("submit", e=>{ e.preventDefault(); const data=Object.fromEntries(new FormData(form)); const adv=generateAdvisory(data); list.innerHTML=adv+`<p style="margin-top:10px;font-style:italic;">${uiTrans[currentLang].thanks}</p>`; showPage("advisories"); });
+// Form advisory
+const form=document.getElementById("farmerForm"); 
+const list=document.getElementById("advisoryList");
+form.addEventListener("submit",e=>{
+e.preventDefault();
+const data=Object.fromEntries(new FormData(form));
+const adv=generateAdvisory(data);
+list.innerHTML=adv+`<p style="margin-top:10px;font-style:italic;">${uiTrans[currentLang].thanks}</p>`;
+showPage("advisories");
+});
+
+// Generate advisory with fertilizer table and quantity
 function generateAdvisory(data){
 let tips=[], cropLower=data.crop.toLowerCase();
 if(cropLower.includes(currentLang==='hi'?'गेहूं':'wheat')) tips.push(advTrans[currentLang].wheat1,advTrans[currentLang].wheat2);
 else if(cropLower.includes(currentLang==='hi'?'चावल':'rice')) tips.push(advTrans[currentLang].rice1,advTrans[currentLang].rice2);
 else tips.push(advTrans[currentLang].general,advTrans[currentLang].general);
+
 if(data.soil.toLowerCase().includes(currentLang==='hi'?'रेतीली':'sandy')) tips.push(advTrans[currentLang].soilSandy);
 if(parseFloat(data.area)>5) tips.push(advTrans[currentLang].largeArea);
 tips.push(advTrans[currentLang].market);
+
+const fertilizerTable = `
+<h4>${currentLang==='hi'?'खाद तुलना':'Fertilizer Comparison'}</h4>
+<table>
+<thead>
+<tr>
+<th>${currentLang==='hi'?'प्रकार':'Type'}</th>
+<th>${currentLang==='hi'?'लाभ':'Benefits'}</th>
+<th>${currentLang==='hi'?'हानि':'Drawbacks'}</th>
+<th>${currentLang==='hi'?'प्रभाव अवधि':'Effect Duration'}</th>
+<th>${currentLang==='hi'?'सिफारिश की मात्रा':'Recommended Quantity'}</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${currentLang==='hi'?'रासायनिक खाद':'Chemical Fertilizer'}</td>
+<td>${currentLang==='hi'?'त्वरित पोषक आपूर्ति, उच्च उपज':'Quick nutrient supply, high yield'}</td>
+<td>${currentLang==='hi'?'मृदा गिरावट, जल प्रदूषण':'Soil degradation, water pollution'}</td>
+<td>${currentLang==='hi'?'अल्पकालिक (2-4 सप्ताह)':'Short-term (2-4 weeks)'}</td>
+<td>${currentLang==='hi'?'50 किग्रा प्रति एकड़':'50 kg per acre'}</td>
+</tr>
+<tr>
+<td>${currentLang==='hi'?'जैविक खाद':'Organic Fertilizer'}</td>
+<td>${currentLang==='hi'?'मृदा स्वास्थ्य में सुधार, टिकाऊ':'Improves soil health, sustainable'}</td>
+<td>${currentLang==='hi'?'धीमा पोषक रिलीज, तुरंत कम उपज':'Slower nutrient release, lower immediate yield'}</td>
+<td>${currentLang==='hi'?'दीर्घकालिक (2-3 महीने)':'Long-term (2-3 months)'}</td>
+<td>${currentLang==='hi'?'2 टन प्रति एकड़':'2 tons per acre'}</td>
+</tr>
+</tbody>
+</table>
+`;
+
 let title=advTrans[currentLang].generalTitle;
 if(cropLower.includes(currentLang==='hi'?'गेहूं':'wheat')) title=advTrans[currentLang].wheatTitle;
 if(cropLower.includes(currentLang==='hi'?'चावल':'rice')) title=advTrans[currentLang].riceTitle;
-return `<div class='advisory'><h3>${title}</h3><ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
+
+return `<div class='advisory'><h3>${title}</h3><ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul>${fertilizerTable}</div>`;
 }
 
-// Voice input for all text fields
-document.querySelectorAll("input[type=text], input[type=tel]").forEach(inp=>{ inp.addEventListener("focus", ()=>{ activeInput=inp; }); });
-document.getElementById("voiceButtonInline").addEventListener("click", ()=>{
-if(!activeInput){ alert(currentLang==='hi'?"कृपया पहले किसी फ़ील्ड पर टैप करें।":"Please tap on a field to enter text via voice"); return; }
+// Voice input
+document.querySelectorAll("input[type=text], input[type=tel]").forEach(inp=>{ inp.addEventListener("focus",()=>activeInput=inp); });
+
+const voiceBtn=document.getElementById("voiceButtonInline");
+voiceBtn.addEventListener("click",startVoice);
+function startVoice(){
+if(!activeInput){ alert(currentLang==='hi'?'कृपया पहले फ़ील्ड पर टैप करें।':'Please tap on a field to enter text via voice'); return; }
 const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(!SpeechRecognition){ alert("Voice input not supported!"); return; }
 let recognition=new SpeechRecognition();
 recognition.lang=currentLang==='hi'?'hi-IN':'en-US';
 recognition.interimResults=false; recognition.maxAlternatives=1;
+voiceBtn.classList.add("listening");
 recognition.start();
-let micBtn=document.getElementById("voiceButtonInline"); micBtn.classList.add("listening");
-recognition.onresult=function(event){ activeInput.value=event.results[0][0].transcript; };
-recognition.onerror=function(event){ alert("Voice recognition error: "+event.error); };
-recognition.onend=function(){ micBtn.classList.remove("listening"); };
-});
+recognition.onresult=function(event){ activeInput.value=event.results[0][0].transcript; voiceBtn.classList.remove("listening"); };
+recognition.onerror=function(){ voiceBtn.classList.remove("listening"); alert("Voice recognition error"); };
+}
 
 // Dark mode toggle
-document.getElementById("darkToggle").addEventListener("click", ()=>{ document.body.classList.toggle("dark"); });
+document.getElementById("darkToggle").addEventListener("click",()=>document.body.classList.toggle("dark"));
 
-// Language corner click to reopen language section
-document.getElementById("langCorner").addEventListener("click", ()=>{ showPage("language"); });
+// Corner language change
+document.getElementById("langCorner").addEventListener("click",()=>showPage("language"));
+
 </script>
 
 </body>
