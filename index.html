@@ -5,142 +5,176 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Smart Crop Advisory App</title>
 <style>
-/* ===== GENERAL ===== */
+/* ================== GENERAL ================== */
 body {
-  font-family:'Segoe UI',sans-serif;
-  margin:0;
-  background:#f3f4f6;
-  color:#111;
-  transition:.3s;
-  overflow-x:hidden;
-  position:relative;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #f3f4f6;
+  color: #111;
+  transition: 0.3s;
 }
-body.dark{background:#1e293b;color:#e2e8f0;}
-#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+body.dark { background: #0f172a; color: #e2e8f0; }
 
-/* ===== HEADER & FOOTER ===== */
-header,footer{position:relative;z-index:1000;color:#fff;overflow:hidden;}
-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:linear-gradient(270deg,#16a34a,#22c55e,#3b82f6,#0ea5e9);background-size:800% 800%;animation:gradientAnim 15s ease infinite;border-bottom:2px solid rgba(0,0,0,0.15);}
-footer{text-align:center;padding:12px 0;font-weight:600;background:linear-gradient(270deg,#16a34a,#22c55e,#3b82f6,#0ea5e9);background-size:800% 800%;animation:gradientAnim 15s ease infinite reverse;}
-@keyframes gradientAnim{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-header img{height:50px;transition:.3s;}
-header h1{font-size:1.6rem;margin:0 10px;text-shadow:1px 1px 3px rgba(0,0,0,0.3);}
+/* ================== HEADER / NAV ================== */
+header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: linear-gradient(270deg,#16a34a,#22c55e,#3b82f6,#0ea5e9);
+  background-size: 800% 800%;
+  animation: gradientAnim 15s ease infinite;
+  z-index: 1000;
+  color: #fff;
+}
+header img { height: 50px; }
+header h1 { margin: 0 12px; font-size: 1.6rem; }
+header .nav-actions { display: flex; gap: 12px; align-items: center; }
+@keyframes gradientAnim {
+  0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}
+}
 
-/* ===== SPLASH ===== */
-#splash{
-  position:fixed;top:0;left:0;right:0;bottom:0;
-  background:linear-gradient(135deg,#16a34a,#22c55e);
+/* ================== SPLASH ================== */
+#splash {
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background:#16a34a; color:#fff;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  font-size:1.4rem; z-index: 9999;
+}
+#splash img { height:100px; margin-bottom:16px; }
+
+/* ================== MAIN CONTAINER ================== */
+main { padding: 24px; max-width: 1200px; margin: auto; }
+
+/* ================== CARD GRID ================== */
+.card-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+  gap:20px;
+  margin-top:24px;
+}
+.card-grid button {
+  background: linear-gradient(135deg,#22c55e,#16a34a,#3b82f6,#0ea5e9);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
   color:#fff;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:9999;font-size:1.4rem;animation:fadeInSplash 1.5s ease-in-out;
+  border:none;
+  border-radius:20px;
+  min-height:140px;
+  font-size:1.25rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  cursor:pointer;
+  transition: transform 0.35s, box-shadow 0.35s;
 }
-#splash img{height:120px;margin-bottom:20px;animation:spin 2s linear infinite;}
-@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-@keyframes fadeInSplash{0%{opacity:0;}100%{opacity:1;}}
-
-/* ===== LANGUAGE MODAL ===== */
-#langModal{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;
-  z-index:10000;backdrop-filter:blur(3px);
+.card-grid button:hover{
+  transform: translateY(-5px) scale(1.05);
+  box-shadow:0 12px 24px rgba(0,0,0,0.3);
 }
-#langModalContent{
-  background:#fff;padding:30px 40px;border-radius:24px;text-align:center;
-  max-width:420px;width:90%;box-shadow:0 12px 28px rgba(0,0,0,.4);transition:.3s;
+@keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* ================== SECTIONS ================== */
+section { display:none; animation: fadeIn 0.4s; margin-top:20px; }
+section.active { display:block; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* ================== TABS ================== */
+.tab-container { display:flex; gap:12px; overflow-x:auto; margin-top:16px; }
+.tab-btn {
+  flex:0 0 auto;
+  min-width:150px;
+  padding:12px 20px;
+  border-radius:16px;
+  background:#d1fae5;
+  color:#166534;
+  font-weight:700;
+  cursor:pointer;
+  white-space:nowrap;
+  text-align:center;
+  transition:0.3s;
 }
-body.dark #langModalContent{background:#1e293b;color:#e2e8f0;}
-#langModalContent h2{margin-bottom:24px;font-size:1.6rem;}
-.btn-primary{padding:10px 18px;border:none;border-radius:10px;background:#16a34a;color:#fff;font-size:1rem;cursor:pointer;transition:.3s;}
-.btn-primary:hover{background:#22c55e;}
-
-/* ===== HOME BUTTONS ===== */
-.btn-line{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:22px;margin-top:16px;z-index:1;
+.tab-btn.active { background: linear-gradient(135deg,#16a34a,#22c55e); color:#fff; box-shadow:0 6px 14px rgba(0,0,0,.25);}
+.tab-content {
+  display:none;
+  margin-top:12px;
+  padding:16px;
+  border-radius:16px;
+  background:#f9fafb;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
-.btn-line button{
-  min-height:160px;padding:20px 16px;border-radius:24px;font-size:1.25rem;display:flex;
-  flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  box-shadow:0 8px 18px rgba(0,0,0,0.2);color:#fff;transition:transform 0.35s,box-shadow 0.35s,filter 0.3s,opacity 0.5s;
-  opacity:0;transform:translateY(30px);
-  background:linear-gradient(-45deg,#22c55e,#16a34a,#3b82f6,#0ea5e9);background-size:400% 400%;animation:gradientBG 10s ease infinite;
+.tab-content.active { display:block; }
+body.dark .tab-content { background:#1e293b; color:#e2e8f0; }
+
+/* ================== FORM ================== */
+form { max-width:600px; margin:auto; display:flex; flex-direction:column; gap:12px; }
+form input, form select { padding:10px; border-radius:8px; border:1px solid #ccc; width:100%; }
+body.dark form input, body.dark form select { background:#1e293b; border:1px solid #555; color:#e2e8f0; }
+form button { padding:10px 16px; border:none; border-radius:10px; cursor:pointer; font-weight:600; }
+.btn-primary { background:#22c55e; color:#fff; }
+.btn-secondary { background:#e5e7eb; color:#111; }
+body.dark .btn-secondary { background:#334155; color:#a5f3fc; }
+
+/* ================== CARDS / TABLES ================== */
+.card { background:#fff; padding:16px; border-radius:12px; margin:12px 0; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+body.dark .card { background:#334155; color:#e2e8f0; }
+table { width:100%; border-collapse:collapse; margin-top:12px; }
+th,td { padding:8px; border:1px solid #ccc; border-radius:6px; text-align:center; }
+body.dark th, body.dark td { border-color:#555; }
+
+/* ================== FIXED BUTTONS ================== */
+#darkToggle, #voiceButtonInline {
+  position:fixed; bottom:20px; width:50px; height:50px; border-radius:50%; font-size:24px;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,.3); cursor:pointer; z-index:999;
 }
-.btn-line button:hover{transform:translateY(-6px) scale(1.05);box-shadow:0 14px 28px rgba(0,0,0,0.3);filter:drop-shadow(0 0 16px rgba(255,255,255,0.5));}
-.btn-line button.show{opacity:1;transform:translateY(0);}
-@keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+#darkToggle { right:20px; background:#16a34a; color:#fff; }
+#voiceButtonInline { right:80px; background:#3b82f6; color:#fff; }
+#voiceButtonInline.listening { animation:pulse 1s infinite; }
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
 
-/* ===== TABS ===== */
-.tab-container{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scroll-behavior:smooth;}
-.tab-btn{flex:0 0 auto;min-width:150px;padding:14px 20px;border-radius:16px;background:#d1fae5;color:#166534;font-weight:700;font-size:1.1rem;cursor:pointer;text-align:center;white-space:nowrap;transition:.3s;}
-.tab-btn.active{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 6px 14px rgba(0,0,0,.25);}
-body.dark .tab-btn{background:#334155;color:#a5f3fc;}
-body.dark .tab-btn.active{background:#22c55e;color:#fff;}
-.tab-content{display:none;border-radius:16px;padding:14px;background:#f9fafb;box-shadow:0 2px 6px rgba(0,0,0,.1);margin-top:10px}
-.tab-content.active{display:block}
-body.dark .tab-content{background:#2a2a2a;border:1px solid #555}
-
-/* ===== FORMS ===== */
-form label{display:block;margin-top:10px;font-weight:600}
-form input,form select{width:100%;padding:8px;margin-top:4px;border-radius:8px;border:1px solid #ccc}
-body.dark form input,body.dark form select{background:#1e293b;border:1px solid #555;color:#e2e8f0}
-
-/* ===== CARDS ===== */
-.card{background:#fff;padding:12px 16px;border-radius:12px;margin:8px 0;box-shadow:0 2px 6px rgba(0,0,0,.1)}
-body.dark .card{background:#334155;color:#e2e8f0}
-
-/* ===== FIXED BUTTONS ===== */
-#darkToggle,#voiceButtonInline{position:fixed;bottom:20px;width:55px;height:55px;border-radius:50%;font-size:26px;display:flex;align-items:center;justify-content:center;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.3)}
-#darkToggle{right:20px;background:#16a34a;color:#fff}
-#voiceButtonInline{right:90px;background:#3b82f6;color:#fff}
-#voiceButtonInline.listening{animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-
-/* ===== TABLES ===== */
-table{width:100%;border-collapse:collapse;margin-top:10px}
-th,td{border:1px solid #ccc;padding:8px;text-align:center;border-radius:8px}
-body.dark th,body.dark td{border-color:#555}
-
-/* ===== SPLASH SMALL ===== */
-@media(max-width:600px){body{font-size:14px}.btn-line button{min-height:120px;font-size:1rem;padding:16px}.tab-btn{font-size:1rem;padding:12px 16px}}
+/* ================== RESPONSIVE ================== */
+@media (max-width:600px){
+  .card-grid { grid-template-columns: 1fr; gap:12px; }
+  header h1{ font-size:1.3rem; }
+}
 </style>
 </head>
 <body>
-<canvas id="particles"></canvas>
 
 <!-- SPLASH -->
 <div id="splash">
-  <img src="logo.png" alt="Logo"/>
+  <img src="logo.png" alt="Logo">
   <div>Smart Crop Advisory</div>
   <small>Loading...</small>
 </div>
 
-<!-- LANGUAGE MODAL -->
-<div id="langModal">
-  <div id="langModalContent">
-    <h2>Select Language 🌐</h2>
+<!-- HEADER -->
+<header>
+  <img src="logo.png" alt="Logo">
+  <h1>Smart Crop Advisory</h1>
+  <div class="nav-actions">
     <select id="langSelect">
       <option value="en">English</option>
       <option value="hi">हिन्दी</option>
-    </select><br><br>
-    <button class="btn-primary" onclick="setLanguageModal()">✅ Confirm</button>
+    </select>
   </div>
-</div>
-
-<header>
-  <img src="logo.png" alt="Logo" />
-  <h1>Smart Crop Advisory</h1>
 </header>
 
 <main>
-  <!-- HOME -->
+  <!-- HOME / CARDS -->
   <section id="home" class="active">
-    <h2 style="text-align:center;font-size:1.8rem;">Welcome Farmers 👋</h2>
-    <p style="text-align:center;font-size:1.15rem;">Choose an option to get started:</p>
-    <div class="btn-line">
+    <h2 style="text-align:center;">Welcome 👋</h2>
+    <p style="text-align:center;">Select an option to get started:</p>
+    <div class="card-grid">
       <button onclick="showPage('input')">👨‍🌾 Farmer Input</button>
       <button onclick="showPage('advisories')">📋 Advisories</button>
       <button onclick="showPage('solution')">💡 Solution Concept</button>
       <button onclick="showPage('market')">💹 Market Prices</button>
-      <button onclick="showPage('weather')">☁️ Weather</button>
+      <button onclick="showPage('weather')">☁ Weather</button>
       <button onclick="showPage('soil')">🌱 Soil Health</button>
       <button onclick="showPage('roadmap')">🚀 Roadmap</button>
     </div>
@@ -150,19 +184,19 @@ body.dark th,body.dark td{border-color:#555}
   <section id="input">
     <h2>👨‍🌾 Farmer Input</h2>
     <form id="farmerForm">
-      <label>Name</label><input type="text" name="name" placeholder="Farmer name" required />
-      <label>Phone</label><input type="tel" name="phone" placeholder="91XXXXXXXXXX" required />
-      <label>District</label><input type="text" name="district" required />
-      <label>Area (acres)</label><input type="number" name="area" step="0.1" value="1" required />
-      <label>Soil Type</label>
+      <input type="text" name="name" placeholder="Farmer Name" required>
+      <input type="tel" name="phone" placeholder="Phone 91XXXXXXXXXX" required>
+      <input type="text" name="district" placeholder="District" required>
+      <input type="number" name="area" placeholder="Area in acres" step="0.1" required>
       <select name="soil" required>
-        <option value="loamy">Loamy</option>
-        <option value="sandy">Sandy</option>
-        <option value="clay">Clay</option>
-        <option value="silty">Silty</option>
+        <option value="">Select Soil Type</option>
+        <option value="Loamy">Loamy</option>
+        <option value="Sandy">Sandy</option>
+        <option value="Clay">Clay</option>
+        <option value="Silty">Silty</option>
       </select>
-      <label>Crop</label><input type="text" name="crop" value="Wheat" required />
-      <div class="btn-line">
+      <input type="text" name="crop" placeholder="Crop Name" required>
+      <div style="display:flex;gap:10px; flex-wrap:wrap; margin-top:10px;">
         <button type="submit" class="btn-primary">✨ Get Advisory</button>
         <button type="reset" class="btn-secondary">Reset</button>
         <button type="button" class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
@@ -173,7 +207,7 @@ body.dark th,body.dark td{border-color:#555}
   <!-- ADVISORIES -->
   <section id="advisories">
     <h2>📋 Advisories</h2>
-    <div id="advisoryList"><p id="noAdvisory">No advisories yet — fill the form and click "Get Advisory".</p></div>
+    <div id="advisoryList"><p id="noAdvisory">No advisories yet. Fill the form above.</p></div>
     <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
   </section>
 
@@ -181,17 +215,17 @@ body.dark th,body.dark td{border-color:#555}
   <section id="solution">
     <h2>💡 Solution Concept</h2>
     <div class="tab-container">
-      <button class="tab-btn active" onclick="openTab('crop')">🌾 Crop Advice</button>
+      <button class="tab-btn" onclick="openTab('crop')">🌾 Crop Advice</button>
       <button class="tab-btn" onclick="openTab('fertilizer')">🧪 Fertilizer</button>
       <button class="tab-btn" onclick="openTab('pest')">🐛 Pest Control</button>
-      <button class="tab-btn" onclick="openTab('marketAdvice')">💹 Market Prices</button>
+      <button class="tab-btn" onclick="openTab('marketAdvice')">💹 Market Advice</button>
     </div>
-    <div id="tab-crop" class="tab-content active">✔ Helps farmers choose the right crop based on soil & weather.</div>
+    <div id="tab-crop" class="tab-content">✔ Helps farmers choose the right crop based on soil & weather.</div>
     <div id="tab-fertilizer" class="tab-content">
       <h3>Organic Fertilizers</h3>
       <ul><li>Improves soil health</li><li>Environmentally friendly</li><li>Slow nutrient release</li></ul>
       <h3>Chemical Fertilizers</h3>
-      <ul><li>Quick nutrient release</li><li>Precise nutrient control</li><li>Can degrade soil with overuse</li></ul>
+      <ul><li>Quick nutrient release</li><li>Precise nutrient control</li><li>Overuse can degrade soil</li></ul>
     </div>
     <div id="tab-pest" class="tab-content">✔ Provides pest control tips and eco-friendly solutions.</div>
     <div id="tab-marketAdvice" class="tab-content">✔ Updates market prices and connects with buyers.</div>
@@ -201,7 +235,11 @@ body.dark th,body.dark td{border-color:#555}
   <!-- MARKET -->
   <section id="market">
     <h2>💹 Market Prices</h2>
-    <div class="card"><table id="marketTable"><tr><th>Crop</th><th>Price/kg (₹)</th></tr></table></div>
+    <div class="card">
+      <table id="marketTable">
+        <tr><th>Crop</th><th>Price/kg (₹)</th></tr>
+      </table>
+    </div>
     <button class="btn-secondary" onclick="showPage('home')">⬅ Back</button>
   </section>
 
@@ -228,38 +266,19 @@ body.dark th,body.dark td{border-color:#555}
 
 </main>
 
-<footer>
-Prototype — Built for Smart India Hackathon.<br/>Connect sensors & APIs for production.
+<footer style="text-align:center;padding:12px;background:#16a34a;color:#fff;">
+  Prototype — Built for Smart India Hackathon. Connect sensors & APIs for production.
 </footer>
 
 <button id="darkToggle">🌓</button>
 <button id="voiceButtonInline">🎤</button>
 
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
-// ===== PARTICLES =====
-particlesJS('particles',{
-  particles:{number:{value:80},color:{value:"#ffffff"},shape:{type:"circle"},opacity:{value:0.3},size:{value:3},
-  line_linked:{enable:true,distance:150,color:"#ffffff",opacity:0.2,width:1},move:{enable:true,speed:1.5}},
-  interactivity:{detect_on:"canvas",events:{onhover:{enable:true,mode:"grab"}},modes:{grab:{distance:140,line_linked:{opacity:0.5}}}}
-});
-
-// ===== STAGGERED BUTTON ANIMATION =====
-window.addEventListener('load',()=>{
-  document.querySelectorAll('.btn-line button').forEach((b,i)=>setTimeout(()=>b.classList.add('show'),i*150));
-});
-
-// ===== SPLASH HIDE =====
-setTimeout(()=>document.getElementById('splash').style.display='none',1500);
-
-// ===== LANGUAGE MODAL =====
-function setLanguageModal(){document.getElementById('langModal').style.display='none';showPage('home');}
-
-// ===== PAGES =====
-let pages=["home","input","advisories","roadmap","solution","market","weather","soil"];
+// ================== CORE ==================
+const pages=["home","input","advisories","solution","market","weather","soil","roadmap"];
 function showPage(id){pages.forEach(p=>document.getElementById(p).classList.remove('active'));document.getElementById(id).classList.add('active');}
 
-// ===== TABS =====
+// Tabs
 function openTab(tab){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
@@ -267,39 +286,49 @@ function openTab(tab){
   document.querySelectorAll('.tab-btn').forEach(b=>{if(b.textContent.toLowerCase().includes(tab))b.classList.add('active');});
 }
 
-// ===== DARK MODE =====
+// Dark mode
 document.getElementById('darkToggle').addEventListener('click',()=>document.body.classList.toggle('dark'));
 
-// ===== VOICE INPUT =====
+// Splash hide
+setTimeout(()=>document.getElementById('splash').style.display='none',1500);
+
+// Farmer Advisory Submit
+document.getElementById('farmerForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const f=e.target,name=f.name.value,crop=f.crop.value,soil=f.soil.value,area=f.area.value;
+  const advisory=document.createElement('div'); advisory.className='card';
+  advisory.innerHTML=`👨‍🌾 ${name} | 🌾 ${crop}, 🌱 ${soil}, 🏞 ${area} acres<br>
+  🧪 Fertilizer: Organic recommended; Chemical as needed<br>💧 Irrigation: Water as needed<br>🐛 Pest: Monitor & control<br>💡 Advisory: Follow soil & crop recommendations.`;
+  const list=document.getElementById('advisoryList'); document.getElementById('noAdvisory')?.remove(); list.prepend(advisory);
+  showPage('advisories'); f.reset();
+});
+
+// Voice Input
 let activeInput=null;
 document.querySelectorAll("input[type=text], input[type=tel]").forEach(inp=>inp.addEventListener("focus",()=>activeInput=inp));
-document.getElementById('voiceButtonInline').addEventListener('click',function(){
-  if(!activeInput){alert('Tap on a field');return;}
+document.getElementById('voiceButtonInline').addEventListener('click', function(){
+  if(!activeInput){alert('Tap on a field'); return;}
   const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SpeechRecognition){alert("Voice input not supported");return;}
-  let recognition=new SpeechRecognition();recognition.lang='en-US';
-  recognition.interimResults=false;recognition.maxAlternatives=1;
-  this.classList.add('listening');recognition.start();
-  recognition.onresult=e=>{activeInput.value=e.results[0][0].transcript;this.classList.remove('listening');};
+  if(!SpeechRecognition){alert("Voice input not supported"); return;}
+  let recognition=new SpeechRecognition(); recognition.lang='en-US';
+  recognition.interimResults=false; recognition.maxAlternatives=1;
+  this.classList.add('listening'); recognition.start();
+  recognition.onresult=e=>{activeInput.value=e.results[0][0].transcript; this.classList.remove('listening');};
   recognition.onerror=e=>this.classList.remove('listening');
 });
 
-// ===== ADVISORY SUBMIT =====
-document.getElementById('farmerForm').addEventListener('submit',e=>{
-  e.preventDefault();
-  const f=e.target,name=f.name.value,crop=f.crop.value,soil=f.soil.value,area=f.area.value;
-  const advisory=document.createElement('div');advisory.className='card';
-  advisory.innerHTML=`👨‍🌾 ${name} | 🌾 ${crop}, 🌱 ${soil}, 🏞 ${area} acres<br>
-  🧪 Fertilizer: Organic recommended; Chemical as needed<br>
-  💧 Irrigation: Water as needed<br>🐛 Pest: Monitor & control<br>💡 Advisory: Follow soil & crop recommendations.`;
-  const list=document.getElementById('advisoryList');document.getElementById('noAdvisory')?.remove();list.prepend(advisory);showPage('advisories');f.reset();
-});
+// Populate Market, Weather, Soil, Roadmap
+const marketData=[{crop:"Wheat",price:21},{crop:"Rice",price:28},{crop:"Cotton",price:65},{crop:"Tomato",price:18},{crop:"Onion",price:12}];
+const weatherData=[{day:"Mon",temp:30,desc:"Sunny"},{day:"Tue",temp:28,desc:"Rainy"},{day:"Wed",temp:29,desc:"Cloudy"}];
+const soilTips=[{type:"Loamy",tip:"Retains moisture & nutrients"},{type:"Sandy",tip:"Drains quickly, add organic matter"},{type:"Clay",tip:"Holds nutrients but drains poorly"},{type:"Silty",tip:"Fertile but can compact"}];
+const roadmap=["App+SMS+IVR+Local language voice","IoT sensors for soil","AI-based advisory","Market prices & buyer connect","Offline SMS digest","Farmer training"];
 
-// ===== PLACEHOLDER FOR LIVE API FETCH =====
-async function fetchMarketData(){console.log("Fetch market API here");}
-async function fetchWeatherData(){console.log("Fetch weather API here");}
-setInterval(()=>{fetchMarketData();fetchWeatherData();},900000);
-
+const table=document.getElementById('marketTable');
+marketData.forEach(m=>{const tr=document.createElement('tr'); tr.innerHTML=`<td>${m.crop}</td><td>${m.price}</td>`; table.appendChild(tr);});
+const weatherContainer=document.getElementById('weatherCards'); weatherData.forEach(w=>{const div=document.createElement('div'); div.className='card'; div.textContent=`${w.day}: ${w.temp}°C, ${w.desc}`; weatherContainer.appendChild(div);});
+const soilContainer=document.getElementById('soilCards'); soilTips.forEach(s=>{const div=document.createElement('div'); div.className='card'; div.textContent=`🌱 ${s.type} - ${s.tip}`; soilContainer.appendChild(div);});
+const roadmapList=document.getElementById('roadmapList'); roadmap.forEach(r=>{const li=document.createElement('li'); li.textContent=r; roadmapList.appendChild(li);});
 </script>
+
 </body>
 </html>
